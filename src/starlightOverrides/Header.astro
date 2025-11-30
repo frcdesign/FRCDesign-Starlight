@@ -29,6 +29,19 @@ function isActive(href: string): boolean {
   if (href === "/") {
     return currentPath === "/" || currentPath === "";
   }
+
+  // Special case: Changelog is a specific page under /resources/
+  // Only mark it active if we're exactly on the changelog page
+  if (href === "/resources/site-changelog/") {
+    return currentPath === "/resources/site-changelog/" || currentPath === "/resources/site-changelog";
+  }
+
+  // Special case: "Other Resources" should NOT be active when on Changelog
+  if (href === "/resources/") {
+    return currentPath.startsWith("/resources/") &&
+           !currentPath.startsWith("/resources/site-changelog");
+  }
+
   // For nested paths like /educators-guide/introduction/, check the base section
   const baseSection = "/" + href.split("/")[1] + "/";
   return currentPath.startsWith(baseSection);

@@ -51,13 +51,13 @@ const icons = {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #43a047 0%, #66bb6a 50%, #43a047 100%);
+    background: linear-gradient(90deg, var(--accent-color) 0%, #66bb6a 50%, var(--accent-color) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
 
   .home-card:hover {
-    border-color: #43a047;
+    border-color: var(--accent-color);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(67, 160, 71, 0.25);
   }
 
@@ -74,7 +74,7 @@ const icons = {
     height: 48px;
     background: rgba(67, 160, 71, 0.15);
     border-radius: 10px;
-    color: #43a047;
+    color: var(--accent-color);
     transition: all 0.3s ease;
   }
 
@@ -97,7 +97,7 @@ const icons = {
   }
 
   .home-card:hover .home-card-title {
-    color: #43a047;
+    color: var(--accent-color);
   }
 
   .home-card-description {
@@ -115,7 +115,7 @@ const icons = {
   }
 
   .home-card:hover .home-card-arrow {
-    color: #43a047;
+    color: var(--accent-color);
     transform: translateX(4px);
   }
 
@@ -134,7 +134,7 @@ const icons = {
   }
 
   :global(html[data-theme="light"]) .home-card:hover .home-card-title {
-    color: #2e7d32;
+    color: var(--accent-color-hover);
   }
 
   :global(html[data-theme="light"]) .home-card-description {

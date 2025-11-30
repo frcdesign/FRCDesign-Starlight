@@ -5,12 +5,19 @@
    ========================================================================== */
 
 :root {
+    /* Layout */
     --sl-content-width: 85rem !important;
-    --sl-font: 'Inter', system-ui, sans-serif !important;
-    --sl-color-text-accent: #43A047 !important;
     --sl-nav-height: 5.5rem !important;
+
+    /* Typography */
+    --sl-font: 'Inter', system-ui, sans-serif !important;
     --sl-text-body: 0.875rem !important;
     --sl-line-height: 1.7 !important;
+
+    /* Brand Colors */
+    --sl-color-text-accent: #43A047 !important;
+    --accent-color: #43A047;
+    --accent-color-hover: #2e7d32;
 }
 
 :root[data-theme="dark"] {
@@ -48,12 +55,12 @@
    ========================================================================== */
 
 .sl-markdown-content a:not([class]) {
-    color: #43A047;
+    color: var(--accent-color);
     text-decoration: none;
 }
 
 .sl-markdown-content a:not([class]):hover {
-    color: #2e7d32;
+    color: var(--accent-color-hover);
 }
 
 /* ==========================================================================
@@ -122,7 +129,7 @@ section[class*="hero"] img {
 [class*="hero"] a[class*="button"],
 .hero a,
 section[class*="hero"] a {
-    background-color: #43a047 !important;
+    background-color: var(--accent-color) !important;
     color: #ffffff !important;
     font-family: "Inter", var(--sl-font), system-ui, sans-serif !important;
     font-weight: 700 !important;
@@ -136,7 +143,7 @@ section[class*="hero"] a {
 [class*="hero"] a[class*="button"]:hover,
 .hero a:hover,
 section[class*="hero"] a:hover {
-    background-color: #2e7d32 !important;
+    background-color: var(--accent-color-hover) !important;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(67, 160, 71, 0.4);
 }
@@ -187,48 +194,48 @@ section[class*="hero"] a:hover svg {
    Sidebar
    ========================================================================== */
 
-/* Remove thin line at top of sidebar */
+/* Remove borders and shadows from sidebar elements */
 .sidebar,
 nav.sidebar,
 .sidebar-pane,
+#starlight__sidebar,
+.sl-flex.sidebar,
 [data-sl-sidebar],
 aside.sidebar {
     border-top: none !important;
     box-shadow: none !important;
 }
 
-/* Override the sidebar-pane border that appears at nav height */
-#starlight__sidebar,
-.sidebar-pane {
-    border-top: none !important;
-    box-shadow: none !important;
+/* Fix potential 1px gap at top of sidebar */
+.sidebar-pane,
+#starlight__sidebar {
     outline: none !important;
-    /* Extend slightly up to cover any potential 1px gap */
     margin-top: -1px !important;
     padding-top: 1px !important;
+    /* Hide scrollbar but allow scrolling */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-/* Target the sidebar container that may have a top border */
-.sl-flex.sidebar {
-    border-top: none !important;
+.sidebar-pane::-webkit-scrollbar,
+#starlight__sidebar::-webkit-scrollbar {
+    display: none;
 }
 
-/* Remove any hairline/separator at top of sidebar content */
 .sidebar-content,
 .sidebar-content-wrapper {
     border-top: none !important;
     margin-top: 0 !important;
 }
 
-.sidebar ul ul .large,
-nav.sidebar ul ul .large {
+/* Sidebar link styling */
+.sidebar ul ul .large {
     font-weight: 400 !important;
     font-size: var(--sl-text-sm) !important;
     color: var(--sl-color-gray-2) !important;
 }
 
-.sidebar ul ul a,
-nav.sidebar ul ul a {
+.sidebar ul ul a {
     font-weight: 400 !important;
 }
 
@@ -409,7 +416,7 @@ html.lightbox-open [data-pagefind-ignore="all"] {
 }
 
 .sl-link-card:hover {
-    border-color: #43a047 !important;
+    border-color: var(--accent-color) !important;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(67, 160, 71, 0.3);
 }
 
@@ -430,7 +437,7 @@ html.lightbox-open [data-pagefind-ignore="all"] {
 }
 
 .sl-link-card:hover .card-title {
-    color: #43a047 !important;
+    color: var(--accent-color) !important;
 }
 
 /* Card description */
@@ -448,7 +455,7 @@ html.lightbox-open [data-pagefind-ignore="all"] {
 }
 
 .sl-link-card:hover svg[aria-hidden="true"] {
-    color: #43a047;
+    color: var(--accent-color);
     transform: translateX(4px);
 }
 
@@ -472,7 +479,7 @@ html.lightbox-open [data-pagefind-ignore="all"] {
 }
 
 :root[data-theme="light"] .sl-link-card:hover .card-title {
-    color: #2e7d32 !important;
+    color: var(--accent-color-hover) !important;
 }
 
 :root[data-theme="light"] .sl-link-card .card-description {
