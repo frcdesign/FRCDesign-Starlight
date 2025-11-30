@@ -15,11 +15,21 @@ In the reference design, the Power Distribution Hub (PDH), main breaker, and Rob
 **Add mounting for some electronic components to your drivetrain.** You can take inspiration from the following instructions slides.
 
 <Slides images={[
-  { src: "/learning-course/stage1/1e/elec/elec-0.webp", caption: "0. Finished mounted electronics." },
-  { src: "/learning-course/stage1/1e/elec/elec-1.webp", caption: "1. Draw box outline for PDH and RoboRIO. Also add the outline and holes for the main breaker and whatever IMU your team uses (Pigeon 2.0, Canandygro, etc.) You can find these dimensions in pdf files on the vendor's websites or by measuring the CAD models from FRCDesignLib." },
-  { src: "", caption: "2. Use the <code>Electronic Mounting</code> Featurescript to add the PDH and RoboRIO mounting holes. Optionally override the hole size for the PDH to be 0.159\" diameter, which (if tapped IRL) will allow the mounting bolt to screw directly into the bellypan.", video: "https://www.youtube.com/embed/_Yyt5wFeIDk?controls=1&rel=0&showinfo=0&vq=hd1080" },
-  { src: "/learning-course/stage1/1e/elec/elec-0.webp", caption: "3. Insert the electronics from FRCDesignLib and add all of the necessary fasteners. The PDH uses #10-32 screws, the RoboRIO uses #4-40 screws, the Breaker uses 1/4-20 screws, the Pigeon 2.0 uses #6-32 screws, and the Canandgyro uses #8-32 screws." }
-]} />
+  { src: "/learning-course/stage1/1e/elec/elec-0.webp" },
+  { src: "/learning-course/stage1/1e/elec/elec-1.webp" },
+  { src: "" },
+  { src: "/learning-course/stage1/1e/elec/elec-0.webp" }
+]}>
+
+0. Finished mounted electronics.
+
+1. Draw box outline for PDH and RoboRIO. Also add the outline and holes for the main breaker and whatever IMU your team uses (Pigeon 2.0, Canandygro, etc.) You can find these dimensions in pdf files on the vendor's websites or by measuring the CAD models from FRCDesignLib.
+
+2. Use the <code>Electronic Mounting</code> Featurescript to add the PDH and RoboRIO mounting holes. Optionally override the hole size for the PDH to be 0.159" diameter, which (if tapped IRL) will allow the mounting bolt to screw directly into the bellypan.
+
+3. Insert the electronics from FRCDesignLib and add all of the necessary fasteners. The PDH uses #10-32 screws, the RoboRIO uses #4-40 screws, the Breaker uses 1/4-20 screws, the Pigeon 2.0 uses #6-32 screws, and the Canandgyro uses #8-32 screws.
+
+</Slides>
 
 <Aside type="tip" title="Simplified Models">
 It is recommended to use the Simplified electronics models to improve assembly performance. You can read more about simplified models on the [Assembly Best Practices Page](/best-practices/assembly-setup/ "Assembly Best Practices Page"). Simplified swerve module models can also be used to reduce lag.

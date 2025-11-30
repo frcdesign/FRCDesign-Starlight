@@ -29,13 +29,33 @@ interface Props {
 const { images } = Astro.props;
 const rawContent = await Astro.slots.render('default') || '';
 
-// Parse captions from slot content - split by double newlines or <p> tags
-const slotCaptions = rawContent
-  ? rawContent
+// Parse captions from slot content
+// MDX may render as: <ol><li>...</li></ol>, <p>...</p><p>...</p>, or plain text with double newlines
+let slotCaptions: string[] = [];
+
+if (rawContent) {
+  // Check if content is wrapped in an ordered list (MDX renders numbered lines as <ol>)
+  // Note: MDX may use <ol start="0"> or similar attributes
+  if (rawContent.includes('<ol') && rawContent.includes('<li>')) {
+    // Extract content from each <li> tag
+    const liMatches = rawContent.match(/<li[^>]*>([\s\S]*?)<\/li>/gi);
+    if (liMatches) {
+      slotCaptions = liMatches.map((li: string) =>
+        li
+          .replace(/<\/?li[^>]*>/gi, '')
+          .replace(/^[\s\n]*<p>/, '')  // Remove leading <p>
+          .replace(/<\/p>[\s\n]*$/, '') // Remove trailing </p>
+          .trim()
+      );
+    }
+  } else {
+    // Split by </p><p> patterns, <br><br>, or double newlines
+    slotCaptions = rawContent
       .split(/<\/p>\s*<p>|<br\s*\/?>\s*<br\s*\/?>|\n\n+/)
       .map((c: string) => c.replace(/<\/?p>/g, '').trim())
-      .filter((c: string) => c.length > 0)
-  : [];
+      .filter((c: string) => c.length > 0);
+  }
+}
 
 // Use captions from images array if provided, otherwise fall back to slot content
 const captions = images.map((img, index) => img.caption || slotCaptions[index] || '');

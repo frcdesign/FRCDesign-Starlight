@@ -37,47 +37,117 @@ Bolts are strong, and people often use more bolts and rivets than are necessary.
 **Navigate to the "Exercise #1 Part Studio" tab** in your copied document and **follow the instructions in the slides** to complete the part studio for this exercise.
 
 <Slides images={[
-  { src: "/learning-course/stage1/1c/flat-intake/parts-0.webp", caption: "0. Final Part Studio." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-1.webp", caption: "1. Start the layout sketch on the Right plane. Begin by sketching the shape of the bottom tube." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-2.webp", caption: "2. Draw a rectangle on top of the tube to represent the floor of this intake" },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-3.webp", caption: "3. Create a circle to represent the wheels, and a circle to represent the motor. Use the origin cube belt ctc function to position them correctly, this is similar to the layout sketch in 1B Exercise 3" },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-4.webp", caption: "4. Draw the pitch circles for both pulleys and add connecting lines for them to represent the belt path. Use the origin cube PulleyPD function to define the pulley circles" },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-5.webp", caption: "5. Draw a rectangle to represent a 2x1 tube. This should be dimensioned above from the wheels and aligned with the edge of the bottom tube." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-6.webp", caption: "6. Create a new sketch using a mate connector offset from the origin. This sketch should be offset in the \"Right\" direction as shown." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-7.webp", caption: "7. Transfer the rectangles for the tubes from the layout sketch using the \"Use\" tool. Make sure these are not construction lines as you will need to extrude them." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-8.webp", caption: "8. Extrude the bottom tube by 1\" towards the origin and apply Tube Converter to it" },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-9.webp", caption: "9. Start a sketch on the Right side of the 1x1 tube. Make sure to disable imprinting. Add circles centered on the motor and wheel circles from the layout sketch. Also transfer the CTC line with the use tool." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-10.webp", caption: "10. Create the bolt circle pattern by drawing a circle on the CTC line, then use the pattern tool to duplicate it around the motor center point. This pattern should have 8 holes, and have a diameter of 2\" to match the standard 2\" motor bolt circle. We only need 3 of the 8 holes on this pattern so make the rest construction holes." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-11.webp", caption: "11. Add mounting holes along the bottom tube, spaced 2\" apart. Add two more hole centered on the top tube spaced 1\" apart." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-12.webp", caption: "12. Draw the plate outline around the holes. Draw arcs around all of the edge holes and connect them with tangent lines." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-13.webp", caption: "13. Extrude to create the plate. If you properly disabled imprinting on slide 9 you should only have one face to select to extrude this plate." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-14.webp", caption: "14. Mirror this plate across the Right plane to create a reference plate. You should color this plate an abnormal color so it is easily distinguishable from the main plate. Name this reference plate \"zREF Plate\". This will make it appear at the bottom of the insert menu, making it harder to accidentally use in the assembly." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-15.webp", caption: "15. Extrude the top tube shape. Make sure to use the \"Up to Face\" setting to extrude the tube parametrically to the reference plate." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-16.webp", caption: "16. Use Tube Converter on this new tube." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-17.webp", caption: "17. Make a sketch on top of the 1x1 tube, again making sure to disable imprinting. Sketch the plate as shown." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-18.webp", caption: "18. Use the `Belt & Chain Gen` Featurescript to make a belt between the motor and wheel holes. Pay close attention to the starting offset and the construction circles you select." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-19.webp", caption: "19. Create the wheel shaft using the Robot Shaft Featurescript. The start mate connector should be placed in the middle of the belt and run up to the left face of the reference plate. The shaft should be offset from the end by 1/16\" to account for the bearing flange. The shaft should also have a starting offset of 9/32\" to put it through the wheel pulley." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-20.webp", caption: "20. Now that our parts are all done, we can pocket the side plate. Create a sketch on the Right side of the plate, and draw the rib lines. The top left line is dimensioned away from the top bolt holes." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-21.webp", caption: "21. Use the Part Lighten Featurescript to pocket the plate. Select the face of the plate, and the entire rib line sketch as shown." },
-  { src: "/learning-course/stage1/1c/flat-intake/parts-0.webp", caption: "22. Make sure to organize your part studio features into appropriate folders." }
-]} />
+  { src: "/learning-course/stage1/1c/flat-intake/parts-0.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-1.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-2.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-3.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-4.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-5.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-6.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-7.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-8.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-9.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-10.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-11.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-12.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-13.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-14.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-15.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-16.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-17.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-18.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-19.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-20.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-21.webp" },
+  { src: "/learning-course/stage1/1c/flat-intake/parts-0.webp" }
+]}>
+
+0. Final Part Studio.
+
+1. Start the layout sketch on the Right plane. Begin by sketching the shape of the bottom tube.
+
+2. Draw a rectangle on top of the tube to represent the floor of this intake
+
+3. Create a circle to represent the wheels, and a circle to represent the motor. Use the origin cube belt ctc function to position them correctly, this is similar to the layout sketch in 1B Exercise 3
+
+4. Draw the pitch circles for both pulleys and add connecting lines for them to represent the belt path. Use the origin cube PulleyPD function to define the pulley circles
+
+5. Draw a rectangle to represent a 2x1 tube. This should be dimensioned above from the wheels and aligned with the edge of the bottom tube.
+
+6. Create a new sketch using a mate connector offset from the origin. This sketch should be offset in the "Right" direction as shown.
+
+7. Transfer the rectangles for the tubes from the layout sketch using the "Use" tool. Make sure these are not construction lines as you will need to extrude them.
+
+8. Extrude the bottom tube by 1" towards the origin and apply Tube Converter to it
+
+9. Start a sketch on the Right side of the 1x1 tube. Make sure to disable imprinting. Add circles centered on the motor and wheel circles from the layout sketch. Also transfer the CTC line with the use tool.
+
+10. Create the bolt circle pattern by drawing a circle on the CTC line, then use the pattern tool to duplicate it around the motor center point. This pattern should have 8 holes, and have a diameter of 2" to match the standard 2" motor bolt circle. We only need 3 of the 8 holes on this pattern so make the rest construction holes.
+
+11. Add mounting holes along the bottom tube, spaced 2" apart. Add two more hole centered on the top tube spaced 1" apart.
+
+12. Draw the plate outline around the holes. Draw arcs around all of the edge holes and connect them with tangent lines.
+
+13. Extrude to create the plate. If you properly disabled imprinting on slide 9 you should only have one face to select to extrude this plate.
+
+14. Mirror this plate across the Right plane to create a reference plate. You should color this plate an abnormal color so it is easily distinguishable from the main plate. Name this reference plate "zREF Plate". This will make it appear at the bottom of the insert menu, making it harder to accidentally use in the assembly.
+
+15. Extrude the top tube shape. Make sure to use the "Up to Face" setting to extrude the tube parametrically to the reference plate.
+
+16. Use Tube Converter on this new tube.
+
+17. Make a sketch on top of the 1x1 tube, again making sure to disable imprinting. Sketch the plate as shown.
+
+18. Use the `Belt & Chain Gen` Featurescript to make a belt between the motor and wheel holes. Pay close attention to the starting offset and the construction circles you select.
+
+19. Create the wheel shaft using the Robot Shaft Featurescript. The start mate connector should be placed in the middle of the belt and run up to the left face of the reference plate. The shaft should be offset from the end by 1/16" to account for the bearing flange. The shaft should also have a starting offset of 9/32" to put it through the wheel pulley.
+
+20. Now that our parts are all done, we can pocket the side plate. Create a sketch on the Right side of the plate, and draw the rib lines. The top left line is dimensioned away from the top bolt holes.
+
+21. Use the Part Lighten Featurescript to pocket the plate. Select the face of the plate, and the entire rib line sketch as shown.
+
+22. Make sure to organize your part studio features into appropriate folders.
+
+</Slides>
 
 ## Assembly Instructions
 
 **Next, navigate to the "Exercise #1 Assembly" tab** in your copied document and **follow the instructions in the slides** to complete this exercise.
 
 <Slides images={[
-  { src: "/learning-course/stage1/1c/flat-intake/assy-0.webp", caption: "0. Final assembly." },
-  { src: "https://www.youtube.com/embed/H6y1S_cHLKk", caption: "1. Insert the part studio and delete the reference plate. Group all of these components together, and fasten the origin cube to the assembly origin" },
-  { src: "https://www.youtube.com/embed/_CIzPllEGyU", caption: "2. Use the Assembly Mirror tool to copy the bottom tube and plate over to the other side. You can use a mate connector in the middle of the origin cube's edge as a mirror plane" },
-  { src: "https://www.youtube.com/embed/pz9FJVzkWjg", caption: "3. Insert 2x1 Tube plugs with a the 1/16\" Sleeve to fit the top tube. Mate these tube plugs to the ends of the top tube." },
-  { src: "https://www.youtube.com/embed/aNM9l2OV1fY", caption: "4. Insert the motor, pulley and shaft spacers. Assemble the motor shaft parts together and mate it to the side plate on the Right side." },
-  { src: "https://www.youtube.com/embed/iQ3y-yqWeA4", caption: "5. Insert two hex bearings for the wheel shaft and mate them to the plates." },
-  { src: "https://www.youtube.com/embed/RMAst7Xcz4Y", caption: "6. Insert a 1\" Hex Spacer and a 2\" Compliant wheel. Mate them together, and then to the right bearing. Use a Linear Pattern to copy the wheel and spacer across the shaft. Put a final 1/2\" Spacer at the end of the wheels to fully constrain them." },
-  { src: "https://www.youtube.com/embed/xrIZ7Ph1DAo", caption: "7. Insert shaft end screws and mate one to each side of the wheel shaft." },
-  { src: "https://www.youtube.com/embed/quIf3misSe4", caption: "8. Use nuts, bolts and rivets to fasten the structure pieces together. You can make use of assembly mirror to speed up the process since the fasteners are mostly symmetrical." },
-  { src: "/learning-course/stage1/1c/flat-intake/assy-0.webp", caption: "9. Finish your assembly by organizing the parts into folders and naming your replicates." }
-]} />
+  { src: "/learning-course/stage1/1c/flat-intake/assy-0.webp" },
+  { src: "https://www.youtube.com/embed/H6y1S_cHLKk" },
+  { src: "https://www.youtube.com/embed/_CIzPllEGyU" },
+  { src: "https://www.youtube.com/embed/pz9FJVzkWjg" },
+  { src: "https://www.youtube.com/embed/aNM9l2OV1fY" },
+  { src: "https://www.youtube.com/embed/iQ3y-yqWeA4" },
+  { src: "https://www.youtube.com/embed/RMAst7Xcz4Y" },
+  { src: "https://www.youtube.com/embed/xrIZ7Ph1DAo" },
+  { src: "https://www.youtube.com/embed/quIf3misSe4" },
+  { src: "/learning-course/stage1/1c/flat-intake/assy-0.webp" }
+]}>
+
+0. Final assembly.
+
+1. Insert the part studio and delete the reference plate. Group all of these components together, and fasten the origin cube to the assembly origin
+
+2. Use the Assembly Mirror tool to copy the bottom tube and plate over to the other side. You can use a mate connector in the middle of the origin cube's edge as a mirror plane
+
+3. Insert 2x1 Tube plugs with a the 1/16" Sleeve to fit the top tube. Mate these tube plugs to the ends of the top tube.
+
+4. Insert the motor, pulley and shaft spacers. Assemble the motor shaft parts together and mate it to the side plate on the Right side.
+
+5. Insert two hex bearings for the wheel shaft and mate them to the plates.
+
+6. Insert a 1" Hex Spacer and a 2" Compliant wheel. Mate them together, and then to the right bearing. Use a Linear Pattern to copy the wheel and spacer across the shaft. Put a final 1/2" Spacer at the end of the wheels to fully constrain them.
+
+7. Insert shaft end screws and mate one to each side of the wheel shaft.
+
+8. Use nuts, bolts and rivets to fasten the structure pieces together. You can make use of assembly mirror to speed up the process since the fasteners are mostly symmetrical.
+
+9. Finish your assembly by organizing the parts into folders and naming your replicates.
+
+</Slides>
 
 <Aside type="tip" title="Verification">
 Make sure to have you and/or a more experienced member/mentor of your team [**review your CAD!**](/learning-course/stage1/1a/focusing-on-improvement)

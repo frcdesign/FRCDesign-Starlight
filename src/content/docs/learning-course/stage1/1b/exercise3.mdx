@@ -5,7 +5,6 @@ description: Model a gear and belt gearbox
 
 import Aside from '../../../../../components/Aside.astro';
 import Slides from '../../../../../components/Slides.astro';
-import YouTube from '../../../../../components/YouTube.astro';
 
 ## Exercise 3: Belt and Gear Transmission
 
@@ -21,67 +20,99 @@ Always make sure to fully **define** your sketches, **rename** your features, an
 
 <Slides
   images={[
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-0.webp", caption: "0. Final part studio." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-1.webp", caption: "1. Begin by using the Origin Cube feature (so the belt functions can be used later). Then draw the tube profiles for the frame. There is a an 1/8\" gap between the slanted tube and the vertical tube to allow for assembly tolerances." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-2.webp", caption: "2. Use the Extrude Individual Featurescript to extrude the tube profiles." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-3.webp", caption: "3. Use the Tube Converter Featurescript to convert the rectangles into hole patterned 1x1 thin-wall tube (1/16\" thick wall)." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-4.webp", caption: "4. Sketch a simple L gusset" },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-5.webp", caption: "5. Extrude the gusset" },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-6.webp", caption: "6. Create the gearbox layout sketch on the outer face of the bottom tube. Begin by drawing the two gears, a 60T and 20T gear. The 60T gear is the output, and we would like to constrain it to a specific location given by the 2\" and 4.5\" dimensions." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-7.webp", caption: "7. Next, draw the 5mm pitch 12T and 36T pulleys. Use a line to connect the two pulleys. Use the #PulleyPD_5mm() function from the Origin Cube featurescript you inserted at the beginning to calculate the pitch diameters of the pulleys. Also space the 36T pulley to be 0.25\" from the vertical tube. This step fully constrains the location of the gears." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-8.webp", caption: "8. Add the belt c-c to the layout sketch for a 60T HTD5 belt using the #BeltCTC_5mm() function." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-9.webp", caption: "9. Optionally draw two tangent lines to connect the two pulley circles. This represents the belt." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-10.webp", caption: "10. Finally, sketch a 2.5\" circle for the motor. Space the motor to be 1/8\" away from the slanted tube. The layout sketch is now fully defined." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-11.webp", caption: "11. Create the plate sketch on the outer face of the bottom tube. Begin by drawing the two 1.125\" diameter bearing holes. Add a 1.5\" hole for the motor boss so that the 12T pulley on the motor can fit through the hole to assist with real life assembly. This will become more clear when you create the gearbox assembly." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-12.webp", caption: "12. Add a 2\" bolt circle for the motor with a circular pattern. Constrain the center of the top left hole to be coincident with the center line between the pulleys (coincident uses an infinite extension of the line)" },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-13.webp", caption: "13. Add the tube mounting holes for the plate. Note that the holes reference the edges of the tube and not the holes on the tube. This is to make the model more parametric, as changes in the tube can change the locations of the holes and break the gearbox plate sketch." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-14.webp", caption: "14. Draw the outline for the plate using centerpoint arcs and tangent lines. Space the bottom of the plate 0.25\" from the edge of the pitch circle for the 60T gear." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-15.webp", caption: "15. Add two holes for spacers. The construction circles represent the 3/8\" diameter spacer. The top hole is tangent with the left edge of the plate and tangent with the 2.5\" motor circle." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-16.webp", caption: "16. Extrude the plate to be 1/4\" thick." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-17.webp", caption: "17. On the opposite side, create a sketch for the inner plate. Utilize the Use sketch feature to copy over common geometry (holes, outline). Do not copy the motor holes, as there will be a cutout on the inner plate for the body of the motor." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-18.webp", caption: "18. Finish the outline of the plate by adding an arc for the motor cutout." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-19.webp", caption: "19. Extrude the inner plate to be 1/4\" thick." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-20.webp", caption: "20. Add a 3/16\" radius fillet on the two edges for the motor cutout. The radius is selected to match the 3/8\" diameter spacer." },
-    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-21.webp", caption: "21. Model the 3/8\" diameter spacer. The Up to Face end condition can be utilized to keep the spacer length parametric." }
-  ]}
-/>
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-0.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-1.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-2.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-3.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-4.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-5.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-6.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-7.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-8.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-9.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-10.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-11.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-12.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-13.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-14.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-15.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-16.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-17.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-18.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-19.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-20.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-21.webp" },
+    { src: "https://www.youtube.com/embed/UBT5AGqBYW4" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-23.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-24.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-25.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-26.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-27.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-28.webp" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/parts-0.webp" },
+  ]}>
 
-<YouTube id="UBT5AGqBYW4" caption='22. Use the Belt & Chain Gen Featurescript to create a model of the belt. The pitch of the belt is 5mm and the width is 9mm. Offset the reference plane by 0.5" so that the belt does not collide with the plate. Keep the belt simplified, as turning on teeth modeling will slow down the part studio. Notice that the Belt & Chain Gen Featurescript also calculates the pitch length of the belt which allows us to verify that we calculated the correct C-C in step 7 and 8.' />
+0. Final part studio.
 
-<figure>
-  <img src="/learning-course/stage1/1b/exercises/exercise3/parts-23.webp" style="width:100%" alt="First stage shaft" />
-  <figcaption>23. Use the Robot Shaft Featurescript to create the 1st stage shaft.</figcaption>
-</figure>
+1. Begin by using the Origin Cube feature (so the belt functions can be used later). Then draw the tube profiles for the frame. There is a an 1/8" gap between the slanted tube and the vertical tube to allow for assembly tolerances.
 
-<figure>
-  <img src="/learning-course/stage1/1b/exercises/exercise3/parts-24.webp" style="width:100%" alt="Output shaft" />
-  <figcaption>24. Use the Robot Shaft Featurescript to create the output shaft.</figcaption>
-</figure>
+2. Use the Extrude Individual Featurescript to extrude the tube profiles.
 
-<figure>
-  <img src="/learning-course/stage1/1b/exercises/exercise3/parts-25.webp" style="width:100%" alt="Pocketing sketch" />
-  <figcaption>25. Optionally pocket the plates. To begin, create a sketch on the outer face of the motor plate and draw lines to create the struts.</figcaption>
-</figure>
+3. Use the Tube Converter Featurescript to convert the rectangles into hole patterned 1x1 thin-wall tube (1/16" thick wall).
 
-<figure>
-  <img src="/learning-course/stage1/1b/exercises/exercise3/parts-26.webp" style="width:100%" alt="Part lighten motor plate" />
-  <figcaption>26. Use the Part Lighten Featurescript to add the pocketing by selecting the previous sketch. Use 0.15" wide ribs and 0.26" tool diameter.</figcaption>
-</figure>
+4. Sketch a simple L gusset
 
-<figure>
-  <img src="/learning-course/stage1/1b/exercises/exercise3/parts-27.webp" style="width:100%" alt="Inner plate pocketing sketch" />
-  <figcaption>27. Create a sketch on the inner plate and draw the strut lines. You can utilize the Use sketch feature to copy over strut lines from the motor plate pocketing sketch.</figcaption>
-</figure>
+5. Extrude the gusset
 
-<figure>
-  <img src="/learning-course/stage1/1b/exercises/exercise3/parts-28.webp" style="width:100%" alt="Part lighten inner plate" />
-  <figcaption>28. Use the Part Lighten Featurescript to add the pocketing by selecting the previous sketch. Again, use 0.15" wide ribs and 0.26" tool diameter.</figcaption>
-</figure>
+6. Create the gearbox layout sketch on the outer face of the bottom tube. Begin by drawing the two gears, a 60T and 20T gear. The 60T gear is the output, and we would like to constrain it to a specific location given by the 2" and 4.5" dimensions.
 
-<figure>
-  <img src="/learning-course/stage1/1b/exercises/exercise3/parts-0.webp" style="width:100%" alt="Finished part studio" />
-  <figcaption>29. Finished part studio. Name the key sketches and parts. Set the material of the plate and spacers to 6061 Aluminum. The tube, gusset, and shafts should have their material automatically set already.</figcaption>
-</figure>
+7. Next, draw the 5mm pitch 12T and 36T pulleys. Use a line to connect the two pulleys. Use the #PulleyPD_5mm() function from the Origin Cube featurescript you inserted at the beginning to calculate the pitch diameters of the pulleys. Also space the 36T pulley to be 0.25" from the vertical tube. This step fully constrains the location of the gears.
+
+8. Add the belt c-c to the layout sketch for a 60T HTD5 belt using the #BeltCTC_5mm() function.
+
+9. Optionally draw two tangent lines to connect the two pulley circles. This represents the belt.
+
+10. Finally, sketch a 2.5" circle for the motor. Space the motor to be 1/8" away from the slanted tube. The layout sketch is now fully defined.
+
+11. Create the plate sketch on the outer face of the bottom tube. Begin by drawing the two 1.125" diameter bearing holes. Add a 1.5" hole for the motor boss so that the 12T pulley on the motor can fit through the hole to assist with real life assembly. This will become more clear when you create the gearbox assembly.
+
+12. Add a 2" bolt circle for the motor with a circular pattern. Constrain the center of the top left hole to be coincident with the center line between the pulleys (coincident uses an infinite extension of the line)
+
+13. Add the tube mounting holes for the plate. Note that the holes reference the edges of the tube and not the holes on the tube. This is to make the model more parametric, as changes in the tube can change the locations of the holes and break the gearbox plate sketch.
+
+14. Draw the outline for the plate using centerpoint arcs and tangent lines. Space the bottom of the plate 0.25" from the edge of the pitch circle for the 60T gear.
+
+15. Add two holes for spacers. The construction circles represent the 3/8" diameter spacer. The top hole is tangent with the left edge of the plate and tangent with the 2.5" motor circle.
+
+16. Extrude the plate to be 1/4" thick.
+
+17. On the opposite side, create a sketch for the inner plate. Utilize the Use sketch feature to copy over common geometry (holes, outline). Do not copy the motor holes, as there will be a cutout on the inner plate for the body of the motor.
+
+18. Finish the outline of the plate by adding an arc for the motor cutout.
+
+19. Extrude the inner plate to be 1/4" thick.
+
+20. Add a 3/16" radius fillet on the two edges for the motor cutout. The radius is selected to match the 3/8" diameter spacer.
+
+21. Model the 3/8" diameter spacer. The Up to Face end condition can be utilized to keep the spacer length parametric.
+
+22. Use the Belt & Chain Gen Featurescript to create a model of the belt. The pitch of the belt is 5mm and the width is 9mm. Offset the reference plane by 0.5" so that the belt does not collide with the plate. Keep the belt simplified, as turning on teeth modeling will slow down the part studio. Notice that the Belt & Chain Gen Featurescript also calculates the pitch length of the belt which allows us to verify that we calculated the correct C-C in step 7 and 8.
+
+23. Use the Robot Shaft Featurescript to create the 1st stage shaft.
+
+24. Use the Robot Shaft Featurescript to create the output shaft.
+
+25. Optionally pocket the plates. To begin, create a sketch on the outer face of the motor plate and draw lines to create the struts.
+
+26. Use the Part Lighten Featurescript to add the pocketing by selecting the previous sketch. Use 0.15" wide ribs and 0.26" tool diameter.
+
+27. Create a sketch on the inner plate and draw the strut lines. You can utilize the Use sketch feature to copy over strut lines from the motor plate pocketing sketch.
+
+28. Use the Part Lighten Featurescript to add the pocketing by selecting the previous sketch. Again, use 0.15" wide ribs and 0.26" tool diameter.
+
+29. Finished part studio. Name the key sketches and parts. Set the material of the plate and spacers to 6061 Aluminum. The tube, gusset, and shafts should have their material automatically set already.
+
+</Slides>
 
 ### Assembly Instructions
 
@@ -89,28 +120,36 @@ Now that you've completed the part studio, **navigate to the "Exercise #3 Assemb
 
 <Slides
   images={[
-    { src: "/learning-course/stage1/1b/exercises/exercise3/assy-0.webp", caption: "0. Final assembly." }
-  ]}
-/>
+    { src: "/learning-course/stage1/1b/exercises/exercise3/assy-0.webp" },
+    { src: "https://www.youtube.com/embed/DdvX_09Hd20" },
+    { src: "https://www.youtube.com/embed/Rait0iVbiD0" },
+    { src: "https://www.youtube.com/embed/3rhXrBgWlng" },
+    { src: "https://www.youtube.com/embed/j-Tofk8_Nfs" },
+    { src: "https://www.youtube.com/embed/0yfIqvglCHw" },
+    { src: "https://www.youtube.com/embed/h7ABxpXyMbY" },
+    { src: "https://www.youtube.com/embed/fd56NxBZHd8" },
+    { src: "/learning-course/stage1/1b/exercises/exercise3/assy-0.webp" },
+  ]}>
 
-<YouTube id="DdvX_09Hd20" caption="1. Insert the part studio into the assembly and fix only the bottom tube. Use the group mate on the tubes, plates, and gusset. Copy the gusset and mate it to the other side of the tube. Next, mate the spacer to the plate and use the Replicate tool to replicate the spacer." />
+0. Final assembly.
 
-<YouTube id="Rait0iVbiD0" caption="2. Assemble the bearings and shafts using parts from FRCDesignLib. Use the Replicate tool to replicate the bearing." />
+1. Insert the part studio into the assembly and fix only the bottom tube. Use the group mate on the tubes, plates, and gusset. Copy the gusset and mate it to the other side of the tube. Next, mate the spacer to the plate and use the Replicate tool to replicate the spacer.
 
-<YouTube id="3rhXrBgWlng" caption='3. Assemble the 36T pulley, belt, motor, and motor pinion pulley using parts from FRCDesignLib. Notice that the motor pinion is offset 1/16" from the bottom of the shaft to better align with the belt. Additionally, notice that the belt requires only a single fasten mate since its orientation was determined by how it was modeled in the part studio.' />
+2. Assemble the bearings and shafts using parts from FRCDesignLib. Use the Replicate tool to replicate the bearing.
 
-<YouTube id="j-Tofk8_Nfs" caption="4. Assemble the shaft spacers and gears using parts from FRCDesignLib. Notice that this time we used a pocketed gear for the 60T gear. Pocketed gears are the same as normal gears except they have some material removed to save weight." />
+3. Assemble the 36T pulley, belt, motor, and motor pinion pulley using parts from FRCDesignLib. Notice that the motor pinion is offset 1/16" from the bottom of the shaft to better align with the belt. Additionally, notice that the belt requires only a single fasten mate since its orientation was determined by how it was modeled in the part studio.
 
-<YouTube id="0yfIqvglCHw" caption="5. Assemble the shaft retention bolts using FRCDesignLib parts." />
+4. Assemble the shaft spacers and gears using parts from FRCDesignLib. Notice that this time we used a pocketed gear for the 60T gear. Pocketed gears are the same as normal gears except they have some material removed to save weight.
 
-<YouTube id="h7ABxpXyMbY" caption="6. Assemble the motor bolts, gearbox bolts, and nuts using FRCDesignLib parts" />
+5. Assemble the shaft retention bolts using FRCDesignLib parts.
 
-<YouTube id="fd56NxBZHd8" caption="7. Assemble the gusset rivets using FRCDesignLib parts." />
+6. Assemble the motor bolts, gearbox bolts, and nuts using FRCDesignLib parts
 
-<figure>
-  <img src="/learning-course/stage1/1b/exercises/exercise3/assy-0.webp" style="width:100%" alt="Finished assembly" />
-  <figcaption>8. Finished assembly. Make sure to sort your parts into folders and name your replicate features.</figcaption>
-</figure>
+7. Assemble the gusset rivets using FRCDesignLib parts.
+
+8. Finished assembly. Make sure to sort your parts into folders and name your replicate features.
+
+</Slides>
 
 <Aside type="tip" title="Verification">
 Make sure to have you and/or a more experienced member/mentor of your team [**review your CAD!**](/learning-course/stage1/1a/focusing-on-improvement) Your assembly should have 31 instances.

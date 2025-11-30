@@ -7,7 +7,7 @@ description: The style guide for contribution according to the goals of the webs
 
 ## Futureproofing and Usefulness
 
-To make the content you write useful for teams of all resource levels, while maintaining validity in the future, the goal isn't to go broad and shallow, but to go extra deep to equip students with the understanding of the underlying fundamentals behind concepts to apply to their own unique situations. Pros and cons are context dependent while fundamentals are universal.
+To make the content you write useful for teams of all resource levels, while maintaining validity in the future, the goal isn't to go broad and shallow, but rather to go extra deep so you can equip students with the understanding of the underlying fundamentals behind concepts which they can then apply to their own unique situations. Pros and cons are context dependent while fundamentals are universal.
 
 At the same time, things that aren't easily accessible and/or commonly used by teams, like billet chassis and ball drive, shouldn't be included to prevent confusion.
 
@@ -56,15 +56,15 @@ Keep in mind that FRC design trends are temporary and transient.
 ### File Formats:
 
 - Compress images to .webp format using [squoosh](https://squoosh.app/)
-- Embed longer videos using a YouTube embed, and shorter videos with a webm file
+- Embed longer videos using the YouTube component, and shorter videos with a webm file
 - Add images by using `<center><img src="/path/to/image.webp" width="x%" /></center>`
 
 ### Brand Standards
 
 Adhere to brand standards when possible.
 
-- Abide by FIRST® Trademark guidelines, available [here](https://www.firstinspires.org/sites/default/files/uploads/resource_library/UseofUSFIRSTandLEGOGroupTrademarksandCopyrightedMaterials.pdf)
-- The first instance of *FIRST* and FRC on a page should include ® (i.e, FIRST®)
+- Abide by *FIRST* Trademark guidelines, available [here](https://www.firstinspires.org/sites/default/files/uploads/resource_library/UseofUSFIRSTandLEGOGroupTrademarksandCopyrightedMaterials.pdf)
+- The first instance of *FIRST* and FRC on a page should include the registered trademark symbol (i.e, *FIRST*)
 - Always capitalize and italicize the name *FIRST*
 - Do NOT use a possessive on the *FIRST* name (e.g, FIRST's)
 - This also applies to team names: spell them how they are officially spelled
@@ -75,5 +75,10 @@ You can use "you" when writing, when it makes writing less awkward. However, try
 ### Links:
 
 - External links should generally open in a new tab
-- Links to CAD documents should use the LinkButton component
-- Internal links should use relative paths
+- Links to CAD documents should use the LinkButton component:
+  ```mdx
+  import LinkButton from '../../../components/LinkButton.astro';
+
+  <LinkButton href="https://cad.onshape.com/..." variant="primary">CAD Link</LinkButton>
+  ```
+- Internal links should use relative paths: `[Link Text](/path/to/page)`
