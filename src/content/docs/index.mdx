@@ -1,40 +1,50 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: Welcome to FRCDesign.org
+description: A comprehensive learning guide and technical reference for FRC design using Onshape
 template: splash # Remove or comment out this line to display the site sidebar on this page.
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: The comprehensive learning guide and technical reference for FRC design using Onshape
   image:
-    file: ../../assets/houston.webp
+    dark: ../../assets/home/tilt-book-white.png
+    light: ../../assets/home/tilt-book-green.png
   actions:
-    - text: Example Guide
+    - text: Start Learning
       link: /guides/example/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
+
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
-
-## Next steps
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a
-		sidebar on this page.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+	<LinkCard
+		title="Website Feature Guide"  
+		href="/feature-guide/"
+		description="Explains the main features of the website. Recommended to go through before the learning course."
+	/>
+	<LinkCard
+		title="Learning Course"
+		href="/learning-course/"
+		description="A guided curriculum through learning Onshape applied to robot design fundamentals. Looking to learn FRC robot design and CAD skills? Start here."
+	/>
+	<LinkCard
+		title="Design Handbook"
+		href="/design-handbook/"
+		description="Dives into the concepts necessary in order to design a competitive robot. Unlike the learning course, this is primarily a reference wiki."
+	/>
+	<LinkCard
+		title="Mechanism Examples"
+		href="/mechanism-examples/"
+		description="Unlike other mechanism example collections, these are hand picked for specific concepts with detailed breakdowns behind each design."
+	/>
+	<LinkCard
+		title="CAD Best Practices"
+		href="/best-practices/"
+		description="A reference for best practices to follow when you're modeling a robot in Onshape."
+	/>
+	<LinkCard
+		title="Other Resources"
+		href="/other-resources/"
+		description="Besides the other content on the website, we have a nice collection of resources (e.g. featurescripts and models)."
+	/>
 </CardGrid>

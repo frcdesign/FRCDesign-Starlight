@@ -1,0 +1,492 @@
+---
+import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
+import Search from "@astrojs/starlight/components/Search.astro";
+
+import ThemeLightIcon from "../assets/header/theme-light.svg";
+import ThemeLightFilledIcon from "../assets/header/theme-light-filled.svg";
+import GitIcon from "../assets/header/git-white.svg";
+
+const props = Astro.props;
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/feature-guide/", label: "Website Feature Guide" },
+  { href: "/learning-course/", label: "Learning Course" },
+  { href: "/educators-guide/", label: "Educator's Guide" },
+  { href: "/design-handbook/", label: "Design Handbook" },
+  { href: "/mechanism-examples/", label: "Mechanism Examples" },
+  { href: "/best-practices/", label: "Best Practices" },
+  { href: "/other-resources/", label: "Other Resources" },
+  { href: "/changelog/", label: "Changelog" },
+  { href: "/contribution/", label: "Contribution" },
+];
+---
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="header-top-row">
+      <div class="header-logo-section">
+        <SiteTitle {...props} />
+      </div>
+
+      <button
+        type="button"
+        class="mobile-menu-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        data-mobile-menu-toggle
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <div class="header-actions-section">
+        <div class="theme-toggle-wrapper">
+          <button
+            type="button"
+            class="theme-toggle-button"
+            data-theme-toggle
+            aria-label="Toggle dark / light theme"
+          >
+            <ThemeLightIcon class="theme-icon theme-icon-outline" />
+            <ThemeLightFilledIcon class="theme-icon theme-icon-filled" />
+          </button>
+        </div>
+
+        <div class="search-wrapper">
+          <Search {...props} />
+        </div>
+
+        <a
+          href="https://github.com/frcdesign/FRCDesign.org"
+          class="github-link"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Open FRCDesign.org on GitHub"
+        >
+          <GitIcon class="github-icon" />
+        </a>
+      </div>
+    </div>
+
+    <nav class="navigation-row" aria-label="Primary">
+      <div class="primary-navigation">
+        {navLinks.map((item) => <a href={item.href}>{item.label}</a>)}
+      </div>
+    </nav>
+
+    <nav class="mobile-navigation" aria-label="Primary" data-mobile-menu>
+      <div class="mobile-navigation-inner">
+        {navLinks.map((item) => (
+          <a href={item.href} class="mobile-nav-link">{item.label}</a>
+        ))}
+      </div>
+    </nav>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const storageKey = "starlight-theme";
+
+      const getStoredTheme = () => {
+        try {
+          return localStorage.getItem(storageKey);
+        } catch {
+          return null;
+        }
+      };
+
+      const setStoredTheme = (value) => {
+        try {
+          localStorage.setItem(storageKey, value);
+        } catch {
+        }
+      };
+
+      const applyTheme = (theme) => {
+        const html = document.documentElement;
+        const normalized = theme === "light" ? "light" : "dark";
+
+        html.dataset.theme = normalized;
+        setStoredTheme(normalized);
+
+        if (window.StarlightThemeProvider?.updatePickers) {
+          window.StarlightThemeProvider.updatePickers(normalized);
+        }
+      };
+
+      const initMobileMenu = () => {
+        const toggle = document.querySelector("[data-mobile-menu-toggle]");
+        const menu = document.querySelector("[data-mobile-menu]");
+
+        if (!toggle || !menu) return;
+
+        toggle.addEventListener("click", () => {
+          const isOpen = toggle.getAttribute("aria-expanded") === "true";
+          const newState = !isOpen;
+
+          toggle.setAttribute("aria-expanded", newState.toString());
+
+          if (newState) {
+            menu.setAttribute("data-mobile-menu-open", "true");
+          } else {
+            menu.removeAttribute("data-mobile-menu-open");
+          }
+        });
+
+        // Close menu when clicking on a link
+        const mobileLinks = menu.querySelectorAll(".mobile-nav-link");
+        mobileLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            toggle.setAttribute("aria-expanded", "false");
+            menu.removeAttribute("data-mobile-menu-open");
+          });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener("click", (e) => {
+          if (
+            !toggle.contains(e.target) &&
+            !menu.contains(e.target) &&
+            toggle.getAttribute("aria-expanded") === "true"
+          ) {
+            toggle.setAttribute("aria-expanded", "false");
+            menu.removeAttribute("data-mobile-menu-open");
+          }
+        });
+      };
+
+      const init = () => {
+        let theme = getStoredTheme();
+
+        if (!theme) {
+          theme = "dark";
+        }
+        applyTheme(theme);
+
+        document.querySelectorAll("[data-theme-toggle]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const current = getStoredTheme() || "dark";
+            const next = current === "dark" ? "light" : "dark";
+            applyTheme(next);
+          });
+        });
+
+        initMobileMenu();
+      };
+
+      if (
+        document.readyState === "complete" ||
+        document.readyState === "interactive"
+      ) {
+        init();
+      } else {
+        document.addEventListener("DOMContentLoaded", init);
+      }
+    })();
+  </script>
+</header>
+
+<style>
+  .site-header {
+    background: #43a047;
+    color: #ffffff;
+    border-bottom: 1px solid #2e7d32;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+  }
+
+  .site-header-inner {
+    max-width: var(--sl-content-width, 1200px);
+    margin: 0 auto;
+    padding: 0.4rem 1.5rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .header-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .header-logo-section {
+    flex: 0 0 auto;
+  }
+
+  .header-actions-section {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+
+  .theme-toggle-wrapper {
+    flex: 0 0 auto;
+  }
+
+  .theme-toggle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .theme-toggle-button:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.9);
+    outline-offset: 2px;
+  }
+
+  .theme-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .theme-icon-filled {
+    display: none;
+  }
+
+  html[data-theme="light"] .theme-icon-outline {
+    display: none;
+  }
+  html[data-theme="light"] .theme-icon-filled {
+    display: block;
+  }
+
+  .search-wrapper {
+    flex: 0 0 18rem;
+    max-width: 100%;
+  }
+
+  .search-wrapper :global(button[data-open-modal]) {
+    width: 100%;
+    background-color: #2f6b36 !important;
+    border-radius: 4px;
+    border: none;
+    box-shadow: none;
+    color: #ffffff;
+    padding-inline: 1rem;
+  }
+
+  .search-wrapper :global(button[data-open-modal] *) {
+    color: inherit;
+  }
+
+  .search-wrapper :global(button[data-open-modal]:hover),
+  .search-wrapper :global(button[data-open-modal]:focus-visible) {
+    background-color: #285b2f !important;
+  }
+
+  .search-wrapper :global(button[data-open-modal] kbd) {
+    display: none !important;
+  }
+
+  .github-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    text-decoration: none;
+  }
+
+  .github-link:hover,
+  .github-link:focus-visible {
+    background: rgba(255, 255, 255, 0.28);
+    outline: none;
+  }
+
+  .github-icon {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+  }
+
+  .mobile-navigation {
+    display: none;
+  }
+
+  .navigation-row {
+    padding-top: 0.5rem;
+  }
+
+  .primary-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  .primary-navigation a {
+    font-family: "Author-Bold", var(--sl-font), system-ui, sans-serif;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    padding-bottom: 0.25rem;
+    border-bottom: 2px solid transparent;
+  }
+
+  .primary-navigation a:hover,
+  .primary-navigation a:focus-visible {
+    border-bottom-color: #ffffff;
+  }
+
+  @media (max-width: 1350px) {
+    .site-header-inner {
+      padding: 0.4rem 1rem;
+    }
+
+    .header-top-row {
+      gap: 0.75rem;
+    }
+
+    .mobile-menu-toggle {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      margin: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      gap: 6px;
+      z-index: 1001;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      overflow: visible;
+      position: relative;
+    }
+
+    .mobile-menu-toggle:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.9);
+      outline-offset: 2px;
+    }
+
+    .hamburger-line {
+      width: 22px;
+      height: 3px;
+      background-color: #ffffff;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      transform-origin: center;
+      position: absolute;
+      left: 50%;
+      margin-left: -11px;
+    }
+
+    .hamburger-line:nth-child(1) {
+      top: 11px;
+    }
+
+    .hamburger-line:nth-child(2) {
+      top: 50%;
+      margin-top: -1.5px;
+    }
+
+    .hamburger-line:nth-child(3) {
+      bottom: 11px;
+    }
+
+    .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(1) {
+      top: 50%;
+      margin-top: -1.5px;
+      transform: rotate(45deg);
+    }
+
+    .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(2) {
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .mobile-menu-toggle[aria-expanded="true"] .hamburger-line:nth-child(3) {
+      bottom: auto;
+      top: 50%;
+      margin-top: -1.5px;
+      transform: rotate(-45deg);
+    }
+
+    .header-actions-section {
+      gap: 0.5rem;
+    }
+
+    .search-wrapper {
+      flex: 1 1 auto;
+      min-width: 0;
+      max-width: 200px;
+    }
+
+    .github-link {
+      display: none;
+    }
+
+    .navigation-row {
+      display: none;
+    }
+
+    .mobile-navigation {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #43a047;
+      border-top: 1px solid #2e7d32;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      z-index: 1000;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      box-sizing: border-box;
+    }
+
+    .mobile-navigation[data-mobile-menu-open] {
+      max-height: 800px;
+    }
+
+    .mobile-navigation-inner {
+      padding: 1rem 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mobile-nav-link {
+      font-family: "Author-Bold", var(--sl-font), system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.5rem 0;
+      border-bottom: 2px solid transparent;
+      transition: border-bottom-color 0.2s ease;
+    }
+
+    .mobile-nav-link:hover,
+    .mobile-nav-link:focus-visible {
+      border-bottom-color: #ffffff;
+    }
+  }
+</style>

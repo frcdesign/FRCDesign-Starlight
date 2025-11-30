@@ -1,0 +1,235 @@
+---
+import fabworksBlack from '../assets/footer/fabworks-black.svg';
+import fabworksWhite from '../assets/footer/fabworks-white.svg';
+import wcpLogo from '../assets/footer/wcp.svg';
+import Pagination from 'virtual:starlight/components/Pagination';
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/website-feature-guide', label: 'Website Feature Guide' },
+  { href: '/learning-course', label: 'Learning Course' },
+  { href: '/educators-guide', label: "Educator's Guide" },
+  { href: '/design-handbook', label: 'Design Handbook' },
+  { href: '/mechanism-examples', label: 'Mechanism Examples' },
+  { href: '/best-practices', label: 'Best Practices' },
+  { href: '/other-resources', label: 'Other Resources' },
+  { href: '/changelog', label: 'Changelog' },
+  { href: '/contribution', label: 'Contribution' },
+];
+---
+
+<footer class="site-footer">
+  <!-- Pagination Navigation -->
+  <div class="pagination-wrapper">
+    <Pagination />
+  </div>
+
+  <div class="site-footer-inner">
+    <!-- Top: site links -->
+    <div class="footer-links">
+      <h2 class="footer-links-title">Site Links</h2>
+
+      <nav aria-label="Site links">
+        <ul class="footer-links-grid">
+          {navLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Horizontal line between links and sponsors -->
+    <hr class="footer-divider" />
+
+    <!-- Bottom: sponsors -->
+    <div class="footer-sponsors">
+      <p class="footer-powered-label">Powered by:</p>
+
+      <div class="footer-sponsor-row">
+        <!-- WCP logo / link -->
+        <a
+          href="https://wcproducts.com/"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="West Coast Products"
+          class="footer-logo-link"
+        >
+          <img
+            src={wcpLogo.src}
+            alt="West Coast Products"
+            class="footer-logo footer-logo-wcp"
+            loading="lazy"
+          />
+        </a>
+
+        <span class="footer-sponsor-separator" aria-hidden="true"></span>
+
+        <!-- Fabworks logo / link -->
+        <a
+          href="https://go.fabworks.com/frcdesign"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Fabworks"
+          class="footer-logo-link"
+        >
+          <img
+            src={fabworksBlack.src}
+            alt="Fabworks"
+            class="footer-logo fabworks-logo fabworks-logo-light"
+            loading="lazy"
+          />
+          <img
+            src={fabworksWhite.src}
+            alt="Fabworks"
+            class="footer-logo fabworks-logo fabworks-logo-dark"
+            loading="lazy"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 4rem;
+    padding: 0 0 2.5rem;
+    background: var(--sl-color-bg);
+  }
+
+  .pagination-wrapper {
+    max-width: var(--sl-content-width, 72rem);
+    margin: 0 auto 2rem;
+    padding: 0 2rem;
+  }
+
+  .pagination-wrapper :global(nav) {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--sl-color-gray-6);
+  }
+
+  .site-footer-inner {
+    max-width: var(--sl-content-width, 72rem);
+    margin: 0 auto;
+    padding: 2rem 2rem 0;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm, 0.875rem);
+    border-top: 1px solid var(--sl-color-gray-6);
+  }
+
+  /* Top section: links */
+
+  .footer-links-title {
+    margin: 0 0 1rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sl-color-gray-3);
+  }
+
+  .footer-links-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.45rem 3rem;
+  }
+
+  .footer-links-grid a {
+    text-decoration: none;
+    color: var(--sl-color-gray-1);
+  }
+
+  .footer-links-grid a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-divider {
+    margin: 2rem 0 1.75rem;
+    border: 0;
+    border-top: 1px solid var(--sl-color-gray-7);
+  }
+
+  /* Bottom section: sponsors */
+
+  .footer-sponsors {
+    text-align: center;
+  }
+
+  .footer-powered-label {
+    margin: 0 0 0.75rem;
+    font-size: 0.95rem;      /* bumped up a bit */
+    font-weight: 600;        /* “author bold” vibe */
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sl-color-gray-2);
+  }
+
+  .footer-sponsor-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .footer-logo {
+    height: 32px;
+    width: auto;
+    display: block;
+    filter: grayscale(0.15);
+  }
+
+  /* WCP 50% bigger */
+  .footer-logo-wcp {
+    height: 54px;
+  }
+
+  .footer-logo-link {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .footer-sponsor-separator {
+    width: 1px;
+    height: 40px;
+    background: var(--sl-color-gray-7);
+    display: inline-block;
+  }
+
+  /* Light vs dark Fabworks logo */
+  .fabworks-logo-light {
+    display: inline-block;
+  }
+
+  .fabworks-logo-dark {
+    display: none;
+  }
+
+  :global(html[data-theme='dark']) .site-footer .fabworks-logo-light {
+    display: none;
+  }
+
+  :global(html[data-theme='dark']) .site-footer .fabworks-logo-dark {
+    display: inline-block;
+  }
+
+  @media (max-width: 768px) {
+    .site-footer-inner {
+      padding: 0 1.25rem;
+    }
+
+    .footer-links-grid {
+      gap: 0.35rem 1.5rem;
+    }
+
+    .footer-sponsor-row {
+      gap: 1rem;
+    }
+
+    .footer-sponsor-separator {
+      height: 32px;
+    }
+  }
+</style>

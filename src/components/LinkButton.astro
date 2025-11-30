@@ -1,0 +1,47 @@
+---
+/**
+ * LinkButton component - Styled button link
+ *
+ * Usage:
+ * <LinkButton href="https://example.com">Button Text</LinkButton>
+ * <LinkButton href="/path" blank={false}>Internal Link</LinkButton>
+ */
+
+interface Props {
+  href: string;
+  blank?: boolean;
+}
+
+const { href, blank = true } = Astro.props;
+---
+
+<a
+  href={href}
+  class="link-button"
+  target={blank ? "_blank" : undefined}
+  rel={blank ? "noopener noreferrer" : undefined}
+>
+  <slot />
+</a>
+
+<style>
+  .link-button {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background-color: #43A047;
+    color: #ffffff !important;
+    font-family: "Author-Bold", var(--sl-font), system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .link-button:hover {
+    background-color: #2e7d32;
+    text-decoration: none;
+  }
+</style>

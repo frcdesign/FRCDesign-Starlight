@@ -1,0 +1,615 @@
+---
+/**
+ * Slides component - Slideshow with lightbox support
+ *
+ * Usage in MDX:
+ * <Slides images={[
+ *   { src: "/path/to/image1.webp", alt: "Description" },
+ *   { src: "/path/to/image2.webp" },
+ *   { src: "https://www.youtube.com/watch?v=VIDEO_ID" },
+ * ]}>
+ *   Caption for slide 1
+ *
+ *   Caption for slide 2
+ *
+ *   Caption for slide 3
+ * </Slides>
+ */
+
+interface SlideImage {
+  src: string;
+  alt?: string;
+  caption?: string;
+}
+
+interface Props {
+  images: SlideImage[];
+}
+
+const { images } = Astro.props;
+const rawContent = await Astro.slots.render('default') || '';
+
+// Parse captions from slot content - split by double newlines or <p> tags
+const slotCaptions = rawContent
+  ? rawContent
+      .split(/<\/p>\s*<p>|<br\s*\/?>\s*<br\s*\/?>|\n\n+/)
+      .map((c: string) => c.replace(/<\/?p>/g, '').trim())
+      .filter((c: string) => c.length > 0)
+  : [];
+
+// Use captions from images array if provided, otherwise fall back to slot content
+const captions = images.map((img, index) => img.caption || slotCaptions[index] || '');
+
+// Process image sources - convert YouTube URLs to embeds
+function processSource(src: string): { url: string; type: 'image' | 'video' | 'youtube' } {
+  // YouTube watch URL
+  if (src.includes('youtube.com/watch')) {
+    const videoId = new URL(src).searchParams.get('v');
+    return {
+      url: `https://www.youtube.com/embed/${videoId}?rel=0&controls=1&showinfo=0&vq=hd1080`,
+      type: 'youtube'
+    };
+  }
+  // YouTube short URL
+  if (src.includes('youtu.be/')) {
+    const videoId = src.split('youtu.be/')[1]?.split(/[?#]/)[0];
+    return {
+      url: `https://www.youtube.com/embed/${videoId}?rel=0&controls=1&showinfo=0&vq=hd1080`,
+      type: 'youtube'
+    };
+  }
+  // YouTube embed URL (add params if missing)
+  if (src.includes('youtube.com/embed')) {
+    const hasParams = src.includes('?');
+    return {
+      url: hasParams ? src : `${src}?rel=0&controls=1&showinfo=0&vq=hd1080`,
+      type: 'youtube'
+    };
+  }
+  // Video file
+  if (src.endsWith('.webm') || src.endsWith('.mp4')) {
+    return { url: src, type: 'video' };
+  }
+  // Default to image
+  return { url: src, type: 'image' };
+}
+
+const processedImages = images.map((img, index) => ({
+  ...processSource(img.src),
+  alt: img.alt || '',
+  caption: captions[index]
+}));
+
+const slidesData = JSON.stringify(processedImages);
+---
+
+<div class="slides-component" data-slides={slidesData}>
+  <div class="slides-main">
+    <div class="slides-wrapper">
+      {processedImages.map((slide, index) => (
+        <div class={`slide ${index === 0 ? 'active' : ''}`} data-index={index}>
+          <div class="slide-media">
+            {slide.type === 'youtube' ? (
+              <iframe src={slide.url} allowfullscreen loading="lazy"></iframe>
+            ) : slide.type === 'video' ? (
+              <video controls>
+                <source src={slide.url} type={`video/${slide.url.split('.').pop()}`} />
+              </video>
+            ) : (
+              <img src={slide.url} alt={slide.alt} loading="lazy" />
+            )}
+          </div>
+        </div>
+      ))}
+
+      <button class="slides-nav slides-prev" aria-label="Previous slide">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <button class="slides-nav slides-next" aria-label="Next slide">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <p class="slides-caption"></p>
+
+    <div class="slides-dots">
+      {processedImages.map((_, index) => (
+        <button class={`dot ${index === 0 ? 'active' : ''}`} data-index={index} aria-label={`Go to slide ${index + 1}`}></button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" aria-hidden="true">
+    <button class="lightbox-close" aria-label="Close lightbox">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <button class="lightbox-nav lightbox-prev" aria-label="Previous slide">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <div class="lightbox-content">
+      <div class="lightbox-media"></div>
+      <p class="lightbox-caption"></p>
+      <div class="lightbox-dots"></div>
+    </div>
+
+    <button class="lightbox-nav lightbox-next" aria-label="Next slide">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .slides-component {
+    width: 100%;
+    margin: 1.5rem 0;
+  }
+
+  .slides-main {
+    position: relative;
+  }
+
+  .slides-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .slide.active {
+    display: flex;
+  }
+
+  .slide-media {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .slide-media img {
+    max-width: 100%;
+    max-height: 70vh;
+    height: 60vh;
+    border-radius: 0.25rem;
+    object-fit: contain;
+  }
+
+  .slide-media video {
+    max-width: 100%;
+    max-height: 70vh;
+    height: 60vh;
+    border-radius: 0.25rem;
+  }
+
+  .slide-media iframe {
+    width: 80vw;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: 0.25rem;
+  }
+
+  /* Navigation arrows - positioned on the image */
+  .slides-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    z-index: 10;
+  }
+
+  .slides-nav:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .slides-nav svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .slides-prev {
+    left: 0.5rem;
+  }
+
+  .slides-next {
+    right: 0.5rem;
+  }
+
+  /* Caption */
+  .slides-caption {
+    font-family: "Author";
+    text-align: center;
+    margin: 1rem 0 0.5rem 0;
+    color: var(--sl-color-gray-2);
+    font-size: 1.3rem;
+    line-height: 1.5;
+    min-height: 1.5em;
+  }
+
+  /* Dots */
+  .slides-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+
+  .dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--sl-color-gray-4);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.2s, transform 0.2s;
+    margin-top: 0;
+  }
+
+  .dot:hover {
+    background: var(--sl-color-gray-3);
+    transform: scale(1.15);
+  }
+
+  .dot.active {
+    background: #43A047
+  }
+
+  /* Lightbox styles */
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: 3.5rem;
+    box-sizing: border-box;
+  }
+
+  .lightbox.open {
+    display: flex;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 10001;
+    transition: transform 0.2s;
+  }
+
+  .lightbox-close:hover {
+    transform: scale(1.1);
+  }
+
+  .lightbox-close svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 1rem;
+    z-index: 10001;
+    transition: transform 0.2s;
+  }
+
+  .lightbox-nav:hover {
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .lightbox-nav svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .lightbox-prev {
+    left: 1rem;
+  }
+
+  .lightbox-next {
+    right: 1rem;
+  }
+
+  .lightbox-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: calc(100vw - 8rem);
+    max-height: 100vh;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .lightbox-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .lightbox-media :global(img) {
+    max-width: calc(100vw - 10rem);
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .lightbox-media :global(video) {
+    max-width: calc(100vw - 10rem);
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+  }
+
+  .lightbox-media :global(iframe) {
+    width: 80vw;
+    max-width: 1000px;
+    aspect-ratio: 16 / 9;
+    border: none;
+  }
+
+  .lightbox-caption {
+    font-family: "Author";
+    color: white;
+    text-align: center;
+    margin: 1rem 0 0.5rem 0;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    max-width: 80vw;
+  }
+
+  .lightbox-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+
+  .lightbox-dots :global(.dot) {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.2s, transform 0.2s;
+    margin-top: 0;
+  }
+
+  .lightbox-dots :global(.dot:hover) {
+    background: rgba(255, 255, 255, 0.7);
+    transform: scale(1.15);
+  }
+
+  .lightbox-dots :global(.dot.active) {
+    background: #43A047;
+  }
+</style>
+
+<script>
+  function initSlides() {
+    document.querySelectorAll('.slides-component').forEach((component) => {
+      const slidesData = JSON.parse(component.getAttribute('data-slides') || '[]');
+      const slides = component.querySelectorAll('.slide');
+      const dots = component.querySelectorAll('.slides-main .dot');
+      const caption = component.querySelector('.slides-caption') as HTMLElement;
+      const prevBtn = component.querySelector('.slides-prev');
+      const nextBtn = component.querySelector('.slides-next');
+
+      // Lightbox elements
+      const lightbox = component.querySelector('.lightbox') as HTMLElement;
+      const lightboxMedia = component.querySelector('.lightbox-media') as HTMLElement;
+      const lightboxCaption = component.querySelector('.lightbox-caption') as HTMLElement;
+      const lightboxDots = component.querySelector('.lightbox-dots') as HTMLElement;
+      const lightboxClose = component.querySelector('.lightbox-close');
+      const lightboxPrev = component.querySelector('.lightbox-prev');
+      const lightboxNext = component.querySelector('.lightbox-next');
+
+      if (!slides || slides.length === 0) return;
+
+      let currentIndex = 0;
+
+      // Update caption text
+      function updateCaption() {
+        if (caption && slidesData[currentIndex]) {
+          caption.innerHTML = slidesData[currentIndex].caption || '';
+        }
+      }
+
+      // Initialize caption
+      updateCaption();
+
+      function goToSlide(index: number, updateLightbox = false) {
+        // Pause any playing videos
+        slides.forEach((slide) => {
+          const video = slide.querySelector('video');
+          if (video) video.pause();
+        });
+
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+        currentIndex = index;
+        updateCaption();
+
+        if (updateLightbox && lightbox.classList.contains('open')) {
+          renderLightboxSlide(index);
+        }
+      }
+
+      function nextSlide() {
+        goToSlide((currentIndex + 1) % slides.length, true);
+      }
+
+      function prevSlide() {
+        goToSlide((currentIndex - 1 + slides.length) % slides.length, true);
+      }
+
+      // Main slideshow navigation
+      prevBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        prevSlide();
+      });
+      nextBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        nextSlide();
+      });
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => goToSlide(index, true));
+      });
+
+      // Click on media to open lightbox
+      slides.forEach((slide, index) => {
+        const media = slide.querySelector('.slide-media');
+        media?.addEventListener('click', () => {
+          openLightbox(index);
+        });
+      });
+
+      // Lightbox functions
+      function renderLightboxSlide(index: number) {
+        const slide = slidesData[index];
+        if (!slide || !lightboxMedia) return;
+
+        // Pause any existing videos in lightbox
+        const existingVideo = lightboxMedia.querySelector('video');
+        if (existingVideo) existingVideo.pause();
+
+        // Render media
+        if (slide.type === 'youtube') {
+          lightboxMedia.innerHTML = `<iframe src="${slide.url}" allowfullscreen></iframe>`;
+        } else if (slide.type === 'video') {
+          lightboxMedia.innerHTML = `<video controls><source src="${slide.url}" type="video/${slide.url.split('.').pop()}"></video>`;
+        } else {
+          lightboxMedia.innerHTML = `<img src="${slide.url}" alt="${slide.alt || ''}">`;
+        }
+
+        // Update caption
+        if (lightboxCaption) {
+          lightboxCaption.innerHTML = slide.caption || '';
+        }
+
+        // Update dots
+        if (lightboxDots) {
+          lightboxDots.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+        }
+      }
+
+      function openLightbox(index: number) {
+        currentIndex = index;
+        goToSlide(index, false);
+
+        // Create dots in lightbox
+        if (lightboxDots) {
+          lightboxDots.innerHTML = slidesData.map((_: any, i: number) =>
+            `<button class="dot ${i === index ? 'active' : ''}" data-index="${i}" aria-label="Go to slide ${i + 1}"></button>`
+          ).join('');
+
+          // Add click handlers to lightbox dots
+          lightboxDots.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+              goToSlide(i, false);
+              renderLightboxSlide(i);
+            });
+          });
+        }
+
+        renderLightboxSlide(index);
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        // Pause any playing videos
+        const video = lightboxMedia?.querySelector('video');
+        if (video) video.pause();
+
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      // Lightbox navigation
+      lightboxClose?.addEventListener('click', closeLightbox);
+      lightboxPrev?.addEventListener('click', prevSlide);
+      lightboxNext?.addEventListener('click', nextSlide);
+
+      // Close on backdrop click
+      lightbox?.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('open')) {
+          closeLightbox();
+        }
+        if (lightbox.classList.contains('open')) {
+          if (e.key === 'ArrowLeft') prevSlide();
+          if (e.key === 'ArrowRight') nextSlide();
+        }
+      });
+    });
+  }
+
+  initSlides();
+  document.addEventListener('astro:page-load', initSlides);
+</script>
