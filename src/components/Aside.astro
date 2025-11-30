@@ -251,8 +251,8 @@ const icons: Record<string, string> = {
     margin: 0 auto;
   }
 
-  /* Iframe styling inside asides (Desmos, etc.) */
-  .aside-content :global(iframe) {
+  /* Iframe styling inside asides (Desmos, etc.) - exclude YouTube */
+  .aside-content :global(iframe:not([src*="youtube"])) {
     width: 100%;
     max-width: 500px;
     aspect-ratio: 1 / 1;
@@ -260,5 +260,20 @@ const icons: Record<string, string> = {
     border-radius: 0.5rem;
     display: block;
     margin: 0 auto;
+  }
+
+  /* YouTube videos inside asides - constrain size and center */
+  .aside-content :global(.youtube-container) {
+    margin: 0.75rem auto;
+    width: 75%;
+  }
+
+  .aside-content :global(.youtube-wrapper) {
+    max-width: 100%;
+  }
+
+  .aside-content :global(.youtube-wrapper iframe) {
+    max-width: none;
+    aspect-ratio: 16 / 9;
   }
 </style>

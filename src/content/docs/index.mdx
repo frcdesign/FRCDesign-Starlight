@@ -11,42 +11,48 @@ hero:
     light: ../../assets/home/tilt-book-green.png
   actions:
     - text: Start Learning
-      link: /guides/example/
+      link: /learning-course/
       icon: right-arrow
 
 ---
 
-import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+import HomeCard from '../../components/HomeCard.astro';
 
-<CardGrid stagger>
-	<LinkCard
-		title="Website Feature Guide"  
-		href="/feature-guide/"
-		description="Explains the main features of the website. Recommended to go through before the learning course."
-	/>
-	<LinkCard
-		title="Learning Course"
-		href="/learning-course/"
-		description="A guided curriculum through learning Onshape applied to robot design fundamentals. Looking to learn FRC robot design and CAD skills? Start here."
-	/>
-	<LinkCard
-		title="Design Handbook"
-		href="/design-handbook/"
-		description="Dives into the concepts necessary in order to design a competitive robot. Unlike the learning course, this is primarily a reference wiki."
-	/>
-	<LinkCard
-		title="Mechanism Examples"
-		href="/mechanism-examples/"
-		description="Unlike other mechanism example collections, these are hand picked for specific concepts with detailed breakdowns behind each design."
-	/>
-	<LinkCard
-		title="CAD Best Practices"
-		href="/best-practices/"
-		description="A reference for best practices to follow when you're modeling a robot in Onshape."
-	/>
-	<LinkCard
-		title="Other Resources"
-		href="/other-resources/"
-		description="Besides the other content on the website, we have a nice collection of resources (e.g. featurescripts and models)."
-	/>
-</CardGrid>
+<div class="home-cards-grid">
+  <HomeCard
+    title="Website Feature Guide"
+    href="/feature-guide/"
+    icon="book"
+    description="Explains the main features of the website. Recommended to go through before the learning course."
+  />
+  <HomeCard
+    title="Learning Course"
+    href="/learning-course/"
+    icon="graduation"
+    description="A guided curriculum through learning Onshape applied to robot design fundamentals. Looking to learn FRC robot design and CAD skills? Start here."
+  />
+  <HomeCard
+    title="Design Handbook"
+    href="/design-handbook/"
+    icon="wrench"
+    description="Dives into the concepts necessary in order to design a competitive robot. Unlike the learning course, this is primarily a reference wiki."
+  />
+  <HomeCard
+    title="Mechanism Examples"
+    href="/mechanism-examples/"
+    icon="gears"
+    description="Unlike other mechanism example collections, these are hand picked for specific concepts with detailed breakdowns behind each design."
+  />
+  <HomeCard
+    title="CAD Best Practices"
+    href="/best-practices/"
+    icon="check"
+    description="A reference for best practices to follow when you're modeling a robot in Onshape."
+  />
+  <HomeCard
+    title="Other Resources"
+    href="/resources/"
+    icon="folder"
+    description="Besides the other content on the website, we have a nice collection of resources (e.g. featurescripts and models)."
+  />
+</div>

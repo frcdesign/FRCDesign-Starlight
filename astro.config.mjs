@@ -5,6 +5,12 @@ import remarkGlossary from './src/plugins/remark-glossary';
 import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/compile',
+    },
+  },
+
   markdown: {
     remarkPlugins: [remarkGlossary],
   },
@@ -23,6 +29,7 @@ export default defineConfig({
         Header: './src/starlightOverrides/Header.astro',
         Footer: './src/starlightOverrides/Footer.astro',
         Sidebar: './src/starlightOverrides/Sidebar.astro',
+        Pagination: './src/starlightOverrides/Pagination.astro',
       },
       tableOfContents: false,
       // Sidebar configuration is now managed in src/config/sidebarConfig.ts

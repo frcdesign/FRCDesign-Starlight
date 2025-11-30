@@ -622,3 +622,49 @@ export function getSidebarForPath(pathname: string): SidebarSection[] {
   // Default to home (empty sidebar)
   return sidebarSections['/'] || [];
 }
+
+/**
+ * Flattens sidebar items into a linear list of links for prev/next navigation
+ */
+function flattenSidebarItems(items: SidebarItem[]): { label: string; href: string }[] {
+  const result: { label: string; href: string }[] = [];
+
+  for (const item of items) {
+    if (item.slug) {
+      result.push({ label: item.label, href: '/' + item.slug + '/' });
+    }
+    if (item.items) {
+      result.push(...flattenSidebarItems(item.items));
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Gets prev/next navigation links for a given path
+ */
+export function getPrevNextLinks(pathname: string): { prev: { label: string; href: string } | null; next: { label: string; href: string } | null } {
+  const sections = getSidebarForPath(pathname);
+
+  // Flatten all sections into a single list
+  const allLinks: { label: string; href: string }[] = [];
+  for (const section of sections) {
+    allLinks.push(...flattenSidebarItems(section.items));
+  }
+
+  // Normalize the current path
+  const normalizedPath = pathname.endsWith('/') ? pathname : pathname + '/';
+
+  // Find current page index
+  const currentIndex = allLinks.findIndex(link => link.href === normalizedPath);
+
+  if (currentIndex === -1) {
+    return { prev: null, next: null };
+  }
+
+  return {
+    prev: currentIndex > 0 ? allLinks[currentIndex - 1] : null,
+    next: currentIndex < allLinks.length - 1 ? allLinks[currentIndex + 1] : null,
+  };
+}
