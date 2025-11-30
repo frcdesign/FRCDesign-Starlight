@@ -105,6 +105,13 @@ const slidesData = JSON.stringify(processedImages);
 
 <div class="slides-component" data-slides={slidesData}>
   <div class="slides-main">
+    <!-- Dots above the slides -->
+    <div class="slides-dots">
+      {processedImages.map((_, index) => (
+        <button class={`dot ${index === 0 ? 'active' : ''}`} data-index={index} aria-label={`Go to slide ${index + 1}`}></button>
+      ))}
+    </div>
+
     <div class="slides-wrapper">
       {processedImages.map((slide, index) => (
         <div class={`slide ${index === 0 ? 'active' : ''}`} data-index={index}>
@@ -143,12 +150,6 @@ const slidesData = JSON.stringify(processedImages);
           data-caption-index={index}
           set:html={slide.caption || '&nbsp;'}
         ></p>
-      ))}
-    </div>
-
-    <div class="slides-dots">
-      {processedImages.map((_, index) => (
-        <button class={`dot ${index === 0 ? 'active' : ''}`} data-index={index} aria-label={`Go to slide ${index + 1}`}></button>
       ))}
     </div>
   </div>
@@ -338,12 +339,12 @@ const slidesData = JSON.stringify(processedImages);
     font-family: 'Inter', system-ui, sans-serif;
   }
 
-  /* Dots */
+  /* Dots - positioned above slides */
   .slides-dots {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.5rem 0;
+    padding: 0 0 0.4rem 0;
   }
 
   .dot {

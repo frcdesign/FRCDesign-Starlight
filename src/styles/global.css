@@ -499,3 +499,33 @@ html.lightbox-open [data-pagefind-ignore="all"] {
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================================================
+   Sidebar Collapse
+   ========================================================================== */
+
+/* When sidebar is collapsed, adjust the layout */
+.sidebar-pane.collapsed,
+#starlight__sidebar.collapsed {
+    width: 48px !important;
+    min-width: 48px !important;
+}
+
+/* Use class on html element for reliable targeting - prevents flash on navigation */
+html.sidebar-collapsed {
+    --sl-sidebar-width: 48px !important;
+}
+
+html.sidebar-collapsed .sidebar-pane,
+html.sidebar-collapsed #starlight__sidebar {
+    width: 48px !important;
+    min-width: 48px !important;
+}
+
+html.sidebar-collapsed .sidebar-content-wrapper {
+    display: none;
+}
+
+html.sidebar-collapsed .sidebar-collapsed-toggle-wrapper {
+    display: flex;
+}
