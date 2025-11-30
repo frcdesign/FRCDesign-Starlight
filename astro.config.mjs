@@ -2,10 +2,13 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import remarkGlossary from './src/plugins/remark-glossary';
 
+import cloudflare from '@astrojs/cloudflare';
+
 export default defineConfig({
   markdown: {
     remarkPlugins: [remarkGlossary],
   },
+
   integrations: [
     starlight({
       title: 'FRCDesign.org',
@@ -22,9 +25,11 @@ export default defineConfig({
       },
       tableOfContents: false,
       sidebar: [
+        // Learning Course Section
         {
           label: 'Learning Course',
           items: [
+            { label: 'Overview', slug: 'learning-course' },
             {
               label: 'Course Setup',
               collapsed: true,
@@ -267,7 +272,270 @@ export default defineConfig({
             { label: 'Stage 4', slug: 'learning-course/stage4' },
           ],
         },
+        // Educator's Guide Section
+        {
+          label: "Educator's Guide",
+          items: [
+            { label: 'Introduction', slug: 'educators-guide/introduction' },
+            { label: 'The Stages', slug: 'educators-guide/introduction/the-stages' },
+            { label: 'Preparing Yourself', slug: 'educators-guide/introduction/preparation' },
+            { label: 'Stage 0', slug: 'educators-guide/stage0/overview' },
+            {
+              label: 'Stage 1',
+              collapsed: true,
+              items: [
+                { label: 'Overview', slug: 'educators-guide/stage1' },
+                { label: 'Stage 1A', slug: 'educators-guide/stage1/stage1a' },
+                { label: 'Stage 1B', slug: 'educators-guide/stage1/stage1b' },
+                { label: 'Stage 1C', slug: 'educators-guide/stage1/stage1c' },
+                { label: 'Stage 1D', slug: 'educators-guide/stage1/stage1d' },
+                { label: 'Stage 1E', slug: 'educators-guide/stage1/stage1e' },
+              ],
+            },
+          ],
+        },
+        // Design Handbook Section
+        {
+          label: 'Design Handbook',
+          items: [
+            { label: 'Overview', slug: 'design-handbook' },
+            { label: 'Strategic Design', slug: 'design-handbook/strategic-design' },
+            {
+              label: 'Hardware',
+              collapsed: true,
+              items: [
+                { label: 'Materials', slug: 'design-handbook/structure/materials' },
+                { label: 'Structure', slug: 'design-handbook/structure/structure' },
+                { label: 'Fasteners', slug: 'design-handbook/structure/fasteners' },
+                { label: 'Sheet Metal', slug: 'design-handbook/structure/sheet-metal' },
+                { label: 'Intro to 3D Printing', slug: 'design-handbook/structure/intro-to-3d-printing' },
+                { label: 'Design for 3D Printing', slug: 'design-handbook/structure/design-for-3d-printing' },
+                { label: 'Tolerances', slug: 'design-handbook/structure/tolerances' },
+                { label: 'Weight Saving', slug: 'design-handbook/structure/weight-savings' },
+              ],
+            },
+            {
+              label: 'Power Transmission',
+              collapsed: true,
+              items: [
+                { label: 'Motion Components', slug: 'design-handbook/power-transmission/motion-components' },
+                { label: 'Transfer of Rotational Motion', slug: 'design-handbook/power-transmission/rotation' },
+                { label: 'Linear Extension', slug: 'design-handbook/power-transmission/linear-extension' },
+                { label: 'Motors', slug: 'design-handbook/power-transmission/motors' },
+                { label: 'Wheels and Rollers', slug: 'design-handbook/power-transmission/wheels-rollers' },
+                { label: 'Pneumatics', slug: 'design-handbook/power-transmission/pneumatics' },
+                { label: 'Electronics and Sensors', slug: 'design-handbook/power-transmission/electronics-sensors' },
+              ],
+            },
+            {
+              label: 'Mechanisms',
+              collapsed: true,
+              items: [
+                { label: 'Drivetrains', slug: 'design-handbook/mechanisms/drivetrains' },
+                { label: 'Elevators', slug: 'design-handbook/mechanisms/elevators' },
+                { label: 'Arms', slug: 'design-handbook/mechanisms/arms' },
+                { label: 'Linkages', slug: 'design-handbook/mechanisms/linkages' },
+                { label: 'Intakes', slug: 'design-handbook/mechanisms/intakes' },
+                { label: 'Shooters', slug: 'design-handbook/mechanisms/shooters' },
+                { label: 'Turrets', slug: 'design-handbook/mechanisms/turrets' },
+                { label: 'Bumpers', slug: 'design-handbook/mechanisms/bumpers' },
+              ],
+            },
+            {
+              label: 'Design Write-ups',
+              collapsed: true,
+              items: [
+                { label: 'Designing for Controllability', slug: 'design-handbook/design-writeups/dfc' },
+                { label: 'Chain Tensioning Solutions', slug: 'design-handbook/design-writeups/chaintensioning' },
+                { label: 'Bumper Mounting Solutions', slug: 'design-handbook/design-writeups/bumpermounting' },
+                { label: 'Springs and Shocks', slug: 'design-handbook/design-writeups/springs-shocks' },
+              ],
+            },
+          ],
+        },
+        // Mechanism Examples Section
+        {
+          label: 'Mechanism Examples',
+          items: [
+            { label: 'Overview', slug: 'mechanism-examples' },
+            {
+              label: 'Drivebases',
+              collapsed: true,
+              items: [
+                {
+                  label: 'Swerve',
+                  collapsed: true,
+                  items: [
+                    { label: 'Overview', slug: 'mechanism-examples/drivebase/swerve' },
+                    { label: "2910's Charged Up Drivebase", slug: 'mechanism-examples/drivebase/swerve/2910_2023_dt' },
+                    { label: "1678's Crescendo Drivebase", slug: 'mechanism-examples/drivebase/swerve/1678_2024_dt' },
+                    { label: "3005's Charged Up Drivebase", slug: 'mechanism-examples/drivebase/swerve/3005_2023_dt' },
+                    { label: "6328's Crescendo Drivebase", slug: 'mechanism-examples/drivebase/swerve/6328_2024_dt' },
+                    { label: "5460's Crescendo Drivebase", slug: 'mechanism-examples/drivebase/swerve/5460_2023_dt' },
+                    { label: "972's Crescendo Drivebase", slug: 'mechanism-examples/drivebase/swerve/972_2024_dt' },
+                  ],
+                },
+                { label: 'Tank', slug: 'mechanism-examples/drivebase/tank' },
+              ],
+            },
+            {
+              label: 'Intakes',
+              collapsed: true,
+              items: [
+                {
+                  label: 'Pivoting Intakes',
+                  collapsed: true,
+                  items: [
+                    { label: 'Overview', slug: 'mechanism-examples/intake/slapdown' },
+                    { label: "1678's Crescendo Intake", slug: 'mechanism-examples/intake/slapdown/1678_2024_intake' },
+                    { label: "1778's Crescendo Intake", slug: 'mechanism-examples/intake/slapdown/1778_2024_intake' },
+                    { label: "6423's Crescendo Intake", slug: 'mechanism-examples/intake/slapdown/6423_2024_intake' },
+                    { label: "3847's Rapid React Intake", slug: 'mechanism-examples/intake/slapdown/3847_2022_intake' },
+                    { label: "2910's IR @ Home Intake", slug: 'mechanism-examples/intake/slapdown/2910_2021_intake' },
+                  ],
+                },
+                {
+                  label: 'Linkage Intakes',
+                  collapsed: true,
+                  items: [
+                    { label: 'Overview', slug: 'mechanism-examples/intake/linkage' },
+                    { label: "1678's Rapid React Intake", slug: 'mechanism-examples/intake/linkage/1678_2022_intake' },
+                    { label: "6800's Rapid React Intake", slug: 'mechanism-examples/intake/linkage/6800_2022_intake' },
+                    { label: "4089's Rapid React Intake", slug: 'mechanism-examples/intake/linkage/4089_2022_intake' },
+                  ],
+                },
+                { label: 'UTB Intakes', slug: 'mechanism-examples/intake/utb' },
+              ],
+            },
+            {
+              label: 'Game Piece Manipulation',
+              collapsed: true,
+              items: [
+                {
+                  label: 'Shooters',
+                  collapsed: true,
+                  items: [
+                    { label: 'Overview', slug: 'mechanism-examples/shooter' },
+                    { label: "1678's Rapid React Shooter", slug: 'mechanism-examples/shooter/1678_2022_shooter' },
+                    { label: "6328's Crescendo Shooter", slug: 'mechanism-examples/shooter/6328_2024_shooter' },
+                    { label: "2910's Rapid React Shooter", slug: 'mechanism-examples/shooter/2910_2022_shooter' },
+                    { label: "6800's Rapid React Shooter", slug: 'mechanism-examples/shooter/6800_2022_shooter' },
+                    { label: "2910's IR @ Home Shooter", slug: 'mechanism-examples/shooter/2910_2021_shooter' },
+                  ],
+                },
+                { label: 'End Effectors', slug: 'mechanism-examples/end-effector' },
+                { label: 'Indexers', slug: 'mechanism-examples/indexer' },
+              ],
+            },
+            {
+              label: 'Linear Extensions',
+              collapsed: true,
+              items: [
+                {
+                  label: 'Continuous Elevators',
+                  collapsed: true,
+                  items: [
+                    { label: 'Overview', slug: 'mechanism-examples/elevator/continuous' },
+                    { label: "1678's Charged Up Elevator", slug: 'mechanism-examples/elevator/continuous/1678_2023_elevator' },
+                    { label: "3847's Charged Up Elevator", slug: 'mechanism-examples/elevator/continuous/3847_2023_elevator' },
+                  ],
+                },
+                {
+                  label: 'Cascade Elevators',
+                  collapsed: true,
+                  items: [
+                    { label: 'Overview', slug: 'mechanism-examples/elevator/cascade' },
+                    { label: 'WCP Greyt COTS Elevator', slug: 'mechanism-examples/elevator/cascade/wcp_greyt_elevator' },
+                    { label: '2 Stage Cascade Elevator', slug: 'mechanism-examples/elevator/cascade/2_stage_elevator' },
+                    { label: '3 Stage Cascade Elevator', slug: 'mechanism-examples/elevator/cascade/3_stage_elevator' },
+                  ],
+                },
+                { label: 'Telescopes', slug: 'mechanism-examples/telescope' },
+              ],
+            },
+            {
+              label: 'Rotating Mechanisms',
+              collapsed: true,
+              items: [
+                {
+                  label: 'Pivots',
+                  collapsed: true,
+                  items: [
+                    { label: 'Overview', slug: 'mechanism-examples/pivots' },
+                    { label: '6328 A-Frame Pivot', slug: 'mechanism-examples/pivots/6328_2023_pivot' },
+                    { label: '2910 Dead Axle Pivot', slug: 'mechanism-examples/pivots/2910_2023_pivot' },
+                    { label: '1690 Lantern Gear Pivot', slug: 'mechanism-examples/pivots/1690_2024_pivot' },
+                    { label: '5460 Dead Axle Pivot', slug: 'mechanism-examples/pivots/5460_2023_pivot' },
+                  ],
+                },
+                { label: 'Turrets', slug: 'mechanism-examples/turret' },
+              ],
+            },
+          ],
+        },
+        // Best Practices Section
+        {
+          label: 'Best Practices',
+          items: [
+            { label: 'Overview', slug: 'best-practices' },
+            { label: 'Document Setup', slug: 'best-practices/document-setup' },
+            { label: 'Sub-Document Setup', slug: 'best-practices/sub-document-setup' },
+            { label: 'Layout Sketch Best Practices', slug: 'best-practices/mastersketch-setup' },
+            { label: 'Part Studio Best Practices', slug: 'best-practices/feature-tree-setup' },
+            { label: 'Assembly Best Practices', slug: 'best-practices/assembly-setup' },
+          ],
+        },
+        // Resources Section
+        {
+          label: 'Resources',
+          items: [
+            { label: 'Overview', slug: 'resources' },
+            { label: 'Glossary', slug: 'resources/glossary' },
+            {
+              label: 'CAD Resources',
+              collapsed: true,
+              items: [
+                { label: 'FRCDesignLib', slug: 'resources/frcdesignlib' },
+                { label: 'KrayonCAD', slug: 'resources/krayoncad' },
+                { label: 'Featurescript List', slug: 'resources/featurescripts' },
+                { label: 'Featurescript Help', slug: 'resources/featurescript-help' },
+              ],
+            },
+            {
+              label: 'Design Challenges',
+              collapsed: true,
+              items: [
+                { label: 'Overview', slug: 'resources/design-challenges' },
+                { label: 'Week 1 | Swerve Drivebase', slug: 'resources/design-challenges/week1' },
+                { label: 'Week 2 | Gearboxes', slug: 'resources/design-challenges/week2' },
+                { label: 'Week 3 | Ball Shooter', slug: 'resources/design-challenges/week3' },
+                { label: 'Week 4 | Intake', slug: 'resources/design-challenges/week4' },
+                { label: 'Week 5 | Tilt Shift', slug: 'resources/design-challenges/week5' },
+              ],
+            },
+          ],
+        },
+        // Changelog Section
+        {
+          label: 'Changelog',
+          items: [
+            { label: 'Site Updates', slug: 'resources/site-changelog' },
+            { label: 'Reference Guide', slug: 'resources/changelog' },
+          ],
+        },
+        // Contribution Section
+        {
+          label: 'Contribution',
+          items: [
+            { label: 'Methods of Contributing', slug: 'contribution/methodsofcontributing' },
+            { label: 'Contributing to Mech. Examples', slug: 'contribution/mechanismcontribution' },
+            { label: 'Style Guide', slug: 'contribution/styleguide' },
+            { label: 'Contributors', slug: 'contribution/contributors' },
+          ],
+        },
       ],
     }),
   ],
+
+  adapter: cloudflare(),
 });

@@ -19,12 +19,12 @@ The [mechanism examples](/mechanism-examples/) pages are the ones that would ben
 
 ## Adding Mechanism Examples
 
-As was described in [methods of contributing](methodsOfContributing), there are two methods:
+As was described in [methods of contributing](/contribution/methodsOfContributing), there are two methods:
 
 1. Writing the contribution on a separate platform (such as Google Docs) and getting an internal contributor to add it to the website
 2. Forking and making a pull request on GitHub
 
-The first method is pretty self explanatory, but if you choose to fork and make a pull request on GitHub, there is some formatting required. Make sure to follow the contribution guide on the [methods of contributing](methodsOfContributing) page to get up and running with GitHub and VS Code.
+The first method is pretty self explanatory, but if you choose to fork and make a pull request on GitHub, there is some formatting required. Make sure to follow the contribution guide on the [methods of contributing](/contribution/methodsOfContributing) page to get up and running with GitHub and VS Code.
 
 ## Adding a Mechanism Category (OPTIONAL)
 
@@ -40,7 +40,18 @@ If there are multiple types of the mechanism (such as with elevators and intakes
 
 2. Create the landing page(s) for the category, named `index.mdx`. Only one of these can be made per folder.
 
-3. Copy this template for the category landing page and fill it out with your information.
+3. Copy this template for the category landing page and fill it out with your information:
+
+```mdx
+---
+title: page-title
+description: Description of the mechanism category
+---
+
+# page-title
+
+Description of the mechanism category and what examples are included.
+```
 
 ## Adding a Mechanism Example Page
 
@@ -56,11 +67,36 @@ Fill out the page with your information using Markdown and MDX formatting, inclu
 - Links to CAD documents
 - Behind the Design section
 
+Example template:
+
+```mdx
+---
+title: mechanism-example-name
+description: Brief description of the mechanism
+---
+
+# mechanism-example-name
+
+<figure>
+  <img src="/mechanism-examples/category/image.webp" alt="alt-text" style="width: 80%;" />
+  <figcaption>Caption describing the mechanism</figcaption>
+</figure>
+
+### Links
+[CAD Link](https://cad.onshape.com/...)
+
+## Behind the Design
+
+Content about the design decisions, performance, and lessons learned.
+```
+
+Add any images you use for your page in `/public/mechanism-examples/[category]/[example]/`.
+
 ### Adding an Image for the Example
 
 Images should be in `.webp` format and placed in the `/public/mechanism-examples/[category]/` directory.
 
-Use a 1:1.545 or 1.545:1 aspect ratio. 1:1.545 is the aspect ratio of a picture outputted from Onshape's "print" function using the "tabloid" paper size.
+Use a 1:1.545 or 1.545:1 aspect ratio. 1:1.545 is the aspect ratio of a picture outputted from Onshape's "print" function using the "tabloid" paper size. You can select landscape or portrait from there for wide or tall.
 
 <Aside type="tip">
 For images you already have, you can use GIMP and a calculator to crop an image by adding pixels to get it to the desired aspect ratio.
