@@ -231,6 +231,12 @@ const icons: Record<string, string> = {
     color: #374151;
   }
 
+  /* Ensure all text content inside asides uses Inter font */
+  .aside-content,
+  .aside-content :global(*) {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
   /* Ensure images inside asides maintain aspect ratio */
   .aside-content :global(img) {
     max-width: 100%;

@@ -105,6 +105,88 @@ function isActive(href: string): boolean {
 
 <script is:inline>
   (() => {
+    // Global image lightbox functionality
+    const initImageLightbox = () => {
+      // Create lightbox element if it doesn't exist
+      let lightbox = document.getElementById('global-image-lightbox');
+      if (!lightbox) {
+        lightbox = document.createElement('div');
+        lightbox.id = 'global-image-lightbox';
+        lightbox.className = 'global-image-lightbox';
+        lightbox.innerHTML = `
+          <button class="global-lightbox-close" aria-label="Close lightbox">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div class="global-lightbox-content">
+            <img class="global-lightbox-image" src="" alt="">
+          </div>
+        `;
+        document.body.appendChild(lightbox);
+
+        // Close on backdrop click
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox || e.target.classList.contains('global-lightbox-content')) {
+            closeLightbox();
+          }
+        });
+
+        // Close button
+        lightbox.querySelector('.global-lightbox-close').addEventListener('click', closeLightbox);
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && lightbox.classList.contains('open')) {
+            closeLightbox();
+          }
+        });
+      }
+
+      function openLightbox(imgSrc, imgAlt) {
+        const lightboxImg = lightbox.querySelector('.global-lightbox-image');
+        lightboxImg.src = imgSrc;
+        lightboxImg.alt = imgAlt || '';
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.documentElement.classList.add('lightbox-open');
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+        document.documentElement.classList.remove('lightbox-open');
+      }
+
+      // Attach click handlers to all images in markdown content
+      // Exclude images that are already in a Slides component or have data-no-lightbox
+      const contentImages = document.querySelectorAll('.sl-markdown-content img:not(.slides-component img):not([data-no-lightbox])');
+      contentImages.forEach((img) => {
+        // Skip if already has lightbox handler
+        if (img.dataset.lightboxAttached) return;
+        img.dataset.lightboxAttached = 'true';
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openLightbox(img.src, img.alt);
+        });
+      });
+    };
+
+    // Run on page load and Astro navigation
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      initImageLightbox();
+    } else {
+      document.addEventListener('DOMContentLoaded', initImageLightbox);
+    }
+    document.addEventListener('astro:page-load', initImageLightbox);
+  })();
+</script>
+
+<script is:inline>
+  (() => {
     const storageKey = "starlight-theme";
 
     const getStoredTheme = () => {

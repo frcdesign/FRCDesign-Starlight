@@ -194,3 +194,57 @@ html.lightbox-open .sidebar,
 html.lightbox-open [data-pagefind-ignore="all"] {
     display: none !important;
 }
+
+/* Global image lightbox styles */
+.global-image-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+}
+
+.global-image-lightbox.open {
+    display: flex;
+}
+
+.global-lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 10001;
+    transition: transform 0.2s;
+}
+
+.global-lightbox-close:hover {
+    transform: scale(1.1);
+}
+
+.global-lightbox-close svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.global-lightbox-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 95vw;
+    max-height: 95vh;
+    padding: 1rem;
+}
+
+.global-lightbox-image {
+    max-width: 100%;
+    max-height: 85vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}

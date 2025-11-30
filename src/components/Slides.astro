@@ -326,6 +326,11 @@ const slidesData = JSON.stringify(processedImages);
     visibility: visible;
   }
 
+  /* Ensure all content within captions uses Inter */
+  .slides-caption :global(*) {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
   /* Dots */
   .slides-dots {
     display: flex;
@@ -497,6 +502,11 @@ const slidesData = JSON.stringify(processedImages);
   .lightbox-caption.active {
     opacity: 1;
     visibility: visible;
+  }
+
+  /* Ensure all content within lightbox captions uses Inter */
+  .lightbox-caption :global(*) {
+    font-family: 'Inter', system-ui, sans-serif;
   }
 
   .lightbox-dots {

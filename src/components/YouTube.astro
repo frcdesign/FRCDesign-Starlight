@@ -86,12 +86,16 @@ const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&controls=1&show
   }
 
   .youtube-caption {
-    font-family: "Author";
+    font-family: 'Inter', system-ui, sans-serif;
     text-align: center;
     margin: 1rem 0 0 0;
     color: var(--sl-color-gray-2);
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     line-height: 1.5;
     max-width: 800px;
+  }
+
+  .youtube-caption :global(*) {
+    font-family: 'Inter', system-ui, sans-serif;
   }
 </style>
