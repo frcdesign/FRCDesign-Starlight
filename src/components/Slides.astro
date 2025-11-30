@@ -135,7 +135,16 @@ const slidesData = JSON.stringify(processedImages);
       </button>
     </div>
 
-    <p class="slides-caption"></p>
+    <!-- Caption container uses CSS Grid stacking - all captions occupy same cell, tallest wins -->
+    <div class="slides-caption-container">
+      {processedImages.map((slide, index) => (
+        <p
+          class={`slides-caption ${index === 0 ? 'active' : ''}`}
+          data-caption-index={index}
+          set:html={slide.caption || '&nbsp;'}
+        ></p>
+      ))}
+    </div>
 
     <div class="slides-dots">
       {processedImages.map((_, index) => (
@@ -153,23 +162,34 @@ const slidesData = JSON.stringify(processedImages);
       </svg>
     </button>
 
-    <button class="lightbox-nav lightbox-prev" aria-label="Previous slide">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </button>
-
     <div class="lightbox-content">
-      <div class="lightbox-media"></div>
-      <p class="lightbox-caption"></p>
+      <div class="lightbox-media-wrapper">
+        <button class="lightbox-nav lightbox-prev" aria-label="Previous slide">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="lightbox-media"></div>
+
+        <button class="lightbox-nav lightbox-next" aria-label="Next slide">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+      <!-- Lightbox captions use CSS Grid stacking - all captions in same cell, tallest wins -->
+      <div class="lightbox-caption-container">
+        {processedImages.map((slide, index) => (
+          <p
+            class={`lightbox-caption ${index === 0 ? 'active' : ''}`}
+            data-lightbox-caption-index={index}
+            set:html={slide.caption || '&nbsp;'}
+          ></p>
+        ))}
+      </div>
       <div class="lightbox-dots"></div>
     </div>
-
-    <button class="lightbox-nav lightbox-next" aria-label="Next slide">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
   </div>
 </div>
 
@@ -185,46 +205,54 @@ const slidesData = JSON.stringify(processedImages);
 
   .slides-wrapper {
     position: relative;
-    display: flex;
-    justify-content: center;
+    height: 60vh;
+    min-height: 60vh;
+    max-height: 60vh;
+    overflow: hidden;
   }
 
   .slide {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 60vh;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
   }
 
   .slide.active {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
   }
 
   .slide-media {
-    position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
+    width: 100%;
+    height: 100%;
   }
 
-  .slide-media img {
+  .slide-media img,
+  .slide-media video {
+    max-height: 100%;
     max-width: 100%;
-    max-height: 70vh;
-    height: 60vh;
+    width: auto;
+    height: auto;
     border-radius: 0.25rem;
     object-fit: contain;
-  }
-
-  .slide-media video {
-    max-width: 100%;
-    max-height: 70vh;
-    height: 60vh;
-    border-radius: 0.25rem;
   }
 
   .slide-media iframe {
     width: 80vw;
     max-width: 900px;
-    aspect-ratio: 16 / 9;
+    height: 100%;
     border: none;
     border-radius: 0.25rem;
   }
@@ -265,15 +293,37 @@ const slidesData = JSON.stringify(processedImages);
     right: 0.5rem;
   }
 
-  /* Caption */
+  /* Caption container uses CSS Grid stacking - all captions in same cell, tallest wins */
+  .slides-caption-container {
+    display: grid;
+    align-items: start;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+    max-width: min(800px, 90%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* All captions stack in grid cell 1/1, using opacity for show/hide */
   .slides-caption {
-    font-family: "Author";
+    grid-area: 1 / 1;
+    font-family: 'Inter', system-ui, sans-serif;
     text-align: center;
-    margin: 1rem 0 0.5rem 0;
     color: var(--sl-color-gray-2);
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     line-height: 1.5;
-    min-height: 1.5em;
+    margin: 0;
+    padding: 0 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+  }
+
+  .slides-caption.active {
+    opacity: 1;
+    visibility: visible;
   }
 
   /* Dots */
@@ -305,20 +355,16 @@ const slidesData = JSON.stringify(processedImages);
     background: #43A047
   }
 
-  /* Lightbox styles */
+  /* Lightbox styles - full screen overlay */
   .lightbox {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.92);
-    z-index: 9999;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 99999;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding-top: 3.5rem;
     box-sizing: border-box;
   }
 
@@ -348,46 +394,48 @@ const slidesData = JSON.stringify(processedImages);
     height: 2rem;
   }
 
-  .lightbox-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 1rem;
-    z-index: 10001;
-    transition: transform 0.2s;
-  }
-
-  .lightbox-nav:hover {
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  .lightbox-nav svg {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-
-  .lightbox-prev {
-    left: 1rem;
-  }
-
-  .lightbox-next {
-    right: 1rem;
-  }
-
   .lightbox-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: calc(100vw - 8rem);
-    max-height: 100vh;
-    padding: 2rem 1rem;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 1rem;
     box-sizing: border-box;
     overflow: hidden;
+  }
+
+  .lightbox-media-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 100%;
+  }
+
+  .lightbox-nav {
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    padding: 0.75rem;
+    transition: background-color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-nav:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+  }
+
+  .lightbox-nav svg {
+    width: 2rem;
+    height: 2rem;
   }
 
   .lightbox-media {
@@ -395,38 +443,60 @@ const slidesData = JSON.stringify(processedImages);
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    max-width: calc(100% - 8rem);
   }
 
   .lightbox-media :global(img) {
-    max-width: calc(100vw - 10rem);
-    max-height: 70vh;
+    max-width: 100%;
+    max-height: 75vh;
     width: auto;
     height: auto;
     object-fit: contain;
   }
 
   .lightbox-media :global(video) {
-    max-width: calc(100vw - 10rem);
-    max-height: 70vh;
+    max-width: 100%;
+    max-height: 75vh;
     width: auto;
     height: auto;
   }
 
   .lightbox-media :global(iframe) {
     width: 80vw;
-    max-width: 1000px;
+    max-width: 1200px;
     aspect-ratio: 16 / 9;
     border: none;
   }
 
+  /* Lightbox caption container uses CSS Grid stacking - all captions in same cell, tallest wins */
+  .lightbox-caption-container {
+    width: 100%;
+    max-width: min(800px, 90%);
+    margin: 1rem 0 0.5rem 0;
+    display: grid;
+    align-items: start;
+  }
+
+  /* All lightbox captions stack in grid cell 1/1, using opacity for show/hide */
   .lightbox-caption {
-    font-family: "Author";
+    grid-area: 1 / 1;
+    font-family: 'Inter', system-ui, sans-serif;
     color: white;
     text-align: center;
-    margin: 1rem 0 0.5rem 0;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     line-height: 1.5;
-    max-width: 80vw;
+    padding: 0 1rem;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+  }
+
+  .lightbox-caption.active {
+    opacity: 1;
+    visibility: visible;
   }
 
   .lightbox-dots {
@@ -464,14 +534,14 @@ const slidesData = JSON.stringify(processedImages);
       const slidesData = JSON.parse(component.getAttribute('data-slides') || '[]');
       const slides = component.querySelectorAll('.slide');
       const dots = component.querySelectorAll('.slides-main .dot');
-      const caption = component.querySelector('.slides-caption') as HTMLElement;
+      const captions = component.querySelectorAll('.slides-caption');
       const prevBtn = component.querySelector('.slides-prev');
       const nextBtn = component.querySelector('.slides-next');
 
       // Lightbox elements
       const lightbox = component.querySelector('.lightbox') as HTMLElement;
       const lightboxMedia = component.querySelector('.lightbox-media') as HTMLElement;
-      const lightboxCaption = component.querySelector('.lightbox-caption') as HTMLElement;
+      const lightboxCaptions = component.querySelectorAll('.lightbox-caption');
       const lightboxDots = component.querySelector('.lightbox-dots') as HTMLElement;
       const lightboxClose = component.querySelector('.lightbox-close');
       const lightboxPrev = component.querySelector('.lightbox-prev');
@@ -480,44 +550,54 @@ const slidesData = JSON.stringify(processedImages);
       if (!slides || slides.length === 0) return;
 
       let currentIndex = 0;
+      let lightboxIndex = 0;
 
-      // Update caption text
-      function updateCaption() {
-        if (caption && slidesData[currentIndex]) {
-          caption.innerHTML = slidesData[currentIndex].caption || '';
-        }
-      }
-
-      // Initialize caption
-      updateCaption();
-
-      function goToSlide(index: number, updateLightbox = false) {
+      // Update main slideshow (not lightbox)
+      function goToSlide(index: number) {
         // Pause any playing videos
         slides.forEach((slide) => {
           const video = slide.querySelector('video');
           if (video) video.pause();
         });
 
+        // Update slides
         slides.forEach((slide, i) => {
           slide.classList.toggle('active', i === index);
         });
+
+        // Update dots
         dots.forEach((dot, i) => {
           dot.classList.toggle('active', i === index);
         });
-        currentIndex = index;
-        updateCaption();
 
-        if (updateLightbox && lightbox.classList.contains('open')) {
-          renderLightboxSlide(index);
-        }
+        // Update captions (CSS grid stacking handles height automatically)
+        captions.forEach((caption, i) => {
+          caption.classList.toggle('active', i === index);
+        });
+
+        currentIndex = index;
       }
 
       function nextSlide() {
-        goToSlide((currentIndex + 1) % slides.length, true);
+        goToSlide((currentIndex + 1) % slides.length);
       }
 
       function prevSlide() {
-        goToSlide((currentIndex - 1 + slides.length) % slides.length, true);
+        goToSlide((currentIndex - 1 + slides.length) % slides.length);
+      }
+
+      // Lightbox-only navigation (doesn't affect main slides)
+      function goToLightboxSlide(index: number) {
+        lightboxIndex = index;
+        renderLightboxSlide(index);
+      }
+
+      function nextLightboxSlide() {
+        goToLightboxSlide((lightboxIndex + 1) % slides.length);
+      }
+
+      function prevLightboxSlide() {
+        goToLightboxSlide((lightboxIndex - 1 + slides.length) % slides.length);
       }
 
       // Main slideshow navigation
@@ -530,7 +610,7 @@ const slidesData = JSON.stringify(processedImages);
         nextSlide();
       });
       dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => goToSlide(index, true));
+        dot.addEventListener('click', () => goToSlide(index));
       });
 
       // Click on media to open lightbox
@@ -559,10 +639,10 @@ const slidesData = JSON.stringify(processedImages);
           lightboxMedia.innerHTML = `<img src="${slide.url}" alt="${slide.alt || ''}">`;
         }
 
-        // Update caption
-        if (lightboxCaption) {
-          lightboxCaption.innerHTML = slide.caption || '';
-        }
+        // Update captions (CSS grid stacking handles height automatically)
+        lightboxCaptions.forEach((caption, i) => {
+          caption.classList.toggle('active', i === index);
+        });
 
         // Update dots
         if (lightboxDots) {
@@ -573,8 +653,7 @@ const slidesData = JSON.stringify(processedImages);
       }
 
       function openLightbox(index: number) {
-        currentIndex = index;
-        goToSlide(index, false);
+        lightboxIndex = index;
 
         // Create dots in lightbox
         if (lightboxDots) {
@@ -585,15 +664,17 @@ const slidesData = JSON.stringify(processedImages);
           // Add click handlers to lightbox dots
           lightboxDots.querySelectorAll('.dot').forEach((dot, i) => {
             dot.addEventListener('click', () => {
-              goToSlide(i, false);
-              renderLightboxSlide(i);
+              goToLightboxSlide(i);
             });
           });
         }
 
         renderLightboxSlide(index);
+        // Move lightbox to body to escape any stacking contexts
+        document.body.appendChild(lightbox);
         lightbox.classList.add('open');
         document.body.style.overflow = 'hidden';
+        document.documentElement.classList.add('lightbox-open');
       }
 
       function closeLightbox() {
@@ -601,30 +682,58 @@ const slidesData = JSON.stringify(processedImages);
         const video = lightboxMedia?.querySelector('video');
         if (video) video.pause();
 
+        // Sync main slides to the lightbox position when closing
+        goToSlide(lightboxIndex);
+
         lightbox.classList.remove('open');
         document.body.style.overflow = '';
+        document.documentElement.classList.remove('lightbox-open');
+        // Move lightbox back to component
+        component.appendChild(lightbox);
       }
 
       // Lightbox navigation
-      lightboxClose?.addEventListener('click', closeLightbox);
-      lightboxPrev?.addEventListener('click', prevSlide);
-      lightboxNext?.addEventListener('click', nextSlide);
+      lightboxClose?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+      });
+      lightboxPrev?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        prevLightboxSlide();
+      });
+      lightboxNext?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        nextLightboxSlide();
+      });
 
       // Close on backdrop click
       lightbox?.addEventListener('click', (e) => {
+        // Only close if clicking directly on the lightbox backdrop
         if (e.target === lightbox) {
           closeLightbox();
         }
       });
 
-      // Close on Escape key
+      // Also close when clicking on the content area but not on interactive elements
+      const lightboxContent = lightbox.querySelector('.lightbox-content');
+      lightboxContent?.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        // Don't close if clicking on buttons, images, captions, or dots
+        if (target.closest('button') || target.closest('img') || target.closest('iframe') ||
+            target.closest('.lightbox-caption') || target.closest('.lightbox-dots')) {
+          return;
+        }
+        closeLightbox();
+      });
+
+      // Close on Escape key and arrow key navigation in lightbox
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && lightbox.classList.contains('open')) {
           closeLightbox();
         }
         if (lightbox.classList.contains('open')) {
-          if (e.key === 'ArrowLeft') prevSlide();
-          if (e.key === 'ArrowRight') nextSlide();
+          if (e.key === 'ArrowLeft') prevLightboxSlide();
+          if (e.key === 'ArrowRight') nextLightboxSlide();
         }
       });
     });

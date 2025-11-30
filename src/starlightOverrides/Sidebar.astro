@@ -1,0 +1,108 @@
+---
+import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
+import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+import { getSidebarForPath, type SidebarItem, type SidebarSection } from '../config/sidebarConfig';
+
+// Get the current URL pathname
+const pathname = Astro.url.pathname;
+
+// Get the sidebar configuration for the current path
+const sidebarSections = getSidebarForPath(pathname);
+
+// Convert our config format to Starlight's SidebarEntry format
+type SidebarLink = {
+  type: 'link';
+  label: string;
+  href: string;
+  isCurrent: boolean;
+  badge: undefined;
+  attrs: Record<string, string>;
+};
+
+type SidebarGroup = {
+  type: 'group';
+  label: string;
+  entries: (SidebarLink | SidebarGroup)[];
+  collapsed: boolean;
+  badge: undefined;
+};
+
+type SidebarEntry = SidebarLink | SidebarGroup;
+
+function convertItem(item: SidebarItem, currentPath: string, isTopLevel: boolean = false): SidebarEntry {
+  if (item.slug) {
+    // It's a link
+    const href = '/' + item.slug + '/';
+    const normalizedCurrent = currentPath.endsWith('/') ? currentPath : currentPath + '/';
+    return {
+      type: 'link',
+      label: item.label,
+      href,
+      isCurrent: normalizedCurrent === href,
+      badge: undefined,
+      attrs: {},
+    };
+  } else if (item.items) {
+    // It's a group - top level items should NOT be collapsed
+    return {
+      type: 'group',
+      label: item.label,
+      entries: item.items.map(subItem => convertItem(subItem, currentPath, false)),
+      collapsed: isTopLevel ? false : (item.collapsed ?? false),
+      badge: undefined,
+    };
+  }
+  // Fallback - shouldn't happen with valid config
+  return {
+    type: 'link',
+    label: item.label,
+    href: '#',
+    isCurrent: false,
+    badge: undefined,
+    attrs: {},
+  };
+}
+
+function convertSections(sections: SidebarSection[], currentPath: string): { label: string; entries: SidebarEntry[] }[] {
+  return sections.map(section => ({
+    label: section.label,
+    entries: section.items.map(item => convertItem(item, currentPath, true)),
+  }));
+}
+
+const sidebarData = convertSections(sidebarSections, pathname);
+---
+
+<div class="sidebar-content-wrapper">
+  {sidebarData.map(section => (
+    <div class="sidebar-section">
+      <h2 class="sidebar-section-title">{section.label}</h2>
+      <SidebarPersister>
+        <SidebarSublist sublist={section.entries} />
+      </SidebarPersister>
+    </div>
+  ))}
+</div>
+
+<div class="md:sl-hidden">
+  <MobileMenuFooter />
+</div>
+
+<style>
+  .sidebar-content-wrapper {
+    padding-top: 0.75rem;
+  }
+
+  .sidebar-section {
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-section-title {
+    color: var(--sl-color-text-accent);
+    font-size: var(--sl-text-lg);
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+    padding: 0 0.5rem;
+  }
+</style>

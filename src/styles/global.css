@@ -1,41 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
 	--sl-content-width: 85rem !important;
-    --sl-font: 'Author-Semibold', sans-serif !important;
+    --sl-font: 'Inter', system-ui, sans-serif !important;
     --sl-color-text-accent: #43A047 !important;
+    /* Nav height for custom header: green row + dark nav bar */
+    --sl-nav-height: 5.5rem !important;
+    --sl-text-body: 0.875rem !important;
+    --sl-line-height: 1.7 !important;
 }
 
-/* Global link styling */
-a {
-    color: #43A047;
+/* Dark mode text colors */
+:root[data-theme="dark"] {
+    --sl-color-text: #ffffff !important;
+    --sl-color-white: #ffffff !important;
 }
 
-a:hover {
-    color: #2e7d32;
+/* Light mode text colors */
+:root[data-theme="light"] {
+    --sl-color-text: #1a1a1a !important;
+    --sl-color-white: #1a1a1a !important;
 }
 
-.site-title {
-    color: white;
+@media (max-width: 1350px) {
+    :root {
+        /* Mobile: just top row + padding, nav row is hidden */
+        --sl-nav-height: 3.5rem !important;
+    }
 }
 
-.site-title:hover{
-    color: white;
-}
-
-/* Ensure content links are green */
+/* Content link styling - only within page content */
 .sl-markdown-content a:not([class]) {
     color: #43A047;
-    text-decoration: underline;
-    text-decoration-color: rgba(67, 160, 71, 0.4);
-    text-underline-offset: 0.15em;
+    text-decoration: none;
 }
 
 .sl-markdown-content a:not([class]):hover {
     color: #2e7d32;
-    text-decoration-color: #2e7d32;
 }
 
 .header {
     padding-top: 0 !important;
+}
+
+/* Ensure all images maintain aspect ratio */
+.sl-markdown-content img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
 /* Hero image shadow */
@@ -45,6 +57,12 @@ img[src*="tilt-book-green"],
 [class*="hero"] img,
 section[class*="hero"] img {
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+
+/* Hero image glow in dark mode */
+:root[data-theme="dark"] img[src*="tilt-book-white"],
+:root[data-theme="dark"] .hero-image img {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.25)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.1));
 }
 
 /* Hero action button styling */
@@ -130,4 +148,49 @@ abbr.glossary-term::before {
 abbr.glossary-term:hover::before {
     opacity: 1;
     visibility: visible;
+}
+
+/* Figure styling for images with captions */
+.sl-markdown-content figure {
+    margin: 1.5rem auto;
+    max-width: 100%;
+    text-align: center;
+}
+
+.sl-markdown-content figure img,
+.sl-markdown-content figure video {
+    max-width: 100%;
+    max-height: 50vh;
+    width: auto !important;
+    height: auto !important;
+    border-radius: 0.25rem;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.sl-markdown-content figure figcaption {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.1rem;
+    color: var(--sl-color-gray-3);
+    margin-top: 0.75rem;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+:root[data-theme="light"] .sl-markdown-content figure figcaption {
+    color: var(--sl-color-gray-4);
+}
+
+/* Hide header and sidebar when lightbox is open */
+html.lightbox-open .header,
+html.lightbox-open .header-wrapper,
+html.lightbox-open header,
+html.lightbox-open nav.sidebar,
+html.lightbox-open .sidebar,
+html.lightbox-open [data-pagefind-ignore="all"] {
+    display: none !important;
 }

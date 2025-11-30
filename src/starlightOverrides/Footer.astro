@@ -3,19 +3,6 @@ import fabworksBlack from '../assets/footer/fabworks-black.svg';
 import fabworksWhite from '../assets/footer/fabworks-white.svg';
 import wcpLogo from '../assets/footer/wcp.svg';
 import Pagination from 'virtual:starlight/components/Pagination';
-
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/website-feature-guide', label: 'Website Feature Guide' },
-  { href: '/learning-course', label: 'Learning Course' },
-  { href: '/educators-guide', label: "Educator's Guide" },
-  { href: '/design-handbook', label: 'Design Handbook' },
-  { href: '/mechanism-examples', label: 'Mechanism Examples' },
-  { href: '/best-practices', label: 'Best Practices' },
-  { href: '/other-resources', label: 'Other Resources' },
-  { href: '/changelog', label: 'Changelog' },
-  { href: '/contribution', label: 'Contribution' },
-];
 ---
 
 <footer class="site-footer">
@@ -25,27 +12,9 @@ const navLinks = [
   </div>
 
   <div class="site-footer-inner">
-    <!-- Top: site links -->
-    <div class="footer-links">
-      <h2 class="footer-links-title">Site Links</h2>
-
-      <nav aria-label="Site links">
-        <ul class="footer-links-grid">
-          {navLinks.map((link) => (
-            <li>
-              <a href={link.href}>{link.label}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
-
-    <!-- Horizontal line between links and sponsors -->
-    <hr class="footer-divider" />
-
-    <!-- Bottom: sponsors -->
+    <!-- Sponsors -->
     <div class="footer-sponsors">
-      <p class="footer-powered-label">Powered by:</p>
+      <p class="footer-powered-label">FRCDesign.org is sponsored by:</p>
 
       <div class="footer-sponsor-row">
         <!-- WCP logo / link -->
@@ -119,41 +88,7 @@ const navLinks = [
     border-top: 1px solid var(--sl-color-gray-6);
   }
 
-  /* Top section: links */
-
-  .footer-links-title {
-    margin: 0 0 1rem;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--sl-color-gray-3);
-  }
-
-  .footer-links-grid {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.45rem 3rem;
-  }
-
-  .footer-links-grid a {
-    text-decoration: none;
-    color: var(--sl-color-gray-1);
-  }
-
-  .footer-links-grid a:hover {
-    text-decoration: underline;
-  }
-
-  .footer-divider {
-    margin: 2rem 0 1.75rem;
-    border: 0;
-    border-top: 1px solid var(--sl-color-gray-7);
-  }
-
-  /* Bottom section: sponsors */
+  /* Sponsors section */
 
   .footer-sponsors {
     text-align: center;
@@ -218,10 +153,6 @@ const navLinks = [
   @media (max-width: 768px) {
     .site-footer-inner {
       padding: 0 1.25rem;
-    }
-
-    .footer-links-grid {
-      gap: 0.35rem 1.5rem;
     }
 
     .footer-sponsor-row {
