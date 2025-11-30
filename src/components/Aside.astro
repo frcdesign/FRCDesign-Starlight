@@ -173,14 +173,6 @@ const icons: Record<string, string> = {
     outline: none;
   }
 
-  details.aside > summary .aside-title {
-    color: var(--aside-title-color);
-  }
-
-  details.aside > summary .aside-icon {
-    color: var(--aside-title-color);
-  }
-
   .aside-chevron {
     transition: transform 0.2s ease;
     color: var(--sl-color-gray-3);
@@ -255,6 +247,17 @@ const icons: Record<string, string> = {
     height: auto !important;
     width: auto !important;
     object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Iframe styling inside asides (Desmos, etc.) */
+  .aside-content :global(iframe) {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1 / 1;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
     display: block;
     margin: 0 auto;
   }
