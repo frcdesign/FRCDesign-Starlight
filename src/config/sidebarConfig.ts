@@ -536,17 +536,6 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
     },
   ],
 
-  // Changelog section
-  '/changelog': [
-    {
-      label: 'Changelog',
-      items: [
-        { label: 'Site Updates', slug: 'resources/site-changelog' },
-        { label: 'Reference Guide', slug: 'resources/changelog' },
-      ],
-    },
-  ],
-
   // Contribution section
   '/contribution': [
     {
