@@ -28,6 +28,13 @@
 :root[data-theme="light"] {
     --sl-color-text: #1a1a1a !important;
     --sl-color-white: #1a1a1a !important;
+
+    /* Darker aside backgrounds for better visibility in light mode */
+    --sl-color-blue-low: rgba(56, 139, 253, 0.3) !important;
+    --sl-color-green-low: rgba(67, 160, 71, 0.25) !important;
+    --sl-color-orange-low: rgba(210, 153, 34, 0.2) !important;
+    --sl-color-red-low: rgba(248, 81, 73, 0.2) !important;
+    --sl-color-purple-low: rgba(163, 113, 247, 0.3) !important;
 }
 
 @media (max-width: 1350px) {
