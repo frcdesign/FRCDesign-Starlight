@@ -6,6 +6,7 @@ description: Introduction to gears
 import Aside from '../../../../../components/Aside.astro';
 import Slides from '../../../../../components/Slides.astro';
 import ContentImage from '../../../../../components/ContentImage.astro';
+import Gif from '@components/Gif.astro';
 
 ## Power Transmissions
 In FRC, the three most common types of power transmissions are gears, chain and sprocket, and belt and pulley. Although they all achieve the same end result of changing speed and torque, they each excel in different situations. In the following sections you'll be introduced to each of them and how to model them.
@@ -19,8 +20,8 @@ Gears, sprockets, and pulleys all follow profile standards that specify how big 
 Gears are mechanical devices with teeth that mesh with each other to transmit motion or power between rotating shafts. They're like wheels with teeth that fit together, allowing them to transfer torque, change speed, and change direction of rotation.
 
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-![Simple gears animation |center|100%](/learning-course/stage1/1b/gears/simple-gears.gif)
-![Gearbox animation |center|100%](/learning-course/stage1/1b/gears/gearbox-animated.gif)
+<Gif src="/learning-course/stage1/1b/gears/simple-gears.webp" alt="Simple gears animation" />
+<Gif src="/learning-course/stage1/1b/gears/gearbox-animated.webp" alt="Gearbox animation" />
 </div>
 <figcaption>Animations of gears meshing. Notice that meshed gears will spin in opposite directions.</figcaption>
 
