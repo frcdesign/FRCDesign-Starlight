@@ -15,6 +15,10 @@
  *   Caption for slide 3
  * </Slides>
  */
+import { Image } from 'astro:assets';
+
+// Import all images from src/assets/content for optimization (exclude GIFs - they can exceed pixel limits)
+const allImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/content/**/*.{webp,png,jpg,jpeg}', { eager: true });
 
 interface SlideImage {
   src: string;
@@ -28,6 +32,14 @@ interface Props {
 
 const { images } = Astro.props;
 const rawContent = await Astro.slots.render('default') || '';
+
+// Helper to get optimized image from path
+function getOptimizedImage(srcPath: string): ImageMetadata | null {
+  // Convert /folder/image.webp to /src/assets/content/folder/image.webp
+  const assetPath = `/src/assets/content${srcPath}`;
+  const imageModule = allImages[assetPath];
+  return imageModule?.default || null;
+}
 
 // Parse captions from slot content
 // MDX may render as: <ol><li>...</li></ol>, <p>...</p><p>...</p>, or plain text with double newlines
@@ -61,7 +73,13 @@ if (rawContent) {
 const captions = images.map((img, index) => img.caption || slotCaptions[index] || '');
 
 // Process image sources - convert YouTube URLs to embeds
-function processSource(src: string): { url: string; type: 'image' | 'video' | 'youtube' } {
+interface ProcessedSource {
+  url: string;
+  type: 'image' | 'video' | 'youtube';
+  optimizedImage?: ImageMetadata | null;
+}
+
+function processSource(src: string): ProcessedSource {
   // YouTube watch URL
   if (src.includes('youtube.com/watch')) {
     const videoId = new URL(src).searchParams.get('v');
@@ -90,8 +108,9 @@ function processSource(src: string): { url: string; type: 'image' | 'video' | 'y
   if (src.endsWith('.webm') || src.endsWith('.mp4')) {
     return { url: src, type: 'video' };
   }
-  // Default to image
-  return { url: src, type: 'image' };
+  // Default to image - try to get optimized version
+  const optimizedImage = getOptimizedImage(src);
+  return { url: src, type: 'image', optimizedImage };
 }
 
 const processedImages = images.map((img, index) => ({
@@ -100,7 +119,15 @@ const processedImages = images.map((img, index) => ({
   caption: captions[index]
 }));
 
-const slidesData = JSON.stringify(processedImages);
+// For client-side lightbox, we need URLs (not optimized image objects)
+// The optimized images are rendered server-side, but lightbox needs string URLs
+const slidesDataForClient = processedImages.map(slide => ({
+  url: slide.optimizedImage ? slide.optimizedImage.src : slide.url,
+  type: slide.type,
+  alt: slide.alt,
+  caption: slide.caption
+}));
+const slidesData = JSON.stringify(slidesDataForClient);
 ---
 
 <div class="slides-component" data-slides={slidesData}>
@@ -108,13 +135,18 @@ const slidesData = JSON.stringify(processedImages);
     <div class="slides-wrapper">
       {processedImages.map((slide, index) => (
         <div class={`slide ${index === 0 ? 'active' : ''}`} data-index={index}>
-          <div class="slide-media">
+          <div class="slide-media loading">
+            <div class="slide-loader">
+              <div class="spinner"></div>
+            </div>
             {slide.type === 'youtube' ? (
               <iframe src={slide.url} allowfullscreen loading="lazy"></iframe>
             ) : slide.type === 'video' ? (
               <video controls>
                 <source src={slide.url} type={`video/${slide.url.split('.').pop()}`} />
               </video>
+            ) : slide.optimizedImage ? (
+              <Image src={slide.optimizedImage} alt={slide.alt} loading="lazy" class="slide-img" />
             ) : (
               <img src={slide.url} alt={slide.alt} loading="lazy" />
             )}
@@ -217,7 +249,7 @@ const slidesData = JSON.stringify(processedImages);
     top: 0;
     left: 0;
     width: 100%;
-    height: 60vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -236,23 +268,78 @@ const slidesData = JSON.stringify(processedImages);
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    width: 100%;
-    height: 100%;
+    position: relative;
+  }
+
+  /* Loading state */
+  .slide-loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--sl-color-gray-6);
+    border-radius: 0.25rem;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .slide-media:not(.loading) .slide-loader {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--sl-color-gray-4);
+    border-top-color: #43A047;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Hide media while loading */
+  .slide-media.loading :global(img),
+  .slide-media.loading :global(video),
+  .slide-media.loading iframe {
+    opacity: 0;
+  }
+
+  .slide-media:not(.loading) :global(img),
+  .slide-media:not(.loading) :global(video),
+  .slide-media:not(.loading) iframe {
+    opacity: 1;
+    transition: opacity 0.3s ease;
   }
 
   /* When slide contains an iframe (YouTube), constrain the media container */
   .slide-media:has(iframe) {
-    width: auto;
-    height: 58vh;
+    width: min(100%, calc(58vh * 16 / 9));
+    height: auto;
     aspect-ratio: 16 / 9;
   }
 
-  .slide-media img,
-  .slide-media video {
-    max-height: 100%;
+  .slide-media :global(img),
+  .slide-media :global(.slide-img) {
+    max-height: 60vh !important;
+    max-width: 100% !important;
+    height: auto !important;
+    width: auto !important;
+    border-radius: 0.25rem;
+    object-fit: contain;
+  }
+
+  .slide-media :global(video) {
+    max-height: 60vh;
     max-width: 100%;
-    width: auto;
     height: auto;
+    width: auto;
     border-radius: 0.25rem;
     object-fit: contain;
   }
@@ -569,6 +656,35 @@ const slidesData = JSON.stringify(processedImages);
       const lightboxNext = component.querySelector('.lightbox-next');
 
       if (!slides || slides.length === 0) return;
+
+      // Setup loading state handlers for images and iframes
+      slides.forEach((slide) => {
+        const mediaContainer = slide.querySelector('.slide-media');
+        const img = mediaContainer?.querySelector('img');
+        const iframe = mediaContainer?.querySelector('iframe');
+        const video = mediaContainer?.querySelector('video');
+
+        if (img) {
+          if (img.complete) {
+            mediaContainer?.classList.remove('loading');
+          } else {
+            img.addEventListener('load', () => {
+              mediaContainer?.classList.remove('loading');
+            });
+          }
+        } else if (iframe) {
+          iframe.addEventListener('load', () => {
+            mediaContainer?.classList.remove('loading');
+          });
+        } else if (video) {
+          video.addEventListener('loadeddata', () => {
+            mediaContainer?.classList.remove('loading');
+          });
+          if (video.readyState >= 2) {
+            mediaContainer?.classList.remove('loading');
+          }
+        }
+      });
 
       let currentIndex = 0;
       let lightboxIndex = 0;

@@ -5,6 +5,7 @@ description: Model a flat intake
 
 import Aside from '../../../../../components/Aside.astro';
 import Slides from '../../../../../components/Slides.astro';
+import ContentImage from '../../../../../components/ContentImage.astro';
 
 In this exercise, you will be modeling a sort of flat game piece manipulator. This mechanism features live-axle compliant wheels, a belt reduction, and tube plugs.
 
@@ -15,8 +16,8 @@ They can be used to connect plates to the open face of tubes or to connect tubes
 
 <Aside type="example" title="Tube Plugs">
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-  <center><img src="/learning-course/stage1/1c/flat-intake/high-tide-tube-plugs.webp" width="100%" alt="Tube to tube connection" /></center>
-  <center><img src="/learning-course/stage1/1c/flat-intake/miso-tube-plug.webp" width="100%" alt="Tube to plate connection" /></center>
+  <center><ContentImage src="/learning-course/stage1/1c/flat-intake/high-tide-tube-plugs.webp" alt="Tube to tube connection" width="100%" /></center>
+  <center><ContentImage src="/learning-course/stage1/1c/flat-intake/miso-tube-plug.webp" alt="Tube to plate connection" width="100%" /></center>
 </div>
 <figure>
   <figcaption>Tube plugs can be used to create gusset-less tube to tube (left) and tube to plate (right) connections. (Photo Credits: FRC 4414, FRC 9442)</figcaption>
@@ -29,7 +30,7 @@ Throughout the exercises in 1C you'll pick up several usage techniques for bolts
 Bolts are strong, and people often use more bolts and rivets than are necessary. When using only bolts, usually you can use 3-4 to fasten corners of a part and be fine, but you may prefer to use rivets to minimize weight or because they don't go all the way through a tube. In these cases, you can use a number of rivets easily spaced out as long as you have at least **one bolt/nut pair per attachment to prevent the rivets from loosening over time**. This is done for both this exercise and exercise 8.
 
 <figure>
-  <img src="/learning-course/stage1/1c/flat-intake/bolt-and-rivet.webp" style="width:90%; border:5px solid #ADADAD" alt="Bolt and rivet usage" />
+  <ContentImage src="/learning-course/stage1/1c/flat-intake/bolt-and-rivet.webp" alt="Bolt and rivet usage" style="width:90%; border:5px solid #ADADAD" />
 </figure>
 
 ## Part Studio Instructions

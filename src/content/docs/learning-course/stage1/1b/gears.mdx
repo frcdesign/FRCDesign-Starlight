@@ -5,6 +5,7 @@ description: Introduction to gears
 
 import Aside from '../../../../../components/Aside.astro';
 import Slides from '../../../../../components/Slides.astro';
+import ContentImage from '../../../../../components/ContentImage.astro';
 
 ## Power Transmissions
 In FRC, the three most common types of power transmissions are gears, chain and sprocket, and belt and pulley. Although they all achieve the same end result of changing speed and torque, they each excel in different situations. In the following sections you'll be introduced to each of them and how to model them.
@@ -18,8 +19,8 @@ Gears, sprockets, and pulleys all follow profile standards that specify how big 
 Gears are mechanical devices with teeth that mesh with each other to transmit motion or power between rotating shafts. They're like wheels with teeth that fit together, allowing them to transfer torque, change speed, and change direction of rotation.
 
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-<center><img src="/learning-course/stage1/1b/gears/simple-gears.gif" style="width:100%" alt="Simple gears animation" /></center>
-<center><img src="/learning-course/stage1/1b/gears/gearbox-animated.gif" style="width:100%" alt="Gearbox animation" /></center>
+<center><ContentImage src="/learning-course/stage1/1b/gears/simple-gears.gif" alt="Simple gears animation" style="width:100%" /></center>
+<center><ContentImage src="/learning-course/stage1/1b/gears/gearbox-animated.gif" alt="Gearbox animation" style="width:100%" /></center>
 </div>
 <figcaption>Animations of gears meshing. Notice that meshed gears will spin in opposite directions.</figcaption>
 
@@ -55,7 +56,7 @@ Where `PD1` and `PD2` are the *Pitch Diameters* of the two gears. The **Pitch Di
 Where DP stands for **diametral pitch**. For now, you can assume it to always be 20. If you're curious, you can learn more about this in the Design Handbook pages.
 
 <figure>
-    <img src="/learning-course/stage1/1b/gears/gear-diagram.webp" style="width:70%" alt="Gear pitch diagram" />
+    <ContentImage src="/learning-course/stage1/1b/gears/gear-diagram.webp" alt="Gear pitch diagram" style="width:70%" />
     <figcaption>Illustration of a gear's pitch diameter and outer diameter. (Image source: WCP).</figcaption>
 </figure>
 
@@ -64,7 +65,7 @@ Where DP stands for **diametral pitch**. For now, you can assume it to always be
 When modeling, an easy way to set the center-to-center distance between two gears is to draw two circles sized to the gears' pitch diameters and then set the two circles to be tangent to each other. For example, if you need to mesh a 20T gear and a 60T gear, you can draw a `20/20 = 1"` and a `60/20 = 3"` circle and add a tangent constraint between the two circles.
 
 <figure>
-<img src="/learning-course/stage1/1b/gears/gear-cad.webp" style="width:60%" alt="CAD gear modeling" />
+<ContentImage src="/learning-course/stage1/1b/gears/gear-cad.webp" alt="CAD gear modeling" style="width:60%" />
 <figcaption>Modeling gear C-C distance by constraining two pitch diameter construction circles tangent. The diameters of the circle are calculated by dividing the tooth count by DP, which is 20 in this case.</figcaption>
 </figure>
 

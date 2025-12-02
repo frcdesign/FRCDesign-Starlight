@@ -6,6 +6,7 @@ description: Model a telescoping hook
 import Aside from '../../../../../components/Aside.astro';
 import Slides from '../../../../../components/Slides.astro';
 import YouTube from '../../../../../components/YouTube.astro';
+import ContentImage from '../../../../../components/ContentImage.astro';
 
 In this exercise, you will be modeling a telescoping climber. This mechanism features [WCP GreyT telescoping bearing blocks](https://wcproducts.com/products/greyt-telescope) and [REV MAXPlanetary](https://www.revrobotics.com/frc/maxplanetary-system/) mounting gearbox plates. Be sure to pay close attention to hook and gearbox sketches when modeling.
 
@@ -20,8 +21,8 @@ This helps ensure your time is spent where it makes the most impact, rather than
 
 <Aside type="example" title="Exercise 4 COTS Components">
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-  <center><img src="/learning-course/stage1/1c/telescope/greyt.webp" width="100%" alt="GreyT Telescope" /></center>
-  <center><img src="/learning-course/stage1/1c/telescope/maxplanetary.webp" width="100%" alt="MAXPlanetary" /></center>
+  <center><ContentImage src="/learning-course/stage1/1c/telescope/greyt.webp" alt="GreyT Telescope" width="100%" /></center>
+  <center><ContentImage src="/learning-course/stage1/1c/telescope/maxplanetary.webp" alt="MAXPlanetary" width="100%" /></center>
 </div>
 <figure>
   <figcaption>The telescoping bearing blocks have complex geometry that would be difficult and time consuming to manufacture for most teams. The REV MAXPlanetary is an easy way to get a large gearbox reduction without the need for a custom gearbox. (Photo Credits: WCP, REV)</figcaption>
@@ -38,7 +39,7 @@ Alternatively, a "crush plate" can also be utilized to distribute the fastener f
 
 <Aside type="example" title="Crush Blocks and Crush Plates">
 <figure>
-  <img src="/learning-course/stage1/1c/telescope/crush-block-plate.webp" width="65%" alt="Crush block and crush plate" />
+  <ContentImage src="/learning-course/stage1/1c/telescope/crush-block-plate.webp" alt="Crush block and crush plate" width="65%" />
   <figcaption>A 3D printed crush block (left) and crush plate (right). Crush plates tend to work well for the middle of the tubes where it may be difficult to insert a crush block.</figcaption>
 </figure>
 </Aside>

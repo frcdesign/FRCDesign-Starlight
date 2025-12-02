@@ -5,6 +5,7 @@ description: Optimizing Onshape performance for your system
 
 import Aside from '../../../../../components/Aside.astro';
 import Slides from '../../../../../components/Slides.astro';
+import ContentImage from '../../../../../components/ContentImage.astro';
 
 ## Performance Tuning
 
@@ -24,15 +25,15 @@ If you are using Chrome, You can try modifying the following settings to improve
 
 - First, type `chrome://settings/` in your search bar to navigate to chrome settings. Make sure that "Use graphics acceleration when available" is enabled. Relaunch chrome if you have updated it to enable it.
 
-  <center><img src="/learning-course/course-setup/performance-tuning/graphicsacceleration.webp" style="width:80%;border:5px solid #ADADAD; border-radius: 2%" alt="Graphics acceleration setting" /></center>
+  <center><ContentImage src="/learning-course/course-setup/performance-tuning/graphicsacceleration.webp" alt="Graphics acceleration setting" style="width:80%;border:5px solid #ADADAD; border-radius: 2%" /></center>
 
 - Go to `chrome://flags/` and enable "Override Software Rendering List":
 
-  <center><img src="/learning-course/course-setup/performance-tuning/override-rendering-list.png" style="width:80%;border:5px solid #ADADAD; border-radius: 2%" alt="Override rendering list" /></center>
+  <center><ContentImage src="/learning-course/course-setup/performance-tuning/override-rendering-list.png" alt="Override rendering list" style="width:80%;border:5px solid #ADADAD; border-radius: 2%" /></center>
 
 - Finally, Try adjusting your ANGLE graphics backend:
 
-  <center><img src="/learning-course/course-setup/performance-tuning/ANGLE-backend.png" style="width:80%; border:5px solid #ADADAD; border-radius: 2%" alt="ANGLE backend" /></center>
+  <center><ContentImage src="/learning-course/course-setup/performance-tuning/ANGLE-backend.png" alt="ANGLE backend" style="width:80%; border:5px solid #ADADAD; border-radius: 2%" /></center>
 
 Please note that performance will depend on your individual computer setup. We suggest the following process:
 

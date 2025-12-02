@@ -4,6 +4,7 @@ description: Techniques and examples of 3D printing for use in FRC
 ---
 
 import Aside from '../../../../components/Aside.astro';
+import ContentImage from '../../../../components/ContentImage.astro';
 
 This guide serves to provide techniques and examples of 3D printing for use in FRC.
 
@@ -20,7 +21,7 @@ If you're new to 3D printing check out the [Intro to 3D Printing](/design-handbo
 3D printed parts can be used all over an FRC robot. From pulleys and sensor mounts to brackets and structural parts, 3D printing can be a powerful solution for creating almost anything.
 
 <center>
-  <img src="/design-handbook/design-for-3d-printing/3dp-604-robot.png" alt="604 Quixilver 2024" style="width:80%" />
+  <ContentImage src="/design-handbook/design-for-3d-printing/3dp-604-robot.png" alt="604 Quixilver 2024" style="width:80%" />
 </center>
 <center>*604 Quixilver 2024 - Extensive use of 3D printed parts*</center>
 
@@ -49,7 +50,7 @@ The first step to using 3D printing in FRC is understanding when is best to use 
 One of the most straightforward use cases for 3D printing in FRC is to make custom spacers for hex shafts. Using MKCAD you can quickly make different types of spacers and customize the length. These are very easy to print at very low cost. You may notice in the dialogue box an option for additional tolerance (Tolerance Adder). 3D printers generally can produce very precise parts, but factors like thermal expansion, filament inconsistencies, poor calibration, and other error sources can lead to part dimensions that are either larger or smaller than intended. To address this we can add tolerance (gap between two parts) so that parts will fit together well. You likely will need to find the best tolerance your specific printer can achieve, but a reasonable starting tolerance will typically be about 0.004"-0.020" (0.1mm-0.5mm) depending on the type of fit desired (interference, close, clearance).
 
 <center>
-  <img src="/design-handbook/design-for-3d-printing/3dp-spacer-example.png" alt="MKCAD Configurable Spacer" style="width:60%" />
+  <ContentImage src="/design-handbook/design-for-3d-printing/3dp-spacer-example.png" alt="MKCAD Configurable Spacer" style="width:60%" />
 </center>
 <center>*MKCAD Configurable Spacer*</center>
 
@@ -62,7 +63,7 @@ When adding bolts through box tubes, especially 1/16" tube, the force of the bol
 Due to the way 3D printers work through printing layer by layer, holes can end up becoming distorted when printed with their axis parallel to the build plate. This is because gravity will pull down on the hot filament as it's printed, creating a "squished" circle hole. One solution is printing with supports, but these supports can often be difficult to get out especially in longer holes. An easy solution to this problem is to use teardrop geometry to allow for printing without supports.
 
 <center>
-  <img src="/design-handbook/design-for-3d-printing/3dp-crush-block.png" alt="Crush block with teardrop geometry" style="width:60%" />
+  <ContentImage src="/design-handbook/design-for-3d-printing/3dp-crush-block.png" alt="Crush block with teardrop geometry" style="width:60%" />
 </center>
 <center>*Example crush block with teardrop geometry (100 degrees at top of circle)*</center>
 
@@ -73,7 +74,7 @@ Due to the way 3D printers work through printing layer by layer, holes can end u
 Pulleys can be a great option for 3D printing. 3D printing allows you to make any number of teeth and customize how the pulley will mount to other geometry.
 
 <center>
-  <img src="/design-handbook/design-for-3d-printing/3dp-custom-pulley.png" alt="MKCAD Configurable HTD Pulley" style="width:60%" />
+  <ContentImage src="/design-handbook/design-for-3d-printing/3dp-custom-pulley.png" alt="MKCAD Configurable HTD Pulley" style="width:60%" />
 </center>
 <center>*MKCAD Configurable HTD Pulley*</center>
 
@@ -84,7 +85,7 @@ Pulleys can be a great option for 3D printing. 3D printing allows you to make an
 **Hex Shaft Inserts:** Compared to metal, plastic is relatively soft and can be worn down over time. High amounts of torque from a hex shaft (especially Thunderhex, which has rounded edges) can turn the hexagonal hole of a 3D printed pulley into a round hole, eventually eliminating power transmission between the shaft and pulley. One way to fix this is by using metal inserts that help to distribute the forces of the hex shaft into the printed part away from the hex bore.
 
 <center>
-  <img src="/design-handbook/design-for-3d-printing/3dp-pulley-insert.png" alt="Thriftybot metal insert" style="width:50%" />
+  <ContentImage src="/design-handbook/design-for-3d-printing/3dp-pulley-insert.png" alt="Thriftybot metal insert" style="width:50%" />
 </center>
 <center>*Thriftybot metal insert inside of a 3D printed pulley*</center>
 
@@ -93,7 +94,7 @@ Pulleys can be a great option for 3D printing. 3D printing allows you to make an
 Gears can be 3D printed depending on their use case. In general applications with high torque requirements are not well suited for 3D printed gears. However things like claws or secondary mechanisms can benefit from the weight savings and flexibility of 3D printing.
 
 <center>
-  <img src="/design-handbook/design-for-3d-printing/3dp-3005.png" alt="3005 Robochargers 2023 Claw" style="width:60%" />
+  <ContentImage src="/design-handbook/design-for-3d-printing/3dp-3005.png" alt="3005 Robochargers 2023 Claw" style="width:60%" />
 </center>
 <center>*3005 Robochargers 2023 - Claw with 3D printed structure and gears*</center>
 
@@ -112,7 +113,7 @@ Gears can be 3D printed depending on their use case. In general applications wit
 3D printing is an exceptionally good solution when oddly shaped geometry is required.
 
 <center>
-  <img src="/design-handbook/design-for-3d-printing/3dp-5460-arm.png" alt="5460 Strike Zone 2023 Arm" style="width:60%" />
+  <ContentImage src="/design-handbook/design-for-3d-printing/3dp-5460-arm.png" alt="5460 Strike Zone 2023 Arm" style="width:60%" />
 </center>
 <center>*5460 Strike Zone 2023 - Extensive use of 3D printing for complex arm parts*</center>
 
@@ -131,7 +132,7 @@ When designing custom brackets, it's critical to think about how the part will b
 3D printing is a great solution for mounting sensors or cameras as these devices often need to be located very precisely at specific angles. 3D printing makes it very easy to iterate and optimize things like camera angles to see particular April Tags or game elements.
 
 <center>
-  <img src="/design-handbook/design-for-3d-printing/3dp-camera-mount.png" alt="6328 Camera Mount" style="width:50%" />
+  <ContentImage src="/design-handbook/design-for-3d-printing/3dp-camera-mount.png" alt="6328 Camera Mount" style="width:50%" />
 </center>
 <center>*6328 Mechanical Advantage 2024 Camera mount*</center>
 

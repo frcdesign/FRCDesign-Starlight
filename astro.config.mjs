@@ -30,6 +30,7 @@ export default defineConfig({
         Footer: './src/starlightOverrides/Footer.astro',
         Sidebar: './src/starlightOverrides/Sidebar.astro',
         Pagination: './src/starlightOverrides/Pagination.astro',
+        Hero: './src/starlightOverrides/Hero.astro',
       },
       tableOfContents: false,
       // Sidebar configuration is now managed in src/config/sidebarConfig.ts
