@@ -124,6 +124,18 @@ Props:
 - `center`: Centers the button (default: `false`)
 - `blank`: Opens in new tab (default: `true`)
 
+## Centered Text
+
+Use the `:::center` block directive to center text content:
+
+```markdown
+:::center
+**Centered text with markdown**
+:::
+```
+
+This works with any content including text, images, videos, or other elements. The directive uses the [remark-directive](https://github.com/remarkjs/remark-directive) syntax (already included in Starlight).
+
 ## Images
 
 Standard markdown images are automatically optimized. Use the extended syntax for centering, sizing, and captions.

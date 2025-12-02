@@ -570,3 +570,8 @@ html.sidebar-collapsed .sidebar-collapsed-toggle-wrapper {
     text-align: center;
     color: var(--sl-color-gray-3);
 }
+
+/* Centered content block (:::center directive) */
+.centered-content {
+    text-align: center;
+}
