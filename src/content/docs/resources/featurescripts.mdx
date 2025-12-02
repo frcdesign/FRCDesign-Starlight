@@ -1,10 +1,10 @@
 ---
 title: List of Featurescripts
 description: A comprehensive list of FRC-relevant Featurescripts for Onshape to make designing for FRC much easier.
-tableOfContents: false
 ---
 
 import Aside from '../../../components/Aside.astro';
+import { Card, CardGrid } from '@astrojs/starlight/components';
 
 Onshape has its own scripting language to create custom features to automate aspects of design called [Featurescript](https://www.onshape.com/features/custom-features). There are a lot of featurescripts (what we call the custom features) that make designing for FRC much easier.
 
@@ -14,10 +14,11 @@ The title of each featurescript or group of featurescripts links to its respecti
 
 ## Recommended
 These featurescripts are must haves to enhance your Onshape workflow. Many of these are developed by members of the FRC community and well maintained.
-
+<CardGrid>
+<Card>
 ### [Origin Cube Featurescript](https://cad.onshape.com/documents/321c197a842fc5f1a29e6621/w/fc3cdd5ca7edcd93e02f13cc/e/c66db2b954da7f29d438195a)
 
-![Origin Cube |center|80%](/resources/images/featurescripts/origin-cube.webp)
+![Origin Cube |center|80%](img/featurescripts/origin-cube.webp)
 
 - Used to create an origin reference for assembly mating
 - Optionally import design constants like bolt hole sizes, heat set insert hole sizes, etc
@@ -26,14 +27,17 @@ These featurescripts are must haves to enhance your Onshape workflow. Many of th
 
 <Aside type="tip" title="Video Example" collapse>
 <video controls>
-  <source src="/resources/images/featurescripts/origincube.webm" type="video/webm" />
+  <source src="img/featurescripts/origincube.webm" type="video/webm" />
 </video>
 <p style="text-align: center;">Origin Cube's FRC Functions enables belt and chain calculations directly inside of sketches and fully captures design intent by capturing tooth counts.</p>
 </Aside>
 
+</Card>
+<Card>
+
 ### [Belt & Chain Gen](https://cad.onshape.com/documents/53c0b14cad92676c14e04e97/w/1271c254ccb0a79563210195/e/7394c4a86d8d6c35c9a12041)
 
-![Belt & Chain Gen |center|80%](/resources/images/featurescripts/belt-chain-gen.webp)
+![Belt & Chain Gen |center|80%](img/featurescripts/belt-chain-gen.webp)
 
 - Used in conjunction with Origin Cube FRC Functions to create highly customizable belts and chains
 - Highly parametric - pulley/sprocket tooth count is automatically calculated from sketch pitch diameter.
@@ -41,94 +45,121 @@ These featurescripts are must haves to enhance your Onshape workflow. Many of th
 
 <Aside type="tip" title="Video Example" collapse>
 <video controls>
-  <source src="/resources/images/featurescripts/beltchaingen.webm" type="video/webm" />
+  <source src="img/featurescripts/beltchaingen.webm" type="video/webm" />
 </video>
 </Aside>
 
+</Card>
+<Card>
+
 ### [Robot Shaft](https://cad.onshape.com/documents/9cffa92db8b62219498f89af/w/06b332ccabc9d2e0aa0abf88/e/2e6e4b559832eeff8391e933) *(Alex's Featurescripts)*
 
-![Robot Shaft |center|80%](/resources/images/featurescripts/robot-shaft.webp)
+![Robot Shaft |center|80%](img/featurescripts/robot-shaft.webp)
 
 - Generates a shaft, with options for hex, rounded hex (13.75mm OD), MAXSpline, etc.
 - Options for retention type on both ends
 - Can be generated in-place and with offsets
 
+</Card>
+<Card>
+
 ### [Robot Spacer](https://cad.onshape.com/documents/9cffa92db8b62219498f89af/w/06b332ccabc9d2e0aa0abf88/e/2e6e4b559832eeff8391e933) *(Alex's Featurescripts)*
 
-![Robot Spacer |center|80%](/resources/images/featurescripts/robot-spacer.webp)
+![Robot Spacer |center|80%](img/featurescripts/robot-spacer.webp)
 
 - Generates a spacer, with options for round, 3/8" hex, 1/2" hex, MAXSpline, etc.
 - Can be generated in-place and with offsets
 
+</Card>
+<Card>
+
 ### [Extrude Individual](https://cad.onshape.com/documents/95c00401c440b44ad8799ef5/w/1f1ebce01a3b8eb6fa102975/e/7f62400703032fab9a7a3320) *(Julia's Featurescripts)*
 
-![Extrude Individual |center|80%](/resources/images/featurescripts/extrude-individual.webp)
+![Extrude Individual |center|80%](img/featurescripts/extrude-individual.webp)
 
 - Can extrude multiple regions as different parts with one feature, even if regions are adjacent
 - Commonly used with tube converter to make punched aluminum tubes from a top view sketch
 
 <Aside type="tip" title="Video Example" collapse>
-<video controls poster="/resources/images/featurescripts/EI.webp">
-  <source src="/resources/images/featurescripts/extrudeIndividual.mp4" type="video/mp4" />
+<video controls poster="img/featurescripts/EI.webp">
+  <source src="img/featurescripts/extrudeIndividual.mp4" type="video/mp4" />
 </video>
 </Aside>
 
+</Card>
+<Card>
+
 ### [Tube Converter](https://cad.onshape.com/documents/95c00401c440b44ad8799ef5/w/1f1ebce01a3b8eb6fa102975/e/7f62400703032fab9a7a3320) *(Julia's Featurescripts)*
 
-![Tube Converter |center|80%](/resources/images/featurescripts/tube-converter.webp)
+![Tube Converter |center|80%](img/featurescripts/tube-converter.webp)
 
 - Converts extrusions into punched tube, with customization and presets for hole pattern, wall thickness, and profile.
 - Can be slow - try moving to the end of the part studio
 
 <Aside type="tip" title="Video Example" collapse>
-<video controls poster="/resources/images/featurescripts/TC.webp">
-  <source src="/resources/images/featurescripts/tubeConverter.mp4" type="video/mp4" />
+<video controls poster="img/featurescripts/TC.webp">
+  <source src="img/featurescripts/tubeConverter.mp4" type="video/mp4" />
 </video>
 </Aside>
 
+</Card>
+<Card>
+
 ### [Part Lighten](https://cad.onshape.com/documents/028ca8fb10baf53e1f6fce96/v/821c8b51ed0953526b51926e/e/a8b9e45297aac9f5688c871d) *(2471 Featurescripts)*
 
-![Part Lighten |center|80%](/resources/images/featurescripts/part-lighten.webp)
+![Part Lighten |center|80%](img/featurescripts/part-lighten.webp)
 
 - Better control over ribs, cut depth, fillets, etc.
 - Gives a nice estimate of how much weight is being saved
 
 <Aside type="tip" title="Video Example" collapse>
 <video controls>
-  <source src="/resources/images/featurescripts/part-lighten.webm" type="video/webm" />
+  <source src="img/featurescripts/part-lighten.webm" type="video/webm" />
 </video>
 </Aside>
 
+</Card>
+<Card>
+
 ### [FilletXpert (Fillet All Edges)](https://cad.onshape.com/documents/95c00401c440b44ad8799ef5/w/1f1ebce01a3b8eb6fa102975/e/7f62400703032fab9a7a3320) *(Julia's Featurescripts)*
 
-![Fillet All Edges |center|80%](/resources/images/featurescripts/fillet-all-edges.webp)
+![Fillet All Edges |center|80%](img/featurescripts/fillet-all-edges.webp)
 
 - After selecting a face, it adds a fillet to the corners of that face (all edges normal to the selected face)
 
 <Aside type="tip" title="Video Example" collapse>
-<video controls poster="/resources/images/featurescripts/FAE.webp">
-  <source src="/resources/images/featurescripts/filletEdges.mp4" type="video/mp4" />
+<video controls poster="img/featurescripts/FAE.webp">
+  <source src="img/featurescripts/filletEdges.mp4" type="video/mp4" />
 </video>
 </Aside>
 
+</Card>
+<Card>
+
 ### [Spur Gear](https://cad.onshape.com/documents/5742c8cde4b06c68b362d748/w/b493e0cb681bbf9497d9f4b3/e/01a666571e625f8b819fd75b)
 
-![Spur Gear |center|80%](/resources/images/featurescripts/spur-gear.webp)
+![Spur Gear |center|80%](img/featurescripts/spur-gear.webp)
 
 - Generates a spur gear with with many different options
 - Can be useful for 3D-printed parts and custom sector gears
 
+</Card>
+<Card>
+
 ### [3D Printed Mass](https://cad.onshape.com/documents/95c00401c440b44ad8799ef5/w/1f1ebce01a3b8eb6fa102975/e/7f62400703032fab9a7a3320) *(Julia's Featurescripts)*
 
-![3D Printed Mass |center|80%](/resources/images/featurescripts/3D-printed.webp)
+![3D Printed Mass |center|80%](img/featurescripts/3D-printed.webp)
 
 - Modifies 3D-printed parts to have accurate mass with given material, infill, and wall thickness
 
 <Aside type="tip" title="Video Example" collapse>
-<video controls poster="/resources/images/featurescripts/3DP.webp">
-  <source src="/resources/images/featurescripts/3DPMass.mp4" type="video/mp4" />
+<video controls poster="img/featurescripts/3DP.webp">
+  <source src="img/featurescripts/3DPMass.mp4" type="video/mp4" />
 </video>
 </Aside>
+
+</Card>
+</CardGrid>
 
 ## Bundles
 The below links contain several featurescripts each that you can add all at once. The more useful featurescripts from each bundle are demonstrated further below.
@@ -157,8 +188,8 @@ Below is a list of other featurescripts that can be useful but are more niche.
 - Generates a spacer, with options for round, 3/8" hex, and 1/2" hex
 
 <Aside type="tip" title="Video Example" collapse>
-<video controls poster="/resources/images/featurescripts/S.webp">
-  <source src="/resources/images/featurescripts/spacer.mp4" type="video/mp4" />
+<video controls poster="img/featurescripts/S.webp">
+  <source src="img/featurescripts/spacer.mp4" type="video/mp4" />
 </video>
 </Aside>
 
@@ -208,8 +239,8 @@ Below is a list of other featurescripts that can be useful but are more niche.
 - Uses sketch regions to determine pocket and rib placement
 
 <Aside type="tip" title="Video Example" collapse>
-<video controls poster="/resources/images/featurescripts/V.webp">
-  <source src="/resources/images/featurescripts/vent.mp4" type="video/mp4" />
+<video controls poster="img/featurescripts/V.webp">
+  <source src="img/featurescripts/vent.mp4" type="video/mp4" />
 </video>
 </Aside>
 
