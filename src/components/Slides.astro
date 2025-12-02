@@ -105,13 +105,6 @@ const slidesData = JSON.stringify(processedImages);
 
 <div class="slides-component" data-slides={slidesData}>
   <div class="slides-main">
-    <!-- Dots above the slides -->
-    <div class="slides-dots">
-      {processedImages.map((_, index) => (
-        <button class={`dot ${index === 0 ? 'active' : ''}`} data-index={index} aria-label={`Go to slide ${index + 1}`}></button>
-      ))}
-    </div>
-
     <div class="slides-wrapper">
       {processedImages.map((slide, index) => (
         <div class={`slide ${index === 0 ? 'active' : ''}`} data-index={index}>
@@ -140,6 +133,13 @@ const slidesData = JSON.stringify(processedImages);
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </button>
+    </div>
+
+    <!-- Dots below the slides, above captions -->
+    <div class="slides-dots">
+      {processedImages.map((_, index) => (
+        <button class={`dot ${index === 0 ? 'active' : ''}`} data-index={index} aria-label={`Go to slide ${index + 1}`}></button>
+      ))}
     </div>
 
     <!-- Caption container uses CSS Grid stacking - all captions occupy same cell, tallest wins -->
@@ -305,14 +305,16 @@ const slidesData = JSON.stringify(processedImages);
   .slides-caption-container {
     display: grid;
     align-items: start;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     max-width: min(800px, 90%);
     margin-left: auto;
     margin-right: auto;
+    min-height: 3rem; /* Reserve minimum space for captions to prevent layout shift */
   }
 
-  /* All captions stack in grid cell 1/1, using opacity for show/hide */
+  /* All captions stack in grid cell 1/1 - tallest caption determines container height */
+  /* Using opacity only (not visibility) so all captions contribute to layout */
   .slides-caption {
     grid-area: 1 / 1;
     font-family: 'Inter', system-ui, sans-serif;
@@ -325,13 +327,13 @@ const slidesData = JSON.stringify(processedImages);
     width: 100%;
     box-sizing: border-box;
     opacity: 0;
-    visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.2s ease;
   }
 
   .slides-caption.active {
     opacity: 1;
-    visibility: visible;
+    pointer-events: auto;
   }
 
   /* Ensure all content within captions uses Inter */
@@ -339,12 +341,12 @@ const slidesData = JSON.stringify(processedImages);
     font-family: 'Inter', system-ui, sans-serif;
   }
 
-  /* Dots - positioned above slides */
+  /* Dots - positioned below slides, above captions */
   .slides-dots {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0 0 0.4rem 0;
+    padding: 0.75rem 0 0 0;
   }
 
   .dot {
@@ -490,7 +492,8 @@ const slidesData = JSON.stringify(processedImages);
     align-items: start;
   }
 
-  /* All lightbox captions stack in grid cell 1/1, using opacity for show/hide */
+  /* All lightbox captions stack in grid cell 1/1 - tallest caption determines container height */
+  /* Using opacity only (not visibility) so all captions contribute to layout */
   .lightbox-caption {
     grid-area: 1 / 1;
     font-family: 'Inter', system-ui, sans-serif;
@@ -503,13 +506,13 @@ const slidesData = JSON.stringify(processedImages);
     width: 100%;
     box-sizing: border-box;
     opacity: 0;
-    visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.2s ease;
   }
 
   .lightbox-caption.active {
     opacity: 1;
-    visibility: visible;
+    pointer-events: auto;
   }
 
   /* Ensure all content within lightbox captions uses Inter */
