@@ -14,6 +14,12 @@
  *   Caption for YouTube video
  * </Slides>
  *
+ * WITH CUSTOM SCALE (0-1, default 0.8):
+ * <Slides scale={0.6}>
+ *   ![](/path/to/image.webp)
+ *   Caption
+ * </Slides>
+ *
  * HTML FORMAT (also supported):
  * <Slides>
  *   <img src="/path/to/image1.webp" />
@@ -43,10 +49,15 @@ interface SlideImage {
 
 interface Props {
   images?: SlideImage[];
+  scale?: number;
 }
 
-const { images: propImages } = Astro.props;
+const { images: propImages, scale = 0.8 } = Astro.props;
 const rawContent = await Astro.slots.render('default') || '';
+
+// Clamp scale between 0.1 and 1
+const clampedScale = Math.max(0.1, Math.min(1, scale));
+const scalePercent = `${clampedScale * 100}%`;
 
 // Helper to get optimized image from path
 function getOptimizedImage(srcPath: string): ImageMetadata | null {
@@ -57,7 +68,6 @@ function getOptimizedImage(srcPath: string): ImageMetadata | null {
 }
 
 // Parse content to extract images and captions
-// Supports both new sequential format (<Image> tags with captions) and legacy format (images prop + slot captions)
 interface ParsedSlide {
   src: string;
   alt: string;
@@ -67,50 +77,31 @@ interface ParsedSlide {
 function parseSequentialContent(content: string): ParsedSlide[] {
   const slides: ParsedSlide[] = [];
 
-  // Combined regex that matches:
-  // 1. HTML img tags: <img src="..." alt="..." /> or <img src="..." alt="...">
-  // 2. Markdown images (rendered by MDX): ![alt](src) becomes <p><img src="..." alt="..."></p>
-  // The regex captures the full tag and we extract attributes from it
   const imageTagRegex = /<(?:Image|img)\s+([^>]*?)(?:\/>|>(?:<\/(?:Image|img)>)?)/gi;
-
-  // Split content by image tags
   const parts = content.split(imageTagRegex);
-
-  // Find all image tag matches to extract their attributes
   const imageMatches = [...content.matchAll(imageTagRegex)];
 
   if (imageMatches.length === 0) {
     return [];
   }
 
-  // Process each image match
   imageMatches.forEach((match, index) => {
     const attrs = match[1] || '';
-
-    // Extract src attribute
     const srcMatch = attrs.match(/src=["']([^"']+)["']/);
     const src = srcMatch ? srcMatch[1] : '';
-
-    // Extract alt attribute
     const altMatch = attrs.match(/alt=["']([^"']*?)["']/);
     const alt = altMatch ? altMatch[1] : '';
 
     if (!src) return;
 
-    // Get caption - it's the content after this image tag until the next image tag
-    // parts array alternates: [before1, attrs1, after1/before2, attrs2, after2, ...]
-    // The text after an image is at index: (index * 2) + 2
     const captionIndex = (index * 2) + 2;
     let caption = '';
 
     if (parts[captionIndex]) {
       caption = parts[captionIndex]
-        // Remove any leading/trailing HTML tags and whitespace
         .replace(/^[\s\n]*(?:<p>)?/, '')
         .replace(/(?:<\/p>)?[\s\n]*$/, '')
-        // Clean up extra paragraph tags
         .replace(/<\/p>\s*<p>/g, '<br>')
-        // Remove trailing <br> tags
         .replace(/<br\s*\/?>[\s\n]*$/, '')
         .trim();
     }
@@ -126,9 +117,7 @@ function parseLegacyCaptions(content: string, imageCount: number): string[] {
 
   if (!content) return slotCaptions;
 
-  // Check if content is wrapped in an ordered list (MDX renders numbered lines as <ol>)
   if (content.includes('<ol') && content.includes('<li>')) {
-    // Extract content from each <li> tag
     const liMatches = content.match(/<li[^>]*>([\s\S]*?)<\/li>/gi);
     if (liMatches) {
       slotCaptions = liMatches.map((li: string) =>
@@ -140,7 +129,6 @@ function parseLegacyCaptions(content: string, imageCount: number): string[] {
       );
     }
   } else {
-    // Split by </p><p> patterns, <br><br>, or double newlines
     slotCaptions = content
       .split(/<\/p>\s*<p>|<br\s*\/?>\s*<br\s*\/?>|\n\n+/)
       .map((c: string) => c.replace(/<\/?p>/g, '').trim())
@@ -153,14 +141,11 @@ function parseLegacyCaptions(content: string, imageCount: number): string[] {
 // Determine which format is being used
 let slides: ParsedSlide[] = [];
 
-// Check for sequential format (Image tags in content)
 const sequentialSlides = parseSequentialContent(rawContent);
 
 if (sequentialSlides.length > 0) {
-  // New sequential format
   slides = sequentialSlides;
 } else if (propImages && propImages.length > 0) {
-  // Legacy format with images prop
   const legacyCaptions = parseLegacyCaptions(rawContent, propImages.length);
   slides = propImages.map((img, index) => ({
     src: img.src,
@@ -177,7 +162,6 @@ interface ProcessedSource {
 }
 
 function processSource(src: string): ProcessedSource {
-  // YouTube watch URL
   if (src.includes('youtube.com/watch')) {
     const videoId = new URL(src).searchParams.get('v');
     return {
@@ -185,7 +169,6 @@ function processSource(src: string): ProcessedSource {
       type: 'youtube'
     };
   }
-  // YouTube short URL
   if (src.includes('youtu.be/')) {
     const videoId = src.split('youtu.be/')[1]?.split(/[?#]/)[0];
     return {
@@ -193,7 +176,6 @@ function processSource(src: string): ProcessedSource {
       type: 'youtube'
     };
   }
-  // YouTube embed URL (add params if missing)
   if (src.includes('youtube.com/embed')) {
     const hasParams = src.includes('?');
     return {
@@ -201,11 +183,9 @@ function processSource(src: string): ProcessedSource {
       type: 'youtube'
     };
   }
-  // Video file
   if (src.endsWith('.webm') || src.endsWith('.mp4')) {
     return { url: src, type: 'video' };
   }
-  // Default to image - try to get optimized version
   const optimizedImage = getOptimizedImage(src);
   return { url: src, type: 'image', optimizedImage };
 }
@@ -216,40 +196,46 @@ const processedImages = slides.map((slide) => ({
   caption: slide.caption
 }));
 
-// For client-side lightbox, we need URLs (not optimized image objects)
-// The optimized images are rendered server-side, but lightbox needs string URLs
+// For client-side, we need image dimensions for scaling calculations
 const slidesDataForClient = processedImages.map(slide => ({
   url: slide.optimizedImage ? slide.optimizedImage.src : slide.url,
   type: slide.type,
   alt: slide.alt,
-  caption: slide.caption
+  caption: slide.caption,
+  width: slide.optimizedImage?.width || null,
+  height: slide.optimizedImage?.height || null
 }));
 const slidesData = JSON.stringify(slidesDataForClient);
+const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<div class="slides-component" data-slides={slidesData}>
+<div class="slides-component" data-slides={slidesData} data-slide-id={slideId} style={`--slides-scale: ${scalePercent};`}>
   <div class="slides-main">
-    <div class="slides-wrapper">
-      {processedImages.map((slide, index) => (
-        <div class={`slide ${index === 0 ? 'active' : ''}`} data-index={index}>
-          <div class="slide-media loading">
-            <div class="slide-loader">
-              <div class="spinner"></div>
+    <div class="slides-container">
+      <div class="slides-wrapper">
+        {processedImages.map((slide, index) => (
+          <div class={`slide ${index === 0 ? 'active' : ''}`} data-index={index}>
+            <div class="slide-media loading">
+              <div class="slide-loader">
+                <div class="spinner"></div>
+              </div>
+              {slide.type === 'youtube' ? (
+                <div class="youtube-wrapper">
+                  <iframe src={slide.url} allowfullscreen loading="lazy"></iframe>
+                </div>
+              ) : slide.type === 'video' ? (
+                <video controls>
+                  <source src={slide.url} type={`video/${slide.url.split('.').pop()}`} />
+                </video>
+              ) : slide.optimizedImage ? (
+                <Image src={slide.optimizedImage} alt={slide.alt} loading="lazy" class="slide-img" />
+              ) : (
+                <img src={slide.url} alt={slide.alt} loading="lazy" />
+              )}
             </div>
-            {slide.type === 'youtube' ? (
-              <iframe src={slide.url} allowfullscreen loading="lazy"></iframe>
-            ) : slide.type === 'video' ? (
-              <video controls>
-                <source src={slide.url} type={`video/${slide.url.split('.').pop()}`} />
-              </video>
-            ) : slide.optimizedImage ? (
-              <Image src={slide.optimizedImage} alt={slide.alt} loading="lazy" class="slide-img" />
-            ) : (
-              <img src={slide.url} alt={slide.alt} loading="lazy" />
-            )}
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
       <button class="slides-nav slides-prev" aria-label="Previous slide">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -264,14 +250,6 @@ const slidesData = JSON.stringify(slidesDataForClient);
       </button>
     </div>
 
-    <!-- Dots below the slides, above captions -->
-    <div class="slides-dots">
-      {processedImages.map((_, index) => (
-        <button class={`dot ${index === 0 ? 'active' : ''}`} data-index={index} aria-label={`Go to slide ${index + 1}`}></button>
-      ))}
-    </div>
-
-    <!-- Caption container uses CSS Grid stacking - all captions occupy same cell, tallest wins -->
     <div class="slides-caption-container">
       {processedImages.map((slide, index) => (
         <p
@@ -281,9 +259,14 @@ const slidesData = JSON.stringify(slidesDataForClient);
         ></p>
       ))}
     </div>
+
+    <div class="slides-dots">
+      {processedImages.map((_, index) => (
+        <button class={`dot ${index === 0 ? 'active' : ''}`} data-index={index} aria-label={`Go to slide ${index + 1}`}></button>
+      ))}
+    </div>
   </div>
 
-  <!-- Lightbox -->
   <div class="lightbox" aria-hidden="true">
     <button class="lightbox-close" aria-label="Close lightbox">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -293,7 +276,7 @@ const slidesData = JSON.stringify(slidesDataForClient);
     </button>
 
     <div class="lightbox-content">
-      <div class="lightbox-media-wrapper">
+      <div class="lightbox-media-container">
         <button class="lightbox-nav lightbox-prev" aria-label="Previous slide">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
@@ -308,7 +291,7 @@ const slidesData = JSON.stringify(slidesDataForClient);
           </svg>
         </button>
       </div>
-      <!-- Lightbox captions use CSS Grid stacking - all captions in same cell, tallest wins -->
+
       <div class="lightbox-caption-container">
         {processedImages.map((slide, index) => (
           <p
@@ -318,7 +301,12 @@ const slidesData = JSON.stringify(slidesDataForClient);
           ></p>
         ))}
       </div>
-      <div class="lightbox-dots"></div>
+
+      <div class="lightbox-dots">
+        {processedImages.map((_, index) => (
+          <button class={`dot ${index === 0 ? 'active' : ''}`} data-index={index} aria-label={`Go to slide ${index + 1}`}></button>
+        ))}
+      </div>
     </div>
   </div>
 </div>
@@ -329,19 +317,32 @@ const slidesData = JSON.stringify(slidesDataForClient);
     margin: 1.5rem 0;
   }
 
+  .slides-component * {
+    box-sizing: border-box;
+  }
+
   .slides-main {
     position: relative;
   }
 
-  .slides-wrapper {
+  .slides-container {
     position: relative;
-    height: 60vh;
-    min-height: 60vh;
-    max-height: 60vh;
-    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .slide {
+  .slides-wrapper {
+    position: relative;
+    width: var(--slides-scale, 80%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide,
+  .slide:first-child,
+  .slide:first-of-type {
     position: absolute;
     top: 0;
     left: 0;
@@ -353,6 +354,9 @@ const slidesData = JSON.stringify(slidesDataForClient);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s ease;
+    margin: 0;
+    margin-top: 0;
+    padding: 0;
   }
 
   .slide.active {
@@ -366,9 +370,10 @@ const slidesData = JSON.stringify(slidesDataForClient);
     align-items: center;
     cursor: pointer;
     position: relative;
+    width: 100%;
+    height: 100%;
   }
 
-  /* Loading state */
   .slide-loader {
     position: absolute;
     inset: 0;
@@ -401,7 +406,6 @@ const slidesData = JSON.stringify(slidesDataForClient);
     }
   }
 
-  /* Hide media while loading */
   .slide-media.loading :global(img),
   .slide-media.loading :global(video),
   .slide-media.loading iframe {
@@ -415,41 +419,34 @@ const slidesData = JSON.stringify(slidesDataForClient);
     transition: opacity 0.3s ease;
   }
 
-  /* When slide contains an iframe (YouTube), constrain the media container */
-  .slide-media:has(iframe) {
-    width: min(100%, calc(58vh * 16 / 9));
-    height: auto;
-    aspect-ratio: 16 / 9;
-  }
-
   .slide-media :global(img),
   .slide-media :global(.slide-img) {
-    max-height: 60vh !important;
-    max-width: 100% !important;
-    height: auto !important;
-    width: auto !important;
+    max-width: 100%;
+    height: auto;
     border-radius: 0.25rem;
     object-fit: contain;
   }
 
   .slide-media :global(video) {
-    max-height: 60vh;
     max-width: 100%;
     height: auto;
-    width: auto;
     border-radius: 0.25rem;
     object-fit: contain;
   }
 
-  .slide-media iframe {
-    /* Fill the container which has the aspect ratio */
+  .youtube-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .youtube-wrapper iframe {
     width: 100%;
     height: 100%;
     border: none;
     border-radius: 0.25rem;
   }
 
-  /* Navigation arrows - positioned on the image */
+  /* Navigation arrows - centered on the slides container edges */
   .slides-nav {
     position: absolute;
     top: 50%;
@@ -478,27 +475,24 @@ const slidesData = JSON.stringify(slidesDataForClient);
   }
 
   .slides-prev {
-    left: 0.5rem;
+    left: 0;
   }
 
   .slides-next {
-    right: 0.5rem;
+    right: 0;
   }
 
-  /* Caption container uses CSS Grid stacking - all captions in same cell, tallest wins */
+  /* Caption container uses CSS Grid stacking */
   .slides-caption-container {
     display: grid;
     align-items: start;
-    padding-top: 0.5rem;
+    padding-top: 1rem;
     padding-bottom: 0.5rem;
-    max-width: min(800px, 90%);
+    max-width: var(--slides-scale, 80%);
     margin-left: auto;
     margin-right: auto;
-    min-height: 3rem; /* Reserve minimum space for captions to prevent layout shift */
   }
 
-  /* All captions stack in grid cell 1/1 - tallest caption determines container height */
-  /* Using opacity only (not visibility) so all captions contribute to layout */
   .slides-caption {
     grid-area: 1 / 1;
     font-family: 'Inter', system-ui, sans-serif;
@@ -520,20 +514,22 @@ const slidesData = JSON.stringify(slidesDataForClient);
     pointer-events: auto;
   }
 
-  /* Ensure all content within captions uses Inter */
   .slides-caption :global(*) {
     font-family: 'Inter', system-ui, sans-serif;
   }
 
-  /* Dots - positioned below slides, above captions */
+  /* Dots - below captions */
   .slides-dots {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.75rem 0 0 0;
+    padding: 0.5rem 0 0 0;
+    margin: 0;
   }
 
-  .dot {
+  .dot,
+  .dot:first-child,
+  .dot:first-of-type {
     width: 0.75rem;
     height: 0.75rem;
     border-radius: 50%;
@@ -541,8 +537,9 @@ const slidesData = JSON.stringify(slidesDataForClient);
     border: none;
     cursor: pointer;
     padding: 0;
-    transition: background-color 0.2s, transform 0.2s;
+    margin: 0;
     margin-top: 0;
+    transition: background-color 0.2s, transform 0.2s;
   }
 
   .dot:hover {
@@ -551,16 +548,17 @@ const slidesData = JSON.stringify(slidesDataForClient);
   }
 
   .dot.active {
-    background: #43A047
+    background: #43A047;
   }
 
-  /* Lightbox styles - full screen overlay */
+  /* Lightbox */
   .lightbox {
     display: none;
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.85);
     z-index: 99999;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: hidden;
@@ -598,19 +596,22 @@ const slidesData = JSON.stringify(slidesDataForClient);
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
     max-width: 100%;
     max-height: 100%;
-    padding: 1rem;
+    padding: 3rem 1rem 1rem 1rem;
     box-sizing: border-box;
     overflow: hidden;
   }
 
-  .lightbox-media-wrapper {
+  .lightbox-media-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    max-width: 100%;
+    width: 100%;
+    max-width: 90vw;
+    flex: 1;
+    min-height: 0;
   }
 
   .lightbox-nav {
@@ -625,6 +626,7 @@ const slidesData = JSON.stringify(slidesDataForClient);
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0 1rem;
   }
 
   .lightbox-nav:hover {
@@ -642,42 +644,57 @@ const slidesData = JSON.stringify(slidesDataForClient);
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    max-width: calc(100% - 8rem);
+    max-width: calc(90vw - 10rem);
+    max-height: 70vh;
+    position: relative;
+    min-width: 200px;
+    min-height: 150px;
   }
 
   .lightbox-media :global(img) {
     max-width: 100%;
-    max-height: 75vh;
+    max-height: 70vh;
     width: auto;
     height: auto;
     object-fit: contain;
+    border-radius: 0.25rem;
+    transition: opacity 0.2s ease;
   }
 
   .lightbox-media :global(video) {
     max-width: 100%;
-    max-height: 75vh;
+    max-height: 70vh;
     width: auto;
     height: auto;
+    border-radius: 0.25rem;
+    transition: opacity 0.2s ease;
   }
 
   .lightbox-media :global(iframe) {
-    width: 80vw;
-    max-width: 1200px;
-    aspect-ratio: 16 / 9;
-    border: none;
+    transition: opacity 0.2s ease;
   }
 
-  /* Lightbox caption container uses CSS Grid stacking - all captions in same cell, tallest wins */
+  .lightbox-media :global(.youtube-wrapper) {
+    width: min(80vw, calc(70vh * 16 / 9));
+    aspect-ratio: 16 / 9;
+  }
+
+  .lightbox-media :global(.youtube-wrapper iframe) {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0.25rem;
+  }
+
+  /* Lightbox caption container */
   .lightbox-caption-container {
     width: 100%;
     max-width: min(800px, 90%);
-    margin: 1rem 0 0.5rem 0;
     display: grid;
     align-items: start;
+    padding-top: 1rem;
   }
 
-  /* All lightbox captions stack in grid cell 1/1 - tallest caption determines container height */
-  /* Using opacity only (not visibility) so all captions contribute to layout */
   .lightbox-caption {
     grid-area: 1 / 1;
     font-family: 'Inter', system-ui, sans-serif;
@@ -699,36 +716,28 @@ const slidesData = JSON.stringify(slidesDataForClient);
     pointer-events: auto;
   }
 
-  /* Ensure all content within lightbox captions uses Inter */
   .lightbox-caption :global(*) {
     font-family: 'Inter', system-ui, sans-serif;
   }
 
+  /* Lightbox dots - below captions */
   .lightbox-dots {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.5rem 0;
+    padding: 0.75rem 0 0.5rem 0;
+    margin: 0;
   }
 
-  .lightbox-dots :global(.dot) {
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 50%;
+  .lightbox-dots .dot {
     background: rgba(255, 255, 255, 0.4);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background-color 0.2s, transform 0.2s;
-    margin-top: 0;
   }
 
-  .lightbox-dots :global(.dot:hover) {
+  .lightbox-dots .dot:hover {
     background: rgba(255, 255, 255, 0.7);
-    transform: scale(1.15);
   }
 
-  .lightbox-dots :global(.dot.active) {
+  .lightbox-dots .dot.active {
     background: #43A047;
   }
 </style>
@@ -737,74 +746,205 @@ const slidesData = JSON.stringify(slidesDataForClient);
   function initSlides() {
     document.querySelectorAll('.slides-component').forEach((component) => {
       const slidesData = JSON.parse(component.getAttribute('data-slides') || '[]');
+      const slideId = component.getAttribute('data-slide-id');
+
+      // Skip if already initialized
+      if (component.hasAttribute('data-initialized')) return;
+      component.setAttribute('data-initialized', 'true');
+
+      const slidesWrapper = component.querySelector('.slides-wrapper') as HTMLElement;
+      const slidesContainer = component.querySelector('.slides-container') as HTMLElement;
       const slides = component.querySelectorAll('.slide');
       const dots = component.querySelectorAll('.slides-main .dot');
       const captions = component.querySelectorAll('.slides-caption');
-      const prevBtn = component.querySelector('.slides-prev');
-      const nextBtn = component.querySelector('.slides-next');
+      const prevBtn = component.querySelector('.slides-prev') as HTMLElement;
+      const nextBtn = component.querySelector('.slides-next') as HTMLElement;
 
-      // Lightbox elements
       const lightbox = component.querySelector('.lightbox') as HTMLElement;
       const lightboxMedia = component.querySelector('.lightbox-media') as HTMLElement;
       const lightboxCaptions = component.querySelectorAll('.lightbox-caption');
-      const lightboxDots = component.querySelector('.lightbox-dots') as HTMLElement;
+      const lightboxDots = component.querySelectorAll('.lightbox-dots .dot');
       const lightboxClose = component.querySelector('.lightbox-close');
       const lightboxPrev = component.querySelector('.lightbox-prev');
       const lightboxNext = component.querySelector('.lightbox-next');
 
       if (!slides || slides.length === 0) return;
 
-      // Setup loading state handlers for images and iframes
-      slides.forEach((slide) => {
+      let currentIndex = 0;
+      let lightboxIndex = 0;
+      let imagesLoaded = 0;
+      const totalImages = slidesData.filter((s: any) => s.type === 'image').length;
+
+      // Track image dimensions for scaling
+      interface ImageDimensions {
+        width: number;
+        height: number;
+        aspectRatio: number;
+      }
+      const imageDimensions: (ImageDimensions | null)[] = [];
+
+      // Calculate and apply uniform scaling
+      function calculateScaling() {
+        if (imageDimensions.length === 0) return;
+
+        // Find the widest aspect ratio (will be scaled to 100% width of wrapper)
+        let widestAspectRatio = 0;
+        let referenceHeight = 0;
+
+        imageDimensions.forEach((dim, index) => {
+          if (dim && dim.aspectRatio > widestAspectRatio) {
+            widestAspectRatio = dim.aspectRatio;
+          }
+        });
+
+        // Also consider YouTube videos as 16:9
+        slidesData.forEach((slide: any, index: number) => {
+          if (slide.type === 'youtube') {
+            const youtubeAspectRatio = 16 / 9;
+            if (youtubeAspectRatio > widestAspectRatio) {
+              widestAspectRatio = youtubeAspectRatio;
+            }
+          }
+        });
+
+        // The widest image takes 100% width of wrapper (which is scale% of container)
+        // Calculate height based on wrapper width and widest aspect ratio
+        const wrapperWidth = slidesWrapper.offsetWidth;
+        referenceHeight = wrapperWidth / widestAspectRatio;
+
+        // Set wrapper height
+        slidesWrapper.style.height = `${referenceHeight}px`;
+
+        // Scale each slide's content to match reference height
+        slides.forEach((slide, index) => {
+          const media = slide.querySelector('.slide-media') as HTMLElement;
+          const img = media?.querySelector('img') as HTMLImageElement;
+          const youtubeWrapper = media?.querySelector('.youtube-wrapper') as HTMLElement;
+          const video = media?.querySelector('video') as HTMLVideoElement;
+
+          if (img && imageDimensions[index]) {
+            // Scale image to reference height
+            const dim = imageDimensions[index]!;
+            const scaledWidth = referenceHeight * dim.aspectRatio;
+            img.style.height = `${referenceHeight}px`;
+            img.style.width = `${scaledWidth}px`;
+            img.style.maxHeight = 'none';
+            img.style.maxWidth = 'none';
+          } else if (youtubeWrapper) {
+            // YouTube: 16:9 at reference height
+            const scaledWidth = referenceHeight * (16 / 9);
+            youtubeWrapper.style.height = `${referenceHeight}px`;
+            youtubeWrapper.style.width = `${scaledWidth}px`;
+          } else if (video && imageDimensions[index]) {
+            const dim = imageDimensions[index]!;
+            const scaledWidth = referenceHeight * dim.aspectRatio;
+            video.style.height = `${referenceHeight}px`;
+            video.style.width = `${scaledWidth}px`;
+          }
+        });
+
+        // Position arrows outside the slides wrapper
+        const containerRect = slidesContainer.getBoundingClientRect();
+        const wrapperRect = slidesWrapper.getBoundingClientRect();
+        const leftOffset = wrapperRect.left - containerRect.left;
+        const rightOffset = containerRect.right - wrapperRect.right;
+        const arrowGap = 12; // gap between arrow and image edge
+
+        prevBtn.style.left = `${leftOffset - prevBtn.offsetWidth - arrowGap}px`;
+        nextBtn.style.right = `${rightOffset - nextBtn.offsetWidth - arrowGap}px`;
+      }
+
+      // Load and measure images
+      slides.forEach((slide, index) => {
         const mediaContainer = slide.querySelector('.slide-media');
-        const img = mediaContainer?.querySelector('img');
+        const img = mediaContainer?.querySelector('img') as HTMLImageElement;
         const iframe = mediaContainer?.querySelector('iframe');
-        const video = mediaContainer?.querySelector('video');
+        const video = mediaContainer?.querySelector('video') as HTMLVideoElement;
 
         if (img) {
-          if (img.complete) {
+          const measureImage = () => {
+            imageDimensions[index] = {
+              width: img.naturalWidth,
+              height: img.naturalHeight,
+              aspectRatio: img.naturalWidth / img.naturalHeight
+            };
             mediaContainer?.classList.remove('loading');
+            imagesLoaded++;
+            if (imagesLoaded >= totalImages) {
+              calculateScaling();
+            }
+          };
+
+          if (img.complete && img.naturalWidth > 0) {
+            measureImage();
           } else {
-            img.addEventListener('load', () => {
-              mediaContainer?.classList.remove('loading');
-            });
+            img.addEventListener('load', measureImage);
           }
         } else if (iframe) {
+          // YouTube - use 16:9 aspect ratio
+          imageDimensions[index] = {
+            width: 16,
+            height: 9,
+            aspectRatio: 16 / 9
+          };
           iframe.addEventListener('load', () => {
             mediaContainer?.classList.remove('loading');
           });
-        } else if (video) {
-          video.addEventListener('loadeddata', () => {
-            mediaContainer?.classList.remove('loading');
-          });
-          if (video.readyState >= 2) {
-            mediaContainer?.classList.remove('loading');
+          // Consider it loaded for scaling purposes
+          imagesLoaded++;
+          if (imagesLoaded >= totalImages) {
+            calculateScaling();
           }
+        } else if (video) {
+          const measureVideo = () => {
+            imageDimensions[index] = {
+              width: video.videoWidth,
+              height: video.videoHeight,
+              aspectRatio: video.videoWidth / video.videoHeight
+            };
+            mediaContainer?.classList.remove('loading');
+            imagesLoaded++;
+            if (imagesLoaded >= totalImages) {
+              calculateScaling();
+            }
+          };
+
+          if (video.readyState >= 1) {
+            measureVideo();
+          } else {
+            video.addEventListener('loadedmetadata', measureVideo);
+          }
+        } else {
+          imageDimensions[index] = null;
         }
       });
 
-      let currentIndex = 0;
-      let lightboxIndex = 0;
+      // If no images to load, calculate immediately
+      if (totalImages === 0) {
+        calculateScaling();
+      }
 
-      // Update main slideshow (not lightbox)
+      // Recalculate on resize
+      let resizeTimeout: number;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = window.setTimeout(calculateScaling, 100);
+      });
+
       function goToSlide(index: number) {
-        // Pause any playing videos
         slides.forEach((slide) => {
           const video = slide.querySelector('video');
           if (video) video.pause();
         });
 
-        // Update slides
         slides.forEach((slide, i) => {
           slide.classList.toggle('active', i === index);
         });
 
-        // Update dots
         dots.forEach((dot, i) => {
           dot.classList.toggle('active', i === index);
         });
 
-        // Update captions (CSS grid stacking handles height automatically)
         captions.forEach((caption, i) => {
           caption.classList.toggle('active', i === index);
         });
@@ -820,7 +960,6 @@ const slidesData = JSON.stringify(slidesDataForClient);
         goToSlide((currentIndex - 1 + slides.length) % slides.length);
       }
 
-      // Lightbox-only navigation (doesn't affect main slides)
       function goToLightboxSlide(index: number) {
         lightboxIndex = index;
         renderLightboxSlide(index);
@@ -834,7 +973,6 @@ const slidesData = JSON.stringify(slidesDataForClient);
         goToLightboxSlide((lightboxIndex - 1 + slides.length) % slides.length);
       }
 
-      // Main slideshow navigation
       prevBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
         prevSlide();
@@ -847,7 +985,6 @@ const slidesData = JSON.stringify(slidesDataForClient);
         dot.addEventListener('click', () => goToSlide(index));
       });
 
-      // Click on media to open lightbox
       slides.forEach((slide, index) => {
         const media = slide.querySelector('.slide-media');
         media?.addEventListener('click', () => {
@@ -855,56 +992,66 @@ const slidesData = JSON.stringify(slidesDataForClient);
         });
       });
 
-      // Lightbox functions
       function renderLightboxSlide(index: number) {
         const slide = slidesData[index];
         if (!slide || !lightboxMedia) return;
 
-        // Pause any existing videos in lightbox
         const existingVideo = lightboxMedia.querySelector('video');
         if (existingVideo) existingVideo.pause();
 
-        // Render media
+        // Show loading spinner (inline styles since dynamically created)
+        lightboxMedia.innerHTML = `<div style="position:absolute;display:flex;justify-content:center;align-items:center;inset:0;"><div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.3);border-top-color:#43A047;border-radius:50%;animation:spin 0.8s linear infinite;"></div></div>`;
+
         if (slide.type === 'youtube') {
-          lightboxMedia.innerHTML = `<iframe src="${slide.url}" allowfullscreen></iframe>`;
+          const iframe = document.createElement('iframe');
+          iframe.src = slide.url;
+          iframe.allowFullscreen = true;
+          iframe.style.opacity = '0';
+          const wrapper = document.createElement('div');
+          wrapper.className = 'youtube-wrapper';
+          wrapper.appendChild(iframe);
+          lightboxMedia.appendChild(wrapper);
+          iframe.onload = () => {
+            iframe.style.opacity = '1';
+            const loader = lightboxMedia.querySelector('div[style*="position:absolute"]');
+            if (loader) loader.remove();
+          };
         } else if (slide.type === 'video') {
-          lightboxMedia.innerHTML = `<video controls><source src="${slide.url}" type="video/${slide.url.split('.').pop()}"></video>`;
+          const video = document.createElement('video');
+          video.controls = true;
+          video.innerHTML = `<source src="${slide.url}" type="video/${slide.url.split('.').pop()}">`;
+          video.style.opacity = '0';
+          lightboxMedia.appendChild(video);
+          video.onloadeddata = () => {
+            video.style.opacity = '1';
+            const loader = lightboxMedia.querySelector('div[style*="position:absolute"]');
+            if (loader) loader.remove();
+          };
         } else {
-          lightboxMedia.innerHTML = `<img src="${slide.url}" alt="${slide.alt || ''}">`;
+          const img = document.createElement('img');
+          img.src = slide.url;
+          img.alt = slide.alt || '';
+          img.style.opacity = '0';
+          lightboxMedia.appendChild(img);
+          img.onload = () => {
+            img.style.opacity = '1';
+            const loader = lightboxMedia.querySelector('div[style*="position:absolute"]');
+            if (loader) loader.remove();
+          };
         }
 
-        // Update captions (CSS grid stacking handles height automatically)
         lightboxCaptions.forEach((caption, i) => {
           caption.classList.toggle('active', i === index);
         });
 
-        // Update dots
-        if (lightboxDots) {
-          lightboxDots.querySelectorAll('.dot').forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-          });
-        }
+        lightboxDots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
       }
 
       function openLightbox(index: number) {
         lightboxIndex = index;
-
-        // Create dots in lightbox
-        if (lightboxDots) {
-          lightboxDots.innerHTML = slidesData.map((_: any, i: number) =>
-            `<button class="dot ${i === index ? 'active' : ''}" data-index="${i}" aria-label="Go to slide ${i + 1}"></button>`
-          ).join('');
-
-          // Add click handlers to lightbox dots
-          lightboxDots.querySelectorAll('.dot').forEach((dot, i) => {
-            dot.addEventListener('click', () => {
-              goToLightboxSlide(i);
-            });
-          });
-        }
-
         renderLightboxSlide(index);
-        // Move lightbox to body to escape any stacking contexts
         document.body.appendChild(lightbox);
         lightbox.classList.add('open');
         document.body.style.overflow = 'hidden';
@@ -912,21 +1059,17 @@ const slidesData = JSON.stringify(slidesDataForClient);
       }
 
       function closeLightbox() {
-        // Pause any playing videos
         const video = lightboxMedia?.querySelector('video');
         if (video) video.pause();
 
-        // Sync main slides to the lightbox position when closing
         goToSlide(lightboxIndex);
 
         lightbox.classList.remove('open');
         document.body.style.overflow = '';
         document.documentElement.classList.remove('lightbox-open');
-        // Move lightbox back to component
         component.appendChild(lightbox);
       }
 
-      // Lightbox navigation
       lightboxClose?.addEventListener('click', (e) => {
         e.stopPropagation();
         closeLightbox();
@@ -940,19 +1083,22 @@ const slidesData = JSON.stringify(slidesDataForClient);
         nextLightboxSlide();
       });
 
-      // Close on backdrop click
+      lightboxDots.forEach((dot, index) => {
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          goToLightboxSlide(index);
+        });
+      });
+
       lightbox?.addEventListener('click', (e) => {
-        // Only close if clicking directly on the lightbox backdrop
         if (e.target === lightbox) {
           closeLightbox();
         }
       });
 
-      // Also close when clicking on the content area but not on interactive elements
       const lightboxContent = lightbox.querySelector('.lightbox-content');
       lightboxContent?.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
-        // Don't close if clicking on buttons, images, captions, or dots
         if (target.closest('button') || target.closest('img') || target.closest('iframe') ||
             target.closest('.lightbox-caption') || target.closest('.lightbox-dots')) {
           return;
@@ -960,16 +1106,19 @@ const slidesData = JSON.stringify(slidesDataForClient);
         closeLightbox();
       });
 
-      // Close on Escape key and arrow key navigation in lightbox
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox.classList.contains('open')) {
-          closeLightbox();
-        }
+      const handleKeydown = (e: KeyboardEvent) => {
         if (lightbox.classList.contains('open')) {
-          if (e.key === 'ArrowLeft') prevLightboxSlide();
-          if (e.key === 'ArrowRight') nextLightboxSlide();
+          if (e.key === 'Escape') {
+            closeLightbox();
+          } else if (e.key === 'ArrowLeft') {
+            prevLightboxSlide();
+          } else if (e.key === 'ArrowRight') {
+            nextLightboxSlide();
+          }
         }
-      });
+      };
+
+      document.addEventListener('keydown', handleKeydown);
     });
   }
 

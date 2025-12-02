@@ -59,7 +59,7 @@ Types: `note`, `tip`, `caution`, `danger`, `example`
 
 Image and video slideshow with lightbox support. Images are automatically optimized when placed in `src/assets/content/`.
 
-**Markdown format (preferred):**
+**Format:** Each slide is an image immediately followed by its caption:
 
 ```mdx
 import Slides from '@components/Slides.astro';
@@ -76,22 +76,21 @@ import Slides from '@components/Slides.astro';
 </Slides>
 ```
 
-**Legacy format (still supported):**
+**With custom scale** (0.1 to 1, default is 0.8):
 
 ```mdx
-<Slides images={[
-  { src: "/path/to/image1.webp", alt: "Description" },
-  { src: "/path/to/image2.webp" },
-]}>
-  Caption for slide 1
-
-  Caption for slide 2
+<Slides scale={0.6}>
+  ![](/path/to/image.webp)
+  A smaller slideshow at 60% width
 </Slides>
 ```
 
+Props:
+- `scale`: Controls the width of the slideshow (default: `0.8` = 80% width)
+
 Supported media types:
 - Images (`.webp`, `.png`, `.jpg`, `.jpeg`) - automatically optimized
-- YouTube videos (watch URLs, embed URLs, or short URLs)
+- YouTube videos (watch URLs, embed URLs, or short URLs) - displayed at 16:9
 - Video files (`.webm`, `.mp4`)
 
 ### YouTube
