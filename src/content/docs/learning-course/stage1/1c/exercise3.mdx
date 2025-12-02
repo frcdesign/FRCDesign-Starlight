@@ -61,96 +61,90 @@ When inserting a block motor from FRCDesignLib, it is important to use the "Diff
 
 **Navigate to the "Exercise #3 Part Studio" tab** in your copied document and **follow the instructions in the slides** to complete the part studio for this exercise.
 
-<Slides images={[
-  { src: "/learning-course/stage1/1c/shooter/parts-0.webp" },
-  { src: "/learning-course/stage1/1c/shooter/parts-1.webp" },
-  { src: "/learning-course/stage1/1c/shooter/parts-2.webp" },
-  { src: "/learning-course/stage1/1c/shooter/parts-3.webp" },
-  { src: "/learning-course/stage1/1c/shooter/parts-4.webp" },
-  { src: "/learning-course/stage1/1c/shooter/parts-5.webp" },
-  { src: "/learning-course/stage1/1c/shooter/parts-6.webp" },
-  { src: "/learning-course/stage1/1c/shooter/parts-7.webp" },
-  { src: "https://www.youtube.com/embed/rGf0Vt8ahOQ" },
-  { src: "https://www.youtube.com/embed/DUJ8MbPS4Zg" },
-  { src: "/learning-course/stage1/1c/shooter/parts-10.webp" },
-  { src: "https://www.youtube.com/embed/wFNDLm2Tisc" },
-  { src: "https://www.youtube.com/embed/L8HWApw3luM" },
-  { src: "/learning-course/stage1/1c/shooter/parts-13.webp" },
-  { src: "/learning-course/stage1/1c/shooter/parts-0.webp" }
-]}>
+<Slides>
+  ![](/learning-course/stage1/1c/shooter/parts-0.webp)
+  Final Part Studio.
 
-0. Final Part Studio.
+  ![](/learning-course/stage1/1c/shooter/parts-1.webp)
+  Create the layout sketch on the Right plane. Begin by sketching the 4" shooter wheel, 2" feeder wheel, and the ball path.
 
-1. Create the layout sketch on the Right plane. Begin by sketching the 4" shooter wheel, 2" feeder wheel, and the ball path.
+  ![](/learning-course/stage1/1c/shooter/parts-2.webp)
+  On the right plane, create a new sketch with the belts, pulleys, and motors. The bottom most construction line defines the bottom of our shooter.
 
-2. On the right plane, create a new sketch with the belts, pulleys, and motors. The bottom most construction line defines the bottom of our shooter.
+  ![](/learning-course/stage1/1c/shooter/parts-3.webp)
+  Using a mate connector offset 1.375" from the layout sketch plane as the sketch plane, sketch the side plate. Use a circular pattern to sketch the #10-32 clearance holes around the shooter hood.
 
-3. Using a mate connector offset 1.375" from the layout sketch plane as the sketch plane, sketch the side plate. Use a circular pattern to sketch the #10-32 clearance holes around the shooter hood.
+  ![](/learning-course/stage1/1c/shooter/parts-4.webp)
+  Extrude the plate as 1/4", then mirror it across the Right plane. We use a mirror because the opposite side plate is the same except for an extra cutout for the motors.
 
-4. Extrude the plate as 1/4", then mirror it across the Right plane. We use a mirror because the opposite side plate is the same except for an extra cutout for the motors.
+  ![](/learning-course/stage1/1c/shooter/parts-5.webp)
+  Sketch a cutoff boundary to remove the motor mounting from the mirrored plate. Make sure imprinting is enabled. You don't need to sketch the whole region, since the plate outline itself will be used in the extrude.
 
-5. Sketch a cutoff boundary to remove the motor mounting from the mirrored plate. Make sure imprinting is enabled. You don't need to sketch the whole region, since the plate outline itself will be used in the extrude.
+  ![](/learning-course/stage1/1c/shooter/parts-6.webp)
+  Extrude the motor mounting region on the mirrored part to remove the geometry from the part.
 
-6. Extrude the motor mounting region on the mirrored part to remove the geometry from the part.
+  ![](/learning-course/stage1/1c/shooter/parts-7.webp)
+  Model the large 3D print that goes in between the plates. Try to minimize the amount of dimensions you need by using the layout or part geometry. Use an "Up to face" extrude to ensure that the width is parametric.
 
-7. Model the large 3D print that goes in between the plates. Try to minimize the amount of dimensions you need by using the layout or part geometry. Use an "Up to face" extrude to ensure that the width is parametric.
+  ![](https://www.youtube.com/embed/rGf0Vt8ahOQ)
+  Use the `Fillet All Edges` Featurescript to add a 3/16" radius fillet to all of the 3D-printed part edges. To select the face of the part, you can utilize the `Isolate` tool, which will make all other components that are not currently selected transparent or hidden.
 
-8. Use the `Fillet All Edges` Featurescript to add a 3/16" radius fillet to all of the 3D-printed part edges. To select the face of the part, you can utilize the `Isolate` tool, which will make all other components that are not currently selected transparent or hidden.
+  ![](https://www.youtube.com/embed/DUJ8MbPS4Zg)
+  Insert a block motor from FRCDesignLib. Use the `Transform` feature to transform the block motor to the motor bore.
 
-9. Insert a block motor from FRCDesignLib. Use the `Transform` feature to transform the block motor to the motor bore.
+  ![](/learning-course/stage1/1c/shooter/parts-10.webp)
+  Add the HTD 5mm pitch belts. Double check that the pitch length is a multiple of 5 mm to ensure that the belt has an integer number of teeth.
 
-10. Add the HTD 5mm pitch belts. Double check that the pitch length is a multiple of 5 mm to ensure that the belt has an integer number of teeth.
+  ![](https://www.youtube.com/embed/wFNDLm2Tisc)
+  Model the shooter wheel and feeder wheel shaft using the `Robot Shaft` featurescript.
 
-11. Model the shooter wheel and feeder wheel shaft using the `Robot Shaft` featurescript.
+  ![](https://www.youtube.com/embed/L8HWApw3luM)
+  Add a mate connector on the layout sketch for fastening the feeder wheel. Set the owner of the mate connector to the feeder shaft. This mate connector marks the center point between the two plates and will help with assembly.
 
-12. Add a mate connector on the layout sketch for fastening the feeder wheel. Set the owner of the mate connector to the feeder shaft. This mate connector marks the center point between the two plates and will help with assembly.
+  ![](/learning-course/stage1/1c/shooter/parts-13.webp)
+  Repeat the same steps as before to add a mate connector to the shooter wheel shaft. Make sure you select the shooter wheel shaft as the mate connector owner.
 
-13. Repeat the same steps as before to add a mate connector to the shooter wheel shaft. Make sure you select the shooter wheel shaft as the mate connector owner.
-
-14. Finish the part studio by naming your features and organizing them into folders.
-
+  ![](/learning-course/stage1/1c/shooter/parts-0.webp)
+  Finish the part studio by naming your features and organizing them into folders.
 </Slides>
 
 ## Assembly Instructions
 
 **Next, navigate to the "Exercise #3 Assembly" tab** in your copied document and **follow the instructions in the slides** to complete this exercise.
 
-<Slides images={[
-  { src: "/learning-course/stage1/1c/shooter/assy-0.webp" },
-  { src: "/learning-course/stage1/1c/shooter/assy-1.webp" },
-  { src: "https://www.youtube.com/embed/7Zplj3xG83s" },
-  { src: "/learning-course/stage1/1c/shooter/assy-3.webp" },
-  { src: "https://www.youtube.com/embed/RsCl6xD8tMs" },
-  { src: "https://www.youtube.com/embed/vEuopW1B9r4" },
-  { src: "/learning-course/stage1/1c/shooter/assy-6.webp" },
-  { src: "https://www.youtube.com/embed/GuyhDXkKwho" },
-  { src: "/learning-course/stage1/1c/shooter/assy-8.webp" },
-  { src: "/learning-course/stage1/1c/shooter/assy-9.webp" },
-  { src: "/learning-course/stage1/1c/shooter/assy-0.webp" }
-]}>
+<Slides>
+  ![](/learning-course/stage1/1c/shooter/assy-0.webp)
+  Final assembly.
 
-0. Final assembly.
+  ![](/learning-course/stage1/1c/shooter/assy-1.webp)
+  Insert all the part studio components. Group all the components except for the shafts and belts. Fasten the Origin Cube to the origin.
 
-1. Insert all the part studio components. Group all the components except for the shafts and belts. Fasten the Origin Cube to the origin.
+  ![](https://www.youtube.com/embed/7Zplj3xG83s)
+  Insert and fasten 4.5" long nut strips from the FRCDesignLib app. Pay close attention to which side is fastened to the plate - the nut strip holes on adjacent sides are staggered.
 
-2. Insert and fasten 4.5" long nut strips from the FRCDesignLib app. Pay close attention to which side is fastened to the plate - the nut strip holes on adjacent sides are staggered.
+  ![](/learning-course/stage1/1c/shooter/assy-3.webp)
+  Insert and fasten the two NEO motors. Insert, fasten, and replicate the bearings.
 
-3. Insert and fasten the two NEO motors. Insert, fasten, and replicate the bearings.
+  ![](https://www.youtube.com/embed/RsCl6xD8tMs)
+  Insert and configure the shooter pulley to be 24T with 1/2" Hex w/ TTB insert. Copy and paste the pulley and TTB insert to create the motor pulley. Using a 3/16" spacer, fasten the shooter pulley to the shooter bearing. Then, fasten the motor pulley to the belt. Finally, use the `Isolate` tool to fasten the 8mm NEO shaft to 1/2" hex adapter.
 
-4. Insert and configure the shooter pulley to be 24T with 1/2" Hex w/ TTB insert. Copy and paste the pulley and TTB insert to create the motor pulley. Using a 3/16" spacer, fasten the shooter pulley to the shooter bearing. Then, fasten the motor pulley to the belt. Finally, use the `Isolate` tool to fasten the 8mm NEO shaft to 1/2" hex adapter.
+  ![](https://www.youtube.com/embed/vEuopW1B9r4)
+  Insert and configure the feeder pulley to be 36T with a TTB 1/2" hex insert. Configure the motor pulley to be 18T with a 12T 20DP gear insert. Using a 1/16" spacer, fasten the feeder pulley to the feeder bearing. Then, fasten the motor pulley to the belt. Finally, use the `Isolate` tool to fasten the 12T motor pinion.
 
-5. Insert and configure the feeder pulley to be 36T with a TTB 1/2" hex insert. Configure the motor pulley to be 18T with a 12T 20DP gear insert. Using a 1/16" spacer, fasten the feeder pulley to the feeder bearing. Then, fasten the motor pulley to the belt. Finally, use the `Isolate` tool to fasten the 12T motor pinion.
+  ![](/learning-course/stage1/1c/shooter/assy-6.webp)
+  Fasten the shafts to the pulleys.
 
-6. Fasten the shafts to the pulleys.
+  ![](https://www.youtube.com/embed/GuyhDXkKwho)
+  Insert and fasten the shooter and feeder wheels to the shaft centering mate connectors. Then, Use the `Measure` tool to measure the gaps between the bearings and the wheels. Create spacers to fill the gaps on the sides of the wheels. Finally, use the `Assembly Mirror` tool to mirror the spacers and the shooter wheel across the feeder wheel's mate connector.
 
-7. Insert and fasten the shooter and feeder wheels to the shaft centering mate connectors. Then, Use the `Measure` tool to measure the gaps between the bearings and the wheels. Create spacers to fill the gaps on the sides of the wheels. Finally, use the `Assembly Mirror` tool to mirror the spacers and the shooter wheel across the feeder wheel's mate connector.
+  ![](/learning-course/stage1/1c/shooter/assy-8.webp)
+  Insert and fasten the 4" SDS Flywheel to the other side of the shooter.
 
-8. Insert and fasten the 4" SDS Flywheel to the other side of the shooter.
+  ![](/learning-course/stage1/1c/shooter/assy-9.webp)
+  Insert, fasten, and replicate all of the required fasteners and remaining hardware.
 
-9. Insert, fasten, and replicate all of the required fasteners and remaining hardware.
-
-10. Finish your assembly by organizing the parts into folders and naming your replicates. You can also insert and position the ball to visualize it.
-
+  ![](/learning-course/stage1/1c/shooter/assy-0.webp)
+  Finish your assembly by organizing the parts into folders and naming your replicates. You can also insert and position the ball to visualize it.
 </Slides>
 
 <Aside type="tip" title="Verification">

@@ -19,8 +19,8 @@ Gears, sprockets, and pulleys all follow profile standards that specify how big 
 Gears are mechanical devices with teeth that mesh with each other to transmit motion or power between rotating shafts. They're like wheels with teeth that fit together, allowing them to transfer torque, change speed, and change direction of rotation.
 
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-<center><ContentImage src="/learning-course/stage1/1b/gears/simple-gears.gif" alt="Simple gears animation" style="width:100%" /></center>
-<center><ContentImage src="/learning-course/stage1/1b/gears/gearbox-animated.gif" alt="Gearbox animation" style="width:100%" /></center>
+![Simple gears animation |center|100%](/learning-course/stage1/1b/gears/simple-gears.gif)
+![Gearbox animation |center|100%](/learning-course/stage1/1b/gears/gearbox-animated.gif)
 </div>
 <figcaption>Animations of gears meshing. Notice that meshed gears will spin in opposite directions.</figcaption>
 
@@ -47,11 +47,11 @@ In order to change the torque and speed from the input to output, different size
 
 To calculate how far apart to space the gears, you can use the following formula to calculate the center-to-center distance:
 
-<center><code><b>C2C = 0.5 * PD1 + 0.5 * PD2</b></code></center>
+<center>**`C2C = 0.5 * PD1 + 0.5 * PD2`**</center>
 
 Where `PD1` and `PD2` are the *Pitch Diameters* of the two gears. The **Pitch Diameter (PD)**  is the size of the imaginary circle that passes through the center of the gear teeth. The pitch diameters of two gears should be tangent in order for the gears to properly mesh. The equation for PD is as follows:
 
-<center><code><b>PD = (# of teeth) / DP</b></code></center>
+<center>**`PD = (# of teeth) / DP`**</center>
 
 Where DP stands for **diametral pitch**. For now, you can assume it to always be 20. If you're curious, you can learn more about this in the Design Handbook pages.
 
@@ -72,5 +72,5 @@ When modeling, an easy way to set the center-to-center distance between two gear
 It's recommended to input the pitch diameter fraction (Eg: `(60/20)"`) rather than the calculated pitch diameter (Eg: Only inputting `3"` as the dimension) so that you can easily see what the circle represents (a gear, sprocket, or pulley) and how many teeth it has.
 
 <Aside type="tip">
-You can show the expression that a dimension was evaluated from by checking the <code>Show Expression</code> checkbox on the sketch menu. The result will look like the previous image, which allowed you to easily see that the two gears were a 20T and 60T gear, both 20 DP.
+You can show the expression that a dimension was evaluated from by checking the `Show Expression` checkbox on the sketch menu. The result will look like the previous image, which allowed you to easily see that the two gears were a 20T and 60T gear, both 20 DP.
 </Aside>

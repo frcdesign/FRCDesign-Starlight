@@ -26,69 +26,63 @@ If you have a 3D printer, this can be a good option.
 
 **Navigate to the "Exercise #7 Part Studio" tab** in your copied document and **refer to the solution document** to complete the part studio for this exercise. The **following instruction slides** only provide a general outline and some key details.
 
-<Slides images={[
-  { src: "/learning-course/stage1/1c/vertical-rollers/parts-0.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/parts-1.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/parts-2.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/parts-3.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/parts-4.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/parts-5.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/parts-6.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/parts-0.webp" }
-]}>
+<Slides>
+  ![](/learning-course/stage1/1c/vertical-rollers/parts-0.webp)
+  Final Part Studio.
 
-0. Final Part Studio.
+  ![](/learning-course/stage1/1c/vertical-rollers/parts-1.webp)
+  Begin by creating the layout sketch on an offset mate connector 3" above the origin. We subtract 0.015" from each of the belt c-c's to reduce friction since we are linking multiple belts in series. This increases efficiency at the cost of backlash, which doesn't matter for this mechanism
 
-1. Begin by creating the layout sketch on an offset mate connector 3" above the origin. We subtract 0.015" from each of the belt c-c's to reduce friction since we are linking multiple belts in series. This increases efficiency at the cost of backlash, which doesn't matter for this mechanism
+  ![](/learning-course/stage1/1c/vertical-rollers/parts-2.webp)
+  Use the `Mirror` sketch tool to create a right hand reference for the rollers and tube location. Use the distance between the roller pairs to drive the roller locations.
 
-2. Use the `Mirror` sketch tool to create a right hand reference for the rollers and tube location. Use the distance between the roller pairs to drive the roller locations.
+  ![](/learning-course/stage1/1c/vertical-rollers/parts-3.webp)
+  Create the bottom plate. Then, create the top plate offset 7" from the bottom plate. Pay close attention to the plate sketches in the solution document. Note that the 1x1" tube plug requires a 4 holes spaced 3/8" apart from each other in a square pattern. We dont need all 4 so we will only use 2 of them.
 
-3. Create the bottom plate. Then, create the top plate offset 7" from the bottom plate. Pay close attention to the plate sketches in the solution document. Note that the 1x1" tube plug requires a 4 holes spaced 3/8" apart from each other in a square pattern. We dont need all 4 so we will only use 2 of them.
+  ![](/learning-course/stage1/1c/vertical-rollers/parts-4.webp)
+  Sketch, extrude, then tube convert the thin-wall 1x1 tube.
 
-4. Sketch, extrude, then tube convert the thin-wall 1x1 tube.
+  ![](/learning-course/stage1/1c/vertical-rollers/parts-5.webp)
+  Model the the 3D printed motor spacer block and extrude it to be 1" long.
 
-5. Model the the 3D printed motor spacer block and extrude it to be 1" long.
+  ![](/learning-course/stage1/1c/vertical-rollers/parts-6.webp)
+  Model the belts.
 
-6. Model the belts.
-
-7. Finish the part studio by naming your features and organizing them into folders. Assign the part materials accordingly.
-
+  ![](/learning-course/stage1/1c/vertical-rollers/parts-0.webp)
+  Finish the part studio by naming your features and organizing them into folders. Assign the part materials accordingly.
 </Slides>
 
 ## Assembly Instructions
 
 **Next, navigate to the "Exercise #7 Assembly" tab** in your copied document and **refer to the solution document** to complete the assembly for this exercise. The **following instruction slides** only provide a general outline and some key details.
 
-<Slides images={[
-  { src: "/learning-course/stage1/1c/vertical-rollers/assy-0.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/assy-1.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/assy-2.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/assy-3.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/assy-4.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/assy-5.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/assy-6.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/assy-7.webp" },
-  { src: "/learning-course/stage1/1c/vertical-rollers/assy-0.webp" }
-]}>
+<Slides>
+  ![](/learning-course/stage1/1c/vertical-rollers/assy-0.webp)
+  Final assembly.
 
-0. Final assembly.
+  ![](/learning-course/stage1/1c/vertical-rollers/assy-1.webp)
+  Add the part studio parts to the assembly. Like before, group mate the rigid components with the Origin Cube and mate the Origin Cube to the assembly origin.
 
-1. Add the part studio parts to the assembly. Like before, group mate the rigid components with the Origin Cube and mate the Origin Cube to the assembly origin.
+  ![](/learning-course/stage1/1c/vertical-rollers/assy-2.webp)
+  Add 1x1 Tube Plugs to the vertical 1x1 tube.
 
-2. Add 1x1 Tube Plugs to the vertical 1x1 tube.
+  ![](/learning-course/stage1/1c/vertical-rollers/assy-3.webp)
+  Insert a Kraken X44 and 12t pulley into the assembly. Mate the pulley to the motor, and fasten the motor to the spacer.
 
-3. Insert a Kraken X44 and 12t pulley into the assembly. Mate the pulley to the motor, and fasten the motor to the spacer.
+  ![](/learning-course/stage1/1c/vertical-rollers/assy-4.webp)
+  Insert the "Tube Roller System" assembly from FRCDesignLib. Set the overall roller length to 7" and use 24T pulleys on each end. Duplicate and fasten the other 2 rollers.
 
-4. Insert the "Tube Roller System" assembly from FRCDesignLib. Set the overall roller length to 7" and use 24T pulleys on each end. Duplicate and fasten the other 2 rollers.
+  ![](/learning-course/stage1/1c/vertical-rollers/assy-5.webp)
+  Fasten the belts to the roller pulleys.
 
-5. Fasten the belts to the roller pulleys.
+  ![](/learning-course/stage1/1c/vertical-rollers/assy-6.webp)
+  Insert, fasten, and replicate all of the required fasteners.
 
-6. Insert, fasten, and replicate all of the required fasteners.
+  ![](/learning-course/stage1/1c/vertical-rollers/assy-7.webp)
+  Use Assembly Mirror to copy the left side assembly to the right side. Make sure all items have the mirror strategy set to transform so you don't end up making new parts.
 
-7. Use Assembly Mirror to copy the left side assembly to the right side. Make sure all items have the mirror strategy set to transform so you don't end up making new parts.
-
-8. Finish the assembly by organizing your instances into folders.
-
+  ![](/learning-course/stage1/1c/vertical-rollers/assy-0.webp)
+  Finish the assembly by organizing your instances into folders.
 </Slides>
 
 <Aside type="tip" title="Verification">

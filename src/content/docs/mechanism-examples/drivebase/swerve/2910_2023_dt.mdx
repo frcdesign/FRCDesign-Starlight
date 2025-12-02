@@ -7,12 +7,12 @@ import LinkButton from '../../../../../components/LinkButton.astro';
 import Slides from '../../../../../components/Slides.astro';
 import ContentImage from '../../../../../components/ContentImage.astro';
 
-<center>
+<figure>
   <a href="https://cad.onshape.com/documents/cd06c24a1f9c6c76ba35c8b1/v/9eafb52c8bd8f3b9e5b17882/e/fb73561fc4c787b4c7e5d9d3">
     <ContentImage src="/mechanism-examples/drivebase/swerve/2910_2023_dt.webp" alt="2910 Charged Up Drivebase" style="width:80%" />
   </a>
-</center>
-<center>*Swerve drivetrain featuring MK4i swerve modules, a pocketed bellypan, and a billet brass frame-rail for weight distribution.*</center>
+  <figcaption>Swerve drivetrain featuring MK4i swerve modules, a pocketed bellypan, and a billet brass frame-rail for weight distribution.</figcaption>
+</figure>
 
 ### Links
 
@@ -36,15 +36,12 @@ This drivebase is constructed primarily from 1/8 inch box tube, with important c
 
 ### Electrical
 
-<Slides images={[
-  { src: "/mechanism-examples/drivebase/swerve/2910drivebase/2910grommets.webp", alt: "2910 wire grommets" },
-  { src: "/mechanism-examples/drivebase/swerve/2910drivebase/2910elec.webp", alt: "2910 bellypan electrical" },
-]}>
+<Slides>
+  ![2910 wire grommets](/mechanism-examples/drivebase/swerve/2910drivebase/2910grommets.webp)
+  Holes in the drive-rails allow electrical teams to easily route wires to where they need to go. Holes cut into aluminum may have sharp edges, so it's important to cover them with rubber grommets!
 
-Holes in the drive-rails allow electrical teams to easily route wires to where they need to go. Holes cut into aluminum may have sharp edges, so it's important to cover them with rubber grommets!
-
-The robot's bellypan should have mounting holes for most of the major electronics designed into it. This allows for easy and secure fastening of components like the PDH, and reduces the chances of electronics coming loose in competition.
-
+  ![2910 bellypan electrical](/mechanism-examples/drivebase/swerve/2910drivebase/2910elec.webp)
+  The robot's bellypan should have mounting holes for most of the major electronics designed into it. This allows for easy and secure fastening of components like the PDH, and reduces the chances of electronics coming loose in competition.
 </Slides>
 
 The drivebase usually serves a double purpose as a robot's electrical hub, so it's important to take electronics into consideration. While looking through the CAD, you may notice several key aspects of this drivebase that intentionally accommodate electronics including:

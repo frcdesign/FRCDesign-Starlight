@@ -33,69 +33,63 @@ This helps make it clear which parts are custom and which are COTS.
 
 **Navigate to the "Exercise #6 Part Studio" tab** in your copied document and **refer to the solution document** to complete the part studio for this exercise. The **following instruction slides** only provide a general outline and some key details.
 
-<Slides images={[
-  { src: "/learning-course/stage1/1c/direction-swap/parts-0.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/parts-1.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/parts-2.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/parts-3.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/parts-4.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/parts-5.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/parts-6.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/parts-7.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/parts-0.webp" }
-]}>
+<Slides>
+  ![](/learning-course/stage1/1c/direction-swap/parts-0.webp)
+  Final Part Studio.
 
-0. Final Part Studio.
+  ![](/learning-course/stage1/1c/direction-swap/parts-1.webp)
+  Begin by creating the layout sketch on the right plane.
 
-1. Begin by creating the layout sketch on the right plane.
+  ![](/learning-course/stage1/1c/direction-swap/parts-2.webp)
+  Using a mate connector offset 0.5" from the Right plane as the sketch plane, sketch the plate. Pay close attention to the clearances used to define the edges of the plate. The location of the two spacers to the left of the motor are driven by the tangency between the 3/8" OD spacer and the 2.5" motor clearance circle.
 
-2. Using a mate connector offset 0.5" from the Right plane as the sketch plane, sketch the plate. Pay close attention to the clearances used to define the edges of the plate. The location of the two spacers to the left of the motor are driven by the tangency between the 3/8" OD spacer and the 2.5" motor clearance circle.
+  ![](/learning-course/stage1/1c/direction-swap/parts-3.webp)
+  Use a `Driven Dimension` to show the distance between the left gear and the spacer and verify that there is enough clearance. A driven dimension, as opposed to a driving dimension, just reports the distance between the selected elements and is faded gray to indicate that it does not define the sketch geometry.
 
-3. Use a `Driven Dimension` to show the distance between the left gear and the spacer and verify that there is enough clearance. A driven dimension, as opposed to a driving dimension, just reports the distance between the selected elements and is faded gray to indicate that it does not define the sketch geometry.
+  ![](/learning-course/stage1/1c/direction-swap/parts-4.webp)
+  Mirror the plate across the Right plane and add the motor cutout.
 
-4. Mirror the plate across the Right plane and add the motor cutout.
+  ![](/learning-course/stage1/1c/direction-swap/parts-5.webp)
+  If you choose to not use COTS spacers, you can use the `Robot Spacer` Featurescript to create the plate spacer.
 
-5. If you choose to not use COTS spacers, you can use the `Robot Spacer` Featurescript to create the plate spacer.
+  ![](/learning-course/stage1/1c/direction-swap/parts-6.webp)
+  Model all of the shafts and belts. You should be feeling very comfortable using the `Robot Shaft` and `Belt & Chain Gen` Featurescripts at this point.
 
-6. Model all of the shafts and belts. You should be feeling very comfortable using the `Robot Shaft` and `Belt & Chain Gen` Featurescripts at this point.
+  ![](/learning-course/stage1/1c/direction-swap/parts-7.webp)
+  Pocket the two plates. Since the plates are identical apart from the motor cutout, you can use same sketch to pocket both plates. Only create one sketch with the ribs.
 
-7. Pocket the two plates. Since the plates are identical apart from the motor cutout, you can use same sketch to pocket both plates. Only create one sketch with the ribs.
-
-7. Finish the part studio by naming your features and organizing them into folders. Assign the part materials accordingly.
-
+  ![](/learning-course/stage1/1c/direction-swap/parts-0.webp)
+  Finish the part studio by naming your features and organizing them into folders. Assign the part materials accordingly.
 </Slides>
 
 ## Assembly Instructions
 
 **Next, navigate to the "Exercise #6 Assembly" tab** in your copied document and **refer to the solution document** to complete the assembly for this exercise. The **following instruction slides** only provide a general outline and some key details.
 
-<Slides images={[
-  { src: "/learning-course/stage1/1c/direction-swap/assy-0.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/assy-1.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/assy-2.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/assy-3.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/assy-4.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/assy-5.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/assy-6.webp" },
-  { src: "/learning-course/stage1/1c/direction-swap/assy-0.webp" }
-]}>
+<Slides>
+  ![](/learning-course/stage1/1c/direction-swap/assy-0.webp)
+  Final assembly.
 
-0. Final assembly.
+  ![](/learning-course/stage1/1c/direction-swap/assy-1.webp)
+  Add the part studio parts to the assembly. Like before, group mate the rigid components with the Origin Cube and mate the Origin Cube to the assembly origin.
 
-1. Add the part studio parts to the assembly. Like before, group mate the rigid components with the Origin Cube and mate the Origin Cube to the assembly origin.
+  ![](/learning-course/stage1/1c/direction-swap/assy-2.webp)
+  Fasten the spacer to the plate and replicate it.
 
-2. Fasten the spacer to the plate and replicate it.
+  ![](/learning-course/stage1/1c/direction-swap/assy-3.webp)
+  Insert, fasten, and replicate the bearings. Also insert a 2" flex wheel and Kraken X60 motor from FRCDesignLib.
 
-3. Insert, fasten, and replicate the bearings. Also insert a 2" flex wheel and Kraken X60 motor from FRCDesignLib.
+  ![](/learning-course/stage1/1c/direction-swap/assy-4.webp)
+  Insert and fasten the pulleys and spacers. For the pulleys, you can utilize 3D printed HTD pulleys from the FRCDesignLib with 1/2" hex inserts. Also fasten the belts into place.
 
-4. Insert and fasten the pulleys and spacers. For the pulleys, you can utilize 3D printed HTD pulleys from the FRCDesignLib with 1/2" hex inserts. Also fasten the belts into place.
+  ![](/learning-course/stage1/1c/direction-swap/assy-5.webp)
+  Insert a configurable spacer stack from FRCDesignLib. The length should be the distance between the pulley and flex wheel. The spacer stack will display an error most likely. This error can be cleared by deselecting the spacer lengths not present in the stack. Alternatively you can make your own stack of COTS spacers, or use a single long custom spacer.
 
-5. Insert a configurable spacer stack from FRCDesignLib. The length should be the distance between the pulley and flex wheel. The spacer stack will display an error most likely. This error can be cleared by deselecting the spacer lengths not present in the stack. Alternatively you can make your own stack of COTS spacers, or use a single long custom spacer.
+  ![](/learning-course/stage1/1c/direction-swap/assy-6.webp)
+  Add in and replicate all of the required fasteners to complete the design.
 
-6. Add in and replicate all of the required fasteners to complete the design.
-
-7. To finish the assembly, organize your components into folders and name your replicates.
-
+  ![](/learning-course/stage1/1c/direction-swap/assy-0.webp)
+  To finish the assembly, organize your components into folders and name your replicates.
 </Slides>
 
 <Aside type="tip" title="Verification">

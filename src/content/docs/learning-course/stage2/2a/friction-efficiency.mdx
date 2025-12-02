@@ -5,7 +5,6 @@ description: Understanding friction and efficiency in shooters
 
 import Aside from '../../../../../components/Aside.astro';
 import Slides from '../../../../../components/Slides.astro';
-import ContentImage from '../../../../../components/ContentImage.astro';
 
 ## Friction & Efficiency
 
@@ -21,24 +20,18 @@ Slightly reduce belt tension by shortening the center-to-center distance (0.01-0
 #### Spacers
 Use spacers between components on shafts and bearings. Components should not contact the outer race of the bearing to avoid friction.
 
-<center>
-  <ContentImage src="/learning-course/stage2-shooter/hexspacers.webp" alt="COTS 1/2 hex delrin spacer" style="width:60%; border-radius: 2%" />
-</center>
-<center>*A COTS 1/2 hex delrin spacer which is used to reduce friction and constrain the object.*</center>
+![COTS 1/2 hex delrin spacer |center|60%|A COTS 1/2 hex delrin spacer which is used to reduce friction and constrain the object.](/learning-course/stage2-shooter/hexspacers.webp)
 
 #### Shaft Support
 Don't over-constrain shafts by using more than 2 fixed bearing points to hold a shaft; small misalignments can cause massive friction with the bearings.
 
 <Aside type="example">
-<Slides images={[
-  { src: "/learning-course/stage2-shooter/overconstrained-shaft.webp", alt: "Overconstrained shaft example" },
-  { src: "/learning-course/stage2-shooter/proper-constraint.webp", alt: "Properly constrained shaft example" },
-]}>
+<Slides>
+  ![Overconstrained shaft example](/learning-course/stage2-shooter/overconstrained-shaft.webp)
+  Example of a shaft being overconstrained by having a fixed bearing in the middle of the shaft.
 
-Example of a shaft being overconstrained by having a fixed bearing in the middle of the shaft.
-
-Example of a shaft being properly constrained with two fixed bearings.
-
+  ![Properly constrained shaft example](/learning-course/stage2-shooter/proper-constraint.webp)
+  Example of a shaft being properly constrained with two fixed bearings.
 </Slides>
 </Aside>
 

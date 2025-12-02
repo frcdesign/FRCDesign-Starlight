@@ -1,10 +1,12 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import remarkGlossary from './src/plugins/remark-glossary';
+import rehypeImageFigure from './src/plugins/rehype-image-figure';
 
 import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
+  prefetch: true,
   image: {
     service: {
       entrypoint: 'astro/assets/services/compile',
@@ -13,6 +15,7 @@ export default defineConfig({
 
   markdown: {
     remarkPlugins: [remarkGlossary],
+    rehypePlugins: [rehypeImageFigure],
   },
 
   integrations: [

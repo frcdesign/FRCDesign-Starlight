@@ -4,7 +4,6 @@ description: Assembling the pivot
 ---
 
 import Aside from '../../../../../components/Aside.astro';
-import ContentImage from '../../../../../components/ContentImage.astro';
 
 ## Assembly
 
@@ -14,34 +13,22 @@ Because this subsystem contains a static part and a moving part, we want to sepa
 
 Create an assembly for the static parts, insert the parts and origin cube from the part studio with the green checkmark, and group them together. Fasten the origin cube to the origin. Add the rest of the parts from the part studio, MKCAD, and standard content, using replicate and patterns when you can.
 
-<center>
-  <ContentImage src="/learning-course/stage2-pivot/Dead Axle Subassembly.webp" alt="Finished Base Subassembly" style="width:60%" />
-</center>
-<center>*Finished Base Subassembly.*</center>
+![Finished Base Subassembly|center|60%|Finished Base Subassembly.](/learning-course/stage2-pivot/Dead Axle Subassembly.webp)
 
 ### Arm Assembly
 
 Create an assembly for the arm portion of the mechanism and do the same thing as above to complete the assembly and make it rigid.
 
-<center>
-  <ContentImage src="/learning-course/stage2-pivot/Arm Subassembly.webp" alt="Finished Arm Subassembly" style="width:70%" />
-</center>
-<center>*Finished Arm Subassembly.*</center>
+![Finished Arm Subassembly|center|70%|Finished Arm Subassembly.](/learning-course/stage2-pivot/Arm Subassembly.webp)
 
 <Aside type="tip">
 Below is an example of the instance list of a rigid assembly. Notice the icon in the top left indicating it's rigid. You can tell what can still move in the assembly by a "degree of freedom" icon (3 arrows to indicate the 3 axis.)
 
-<center>
-  <ContentImage src="/learning-course/stage2-pivot/deadAxleInstanceList.webp" alt="Instance list of a rigid assembly" style="width:80%" />
-</center>
-<center>*Instance list of a rigid assembly.*</center>
+![Instance list of a rigid assembly|center|80%|Instance list of a rigid assembly.](/learning-course/stage2-pivot/deadAxleInstanceList.webp)
 </Aside>
 
 ### Top Level Assembly
 
 Now create a top level assembly and insert the static assembly (fasten to the origin) and intake arm assembly. Create a revolute mate between the mate connectors from the origin cubes in both assemblies and add a limit to it. This completes the deadaxle pivot assembly.
 
-<center>
-  <ContentImage src="/learning-course/stage2-pivot/Top Level Pivot.webp" alt="Finished Top Level Pivot Assembly" style="width:70%" />
-</center>
-<center>*Finished Top Level Pivot Assembly.*</center>
+![Finished Top Level Pivot Assembly|center|70%|Finished Top Level Pivot Assembly.](/learning-course/stage2-pivot/Top Level Pivot.webp)

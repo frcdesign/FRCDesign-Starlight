@@ -13,11 +13,9 @@ Assuming you have already named your parts and organized your work within the re
 
 The `Origin Cube` Featurescript inserts a 2" transparent cube at the origin of the part studio. The cube has a mate connector at the origin. Because this part will never change and always stays at the origin of the part studio, using it to group and fasten parts to the origin will always be more **robust and parametric** than fixing or using a mate connector attached to another part, in case that part changes or is deleted.
 
-<center>
-  <LinkButton href="https://cad.onshape.com/documents/321c197a842fc5f1a29e6621/w/fc3cdd5ca7edcd93e02f13cc/e/df3afdbec8d1356c2af15e4b?renderMode=0&uiState=6637caa6ccbcaa36badca03a">
-    Origin Cube Featurescript
-  </LinkButton>
-</center>
+<LinkButton href="https://cad.onshape.com/documents/321c197a842fc5f1a29e6621/w/fc3cdd5ca7edcd93e02f13cc/e/df3afdbec8d1356c2af15e4b?renderMode=0&uiState=6637caa6ccbcaa36badca03a" center>
+  Origin Cube Featurescript
+</LinkButton>
 
 <figure>
 <ContentImage src="/best-practices/originCubeFeature.webp" width="60%" />
@@ -54,52 +52,43 @@ Now create a top-level subsystem assembly and insert each subassembly into it. F
 
 The Stage 2C Slapdown Intake is a subsystem with a static portion and a pivoting portion. An extra mate connector is added for the pivot on the main layout sketch, owned by the origin cube.
 
-<center>
-  <LinkButton href="https://cad.onshape.com/documents/17302d787e092ce11015f7ee/w/f7cf5c02c7655f0328a3a74a/e/f1456325e0175c4c081008c2">
-    Stage 2C - Slapdown Intake
-  </LinkButton>
-</center>
+<LinkButton href="https://cad.onshape.com/documents/17302d787e092ce11015f7ee/w/f7cf5c02c7655f0328a3a74a/e/f1456325e0175c4c081008c2" center>
+  Stage 2C - Slapdown Intake
+</LinkButton>
 
-<center><ContentImage src="/best-practices/slapdown-intake-example/slapdown-intake-mate-connector.webp" style="border:5px solid #ADADAD" /></center>
+![|center](/best-practices/slapdown-intake-example/slapdown-intake-mate-connector.webp)
 
 This mate connector exists in both subassemblies.
 
-<center><ContentImage src="/best-practices/slapdown-intake-example/slapdown-intake-static-connectors.webp" style="border:5px solid #ADADAD" /></center>
+![|center](/best-practices/slapdown-intake-example/slapdown-intake-static-connectors.webp)
 
-<center><ContentImage src="/best-practices/slapdown-intake-example/slapdown-intake-arm-connectors.webp" style="border:5px solid #ADADAD" /></center>
+![|center](/best-practices/slapdown-intake-example/slapdown-intake-arm-connectors.webp)
 
 The static assembly is fastened to the origin and the arm assembly revolves using the pivot mate connector owned by both instances of the origin cube.
 
-<center><ContentImage src="/best-practices/slapdown-intake-example/slapdown-intake-top-level.webp" style="border:5px solid #ADADAD" /></center>
+![|center](/best-practices/slapdown-intake-example/slapdown-intake-top-level.webp)
 
 ### Example: Stage 2D - Cascade Elevator
 
 The Stage 2D Cascade Elevator is a subsystem with a static portion and two subassemblies that slide linearly. This contains a part studio, a static frame/gearbox assembly, assemblies for the first stage and carriage, and a top-level assembly combining the 3 subassemblies with slider mates.
 
-<center>
-  <LinkButton href="https://cad.onshape.com/documents/da5aef9e6bf6e869f4a51a45/w/5a0f4a3426876db0ba214277/e/f8fd8133abcb12800eacb5d1">
-    Stage 2D - Cascade Elevator
-  </LinkButton>
-</center>
+<LinkButton href="https://cad.onshape.com/documents/da5aef9e6bf6e869f4a51a45/w/5a0f4a3426876db0ba214277/e/f8fd8133abcb12800eacb5d1" center>
+  Stage 2D - Cascade Elevator
+</LinkButton>
 
-<center><ContentImage src="/best-practices/elevatorAssembly.webp" style="border:5px solid #ADADAD" /></center>
+![|center](/best-practices/elevatorAssembly.webp)
 
 ### Example: 3647 Millennium Falcons 2024 Intake
 
-<center><ContentImage src="/best-practices/0200-A.webp" /></center>
-<center>*Top Level Assembly: 0200-A-Intake. Notice that there is only two mates. The revolute is between the two intake pivot mate connectors, which are attached to the respective origin cubes.*</center>
+![|center|Top Level Assembly: 0200-A-Intake. Notice that there is only two mates. The revolute is between the two intake pivot mate connectors, which are attached to the respective origin cubes.](/best-practices/0200-A.webp)
 
-<center><ContentImage src="/best-practices/0210-A.webp" /></center>
-<center>*Stationary Components Assembly: 0210-A-Intake Base. The components are group mated and the origin cube is fastened to the origin.*</center>
+![|center|Stationary Components Assembly: 0210-A-Intake Base. The components are group mated and the origin cube is fastened to the origin.](/best-practices/0210-A.webp)
 
-<center><ContentImage src="/best-practices/0210-PS.webp" /></center>
-<center>*Stationary Components PS: 0210-A-Intake Base. Notice the intake pivot mate connector, derived from the orange main layout sketch.*</center>
+![|center|Stationary Components PS: 0210-A-Intake Base. Notice the intake pivot mate connector, derived from the orange main layout sketch.](/best-practices/0210-PS.webp)
 
-<center><ContentImage src="/best-practices/0220-A.webp" /></center>
-<center>*Moving Components Assembly: 0220-A-Intake Arm. The components are group mated and the origin cube is fastened to the origin.*</center>
+![|center|Moving Components Assembly: 0220-A-Intake Arm. The components are group mated and the origin cube is fastened to the origin.](/best-practices/0220-A.webp)
 
-<center><ContentImage src="/best-practices/0220-PS.webp" /></center>
-<center>*Moving Components PS: 0220-Intake Arm. Notice the intake pivot mate connector, derived from the orange main layout sketch.*</center>
+![|center|Moving Components PS: 0220-Intake Arm. Notice the intake pivot mate connector, derived from the orange main layout sketch.](/best-practices/0220-PS.webp)
 
 ### Simplified Models
 
@@ -122,4 +111,4 @@ Use simplified modules from FRCDesignLib wherever possible to minimize primitive
 
 See a well-organized assembly here:
 
-<center><ContentImage src="/best-practices/assembly.webp" /></center>
+![|center](/best-practices/assembly.webp)

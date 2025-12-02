@@ -2,17 +2,32 @@
 /**
  * Slides component - Slideshow with lightbox support
  *
- * Usage in MDX:
+ * MARKDOWN FORMAT (preferred):
+ * <Slides>
+ *   ![alt text](/path/to/image1.webp)
+ *   Caption for slide 1
+ *
+ *   ![](/path/to/image2.webp)
+ *   Caption for slide 2
+ *
+ *   ![](https://www.youtube.com/embed/VIDEO_ID)
+ *   Caption for YouTube video
+ * </Slides>
+ *
+ * HTML FORMAT (also supported):
+ * <Slides>
+ *   <img src="/path/to/image1.webp" />
+ *   Caption for slide 1
+ * </Slides>
+ *
+ * LEGACY FORMAT (still supported):
  * <Slides images={[
  *   { src: "/path/to/image1.webp", alt: "Description" },
  *   { src: "/path/to/image2.webp" },
- *   { src: "https://www.youtube.com/watch?v=VIDEO_ID" },
  * ]}>
  *   Caption for slide 1
  *
  *   Caption for slide 2
- *
- *   Caption for slide 3
  * </Slides>
  */
 import { Image } from 'astro:assets';
@@ -27,10 +42,10 @@ interface SlideImage {
 }
 
 interface Props {
-  images: SlideImage[];
+  images?: SlideImage[];
 }
 
-const { images } = Astro.props;
+const { images: propImages } = Astro.props;
 const rawContent = await Astro.slots.render('default') || '';
 
 // Helper to get optimized image from path
@@ -41,36 +56,118 @@ function getOptimizedImage(srcPath: string): ImageMetadata | null {
   return imageModule?.default || null;
 }
 
-// Parse captions from slot content
-// MDX may render as: <ol><li>...</li></ol>, <p>...</p><p>...</p>, or plain text with double newlines
-let slotCaptions: string[] = [];
+// Parse content to extract images and captions
+// Supports both new sequential format (<Image> tags with captions) and legacy format (images prop + slot captions)
+interface ParsedSlide {
+  src: string;
+  alt: string;
+  caption: string;
+}
 
-if (rawContent) {
+function parseSequentialContent(content: string): ParsedSlide[] {
+  const slides: ParsedSlide[] = [];
+
+  // Combined regex that matches:
+  // 1. HTML img tags: <img src="..." alt="..." /> or <img src="..." alt="...">
+  // 2. Markdown images (rendered by MDX): ![alt](src) becomes <p><img src="..." alt="..."></p>
+  // The regex captures the full tag and we extract attributes from it
+  const imageTagRegex = /<(?:Image|img)\s+([^>]*?)(?:\/>|>(?:<\/(?:Image|img)>)?)/gi;
+
+  // Split content by image tags
+  const parts = content.split(imageTagRegex);
+
+  // Find all image tag matches to extract their attributes
+  const imageMatches = [...content.matchAll(imageTagRegex)];
+
+  if (imageMatches.length === 0) {
+    return [];
+  }
+
+  // Process each image match
+  imageMatches.forEach((match, index) => {
+    const attrs = match[1] || '';
+
+    // Extract src attribute
+    const srcMatch = attrs.match(/src=["']([^"']+)["']/);
+    const src = srcMatch ? srcMatch[1] : '';
+
+    // Extract alt attribute
+    const altMatch = attrs.match(/alt=["']([^"']*?)["']/);
+    const alt = altMatch ? altMatch[1] : '';
+
+    if (!src) return;
+
+    // Get caption - it's the content after this image tag until the next image tag
+    // parts array alternates: [before1, attrs1, after1/before2, attrs2, after2, ...]
+    // The text after an image is at index: (index * 2) + 2
+    const captionIndex = (index * 2) + 2;
+    let caption = '';
+
+    if (parts[captionIndex]) {
+      caption = parts[captionIndex]
+        // Remove any leading/trailing HTML tags and whitespace
+        .replace(/^[\s\n]*(?:<p>)?/, '')
+        .replace(/(?:<\/p>)?[\s\n]*$/, '')
+        // Clean up extra paragraph tags
+        .replace(/<\/p>\s*<p>/g, '<br>')
+        // Remove trailing <br> tags
+        .replace(/<br\s*\/?>[\s\n]*$/, '')
+        .trim();
+    }
+
+    slides.push({ src, alt, caption });
+  });
+
+  return slides;
+}
+
+function parseLegacyCaptions(content: string, imageCount: number): string[] {
+  let slotCaptions: string[] = [];
+
+  if (!content) return slotCaptions;
+
   // Check if content is wrapped in an ordered list (MDX renders numbered lines as <ol>)
-  // Note: MDX may use <ol start="0"> or similar attributes
-  if (rawContent.includes('<ol') && rawContent.includes('<li>')) {
+  if (content.includes('<ol') && content.includes('<li>')) {
     // Extract content from each <li> tag
-    const liMatches = rawContent.match(/<li[^>]*>([\s\S]*?)<\/li>/gi);
+    const liMatches = content.match(/<li[^>]*>([\s\S]*?)<\/li>/gi);
     if (liMatches) {
       slotCaptions = liMatches.map((li: string) =>
         li
           .replace(/<\/?li[^>]*>/gi, '')
-          .replace(/^[\s\n]*<p>/, '')  // Remove leading <p>
-          .replace(/<\/p>[\s\n]*$/, '') // Remove trailing </p>
+          .replace(/^[\s\n]*<p>/, '')
+          .replace(/<\/p>[\s\n]*$/, '')
           .trim()
       );
     }
   } else {
     // Split by </p><p> patterns, <br><br>, or double newlines
-    slotCaptions = rawContent
+    slotCaptions = content
       .split(/<\/p>\s*<p>|<br\s*\/?>\s*<br\s*\/?>|\n\n+/)
       .map((c: string) => c.replace(/<\/?p>/g, '').trim())
       .filter((c: string) => c.length > 0);
   }
+
+  return slotCaptions;
 }
 
-// Use captions from images array if provided, otherwise fall back to slot content
-const captions = images.map((img, index) => img.caption || slotCaptions[index] || '');
+// Determine which format is being used
+let slides: ParsedSlide[] = [];
+
+// Check for sequential format (Image tags in content)
+const sequentialSlides = parseSequentialContent(rawContent);
+
+if (sequentialSlides.length > 0) {
+  // New sequential format
+  slides = sequentialSlides;
+} else if (propImages && propImages.length > 0) {
+  // Legacy format with images prop
+  const legacyCaptions = parseLegacyCaptions(rawContent, propImages.length);
+  slides = propImages.map((img, index) => ({
+    src: img.src,
+    alt: img.alt || '',
+    caption: img.caption || legacyCaptions[index] || ''
+  }));
+}
 
 // Process image sources - convert YouTube URLs to embeds
 interface ProcessedSource {
@@ -113,10 +210,10 @@ function processSource(src: string): ProcessedSource {
   return { url: src, type: 'image', optimizedImage };
 }
 
-const processedImages = images.map((img, index) => ({
-  ...processSource(img.src),
-  alt: img.alt || '',
-  caption: captions[index]
+const processedImages = slides.map((slide) => ({
+  ...processSource(slide.src),
+  alt: slide.alt,
+  caption: slide.caption
 }));
 
 // For client-side lightbox, we need URLs (not optimized image objects)

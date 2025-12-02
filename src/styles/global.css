@@ -536,3 +536,37 @@ html.sidebar-collapsed .sidebar-content-wrapper {
 html.sidebar-collapsed .sidebar-collapsed-toggle-wrapper {
     display: flex;
 }
+
+/* ==========================================================================
+   Centered Images and Figures
+   ========================================================================== */
+
+.centered-image {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.centered-image img {
+    display: block;
+}
+
+.centered-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.centered-figure img {
+    display: block;
+}
+
+.centered-figure figcaption {
+    margin-top: 0.5rem;
+    font-style: italic;
+    text-align: center;
+    color: var(--sl-color-gray-3);
+}
