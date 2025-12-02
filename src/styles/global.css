@@ -538,9 +538,10 @@ html.sidebar-collapsed .sidebar-collapsed-toggle-wrapper {
 }
 
 /* ==========================================================================
-   Centered Images and Figures
+   Image Alignment and Figures
    ========================================================================== */
 
+/* Centered (default) */
 .centered-image {
     display: flex;
     justify-content: center;
@@ -568,6 +569,68 @@ html.sidebar-collapsed .sidebar-collapsed-toggle-wrapper {
     margin-top: 0.5rem;
     font-style: italic;
     text-align: center;
+    color: var(--sl-color-gray-3);
+}
+
+/* Left aligned */
+.left-image {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.left-image img {
+    display: block;
+}
+
+.left-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.left-figure img {
+    display: block;
+}
+
+.left-figure figcaption {
+    margin-top: 0.5rem;
+    font-style: italic;
+    text-align: left;
+    color: var(--sl-color-gray-3);
+}
+
+/* Right aligned */
+.right-image {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.right-image img {
+    display: block;
+}
+
+.right-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.right-figure img {
+    display: block;
+}
+
+.right-figure figcaption {
+    margin-top: 0.5rem;
+    font-style: italic;
+    text-align: right;
     color: var(--sl-color-gray-3);
 }
 

@@ -137,7 +137,7 @@ This works with any content including text, images, videos, or other elements. T
 
 ## Images
 
-Standard markdown images are automatically optimized. Use the extended syntax for centering, sizing, and captions.
+Standard markdown images are automatically optimized and **centered by default**.
 
 ### Basic Image
 
@@ -150,33 +150,45 @@ Standard markdown images are automatically optimized. Use the extended syntax fo
 Add modifiers after the alt text, separated by `|`:
 
 ```markdown
-![Alt text |center](/path/to/image.webp)
-![Alt text |center|80%](/path/to/image.webp)
-![Alt text |center|60%|Caption text here](/path/to/image.webp)
+![alt |caption |width |align |border](/path/to/image.webp)
 ```
 
-**Available modifiers:**
+**Modifiers (in order):**
 
-| Modifier | Description | Example |
-|----------|-------------|---------|
-| `center` | Centers the image | `\|center` |
-| `XX%` | Sets max-width | `\|80%`, `\|60%` |
-| Caption text | Wraps in figure with figcaption (must be last) | `\|My caption` |
+| Position | Modifier | Description | Example |
+|----------|----------|-------------|---------|
+| 1 | alt | Alt text for the image | `Robot photo` |
+| 2 | caption | Caption text (wraps in figure) | `\|The 2024 robot` |
+| 3 | width | Max width as percentage | `\|60%` |
+| 4 | align | Alignment: `center` (default), `left`, `right`, `none` | `\|left` |
+| 5 | border | CSS border value | `\|2px solid red` |
 
 **Examples:**
 
 ```markdown
-<!-- Centered image -->
-![Robot photo |center](/images/robot.webp)
+<!-- Centered (default) -->
+![Robot photo](/images/robot.webp)
 
-<!-- Centered image at 60% width -->
-![Gearbox diagram |center|60%](/images/gearbox.webp)
+<!-- With caption (centered) -->
+![Robot photo |Team 1234's 2024 robot](/images/robot.webp)
 
-<!-- Centered image with caption -->
-![CAD model |center|80%|Team 1234's 2024 robot intake](/images/intake.webp)
+<!-- With caption and width -->
+![Gearbox diagram |The main gearbox |60%](/images/gearbox.webp)
 
-<!-- Just resize without centering -->
-![Small icon |50%](/images/icon.webp)
+<!-- Left aligned with caption -->
+![CAD model |Intake assembly |80% |left](/images/intake.webp)
+
+<!-- Width only, no caption (use empty caption) -->
+![Small diagram | |50%](/images/diagram.webp)
+
+<!-- No alignment wrapper -->
+![Icon | | |none](/images/icon.webp)
+
+<!-- With border -->
+![Screenshot | |80% | |2px solid #ccc](/images/screenshot.webp)
+
+<!-- Full example with all options -->
+![Robot |Competition photo |60% |center |1px solid red](/images/robot.webp)
 ```
 
 ### Image Location
