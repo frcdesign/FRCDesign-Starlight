@@ -135,6 +135,49 @@ Use the `:::center` block directive to center text content:
 
 This works with any content including text, images, videos, or other elements. The directive uses the [remark-directive](https://github.com/remarkjs/remark-directive) syntax (already included in Starlight).
 
+## CustomCard
+Cards with styling custom for the website. Can be used with [CardGrid](https://starlight.astro.build/components/card-grids/)
+
+```mdx
+import CustomCard from '@components/CustomCard.astro';
+
+<CustomCard title="Visible title" subTitle="Italicized unlinked text next to title" href="hyperlink for the title">
+
+   Any markdown text, images, components or styling.
+
+</CustomCard>
+
+<CustomCard title="Visible title" subTitle="Italicized unlinked text next to title" href="hyperlink for the title" />
+```
+
+Props:
+- `title`: Bold card title
+- `subTitle`: Italicized text next to the title
+- `href`: Link to make the title text a hyperlink
+
+Use it with CardGrid as follows:
+
+```mdx
+import { CardGrid } from '@astrojs/starlight/components';
+import CustomCard from '@components/CustomCard.astro';
+
+<CardGrid>
+
+<CustomCard title="Visible title" subTitle="Italicized unlinked text next to title" href="hyperlink for the title">
+
+   Any markdown text, images, components or styling.
+
+</CustomCard>
+
+<CustomCard title="Visible title" subTitle="Italicized unlinked text next to title" href="hyperlink for the title">
+
+   Any markdown text, images, components or styling.
+
+</CustomCard>
+
+</CardGrid>
+```
+
 ## Images
 
 ### Figure Directive
