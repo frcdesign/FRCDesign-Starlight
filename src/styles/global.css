@@ -222,11 +222,24 @@ aside.sidebar {
     /* Hide scrollbar but allow scrolling */
     scrollbar-width: none;
     -ms-overflow-style: none;
+    background-color: transparent !important;
 }
 
 .sidebar-pane::-webkit-scrollbar,
 #starlight__sidebar::-webkit-scrollbar {
     display: none;
+}
+
+.sidebar-pane a[aria-current="page"],
+#starlight__sidebar a[aria-current="page"] {
+    background-color: var(--accent-color) !important;
+    color: #ffffff !important;
+}
+
+:root[data-theme="dark"] .sidebar-pane,
+:root[data-theme="dark"] #starlight__sidebar {
+    /* Gray-4 is lighter/brighter than the default, making it visible against dark backgrounds */
+    border-right: 1px solid var(--sl-color-gray-6) !important;
 }
 
 .sidebar-content,
