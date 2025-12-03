@@ -5,7 +5,6 @@ description: Introduction to gears
 
 import Aside from '../../../../../components/Aside.astro';
 import Slides from '../../../../../components/Slides.astro';
-import ContentImage from '../../../../../components/ContentImage.astro';
 import Gif from '@components/Gif.astro';
 
 ## Power Transmissions
@@ -32,13 +31,13 @@ In order to change the torque and speed from the input to output, different size
 :::
 
 <Slides>
-  ![](/learning-course/stage1/1b/gears/gear-reduction.webp)
+  ![](../img/1b/gears/gear-reduction.webp)
   A 12T gear drives an 84T gear. The gear ratio is 84:12, which can be simplified to 7:1. The torque is increased by 7x while the speed is reduced to 1/7 of the original speed. (Image source: WCP)
 
-  ![](/learning-course/stage1/1b/gears/gear-upduction.webp)
+  ![](../img/1b/gears/gear-upduction.webp)
   A 48T gear drives an 24T gear. The gear ratio is 24:48, which can be simplified to 1:2. The torque is reduced to 1/2 of the original torque while the speed is increased by 2x. (Image source: WCP)
 
-  ![](/learning-course/stage1/1b/gears/gear-swap.webp)
+  ![](../img/1b/gears/gear-swap.webp)
   If the same size gears are used, there is no change in speed and torque. However, the direction of the rotation is flipped if there is an even number of gears from input to output. If there is an odd number of gears, the direction remains the same. (Image source: WCP)
 </Slides>
 
@@ -58,19 +57,19 @@ Where `PD1` and `PD2` are the *Pitch Diameters* of the two gears. The **Pitch Di
 
 Where DP stands for **diametral pitch**. For now, you can assume it to always be 20. If you're curious, you can learn more about this in the Design Handbook pages.
 
-<figure>
-    <ContentImage src="/learning-course/stage1/1b/gears/gear-diagram.webp" alt="Gear pitch diagram" style="width:70%" />
-    <figcaption>Illustration of a gear's pitch diameter and outer diameter. (Image source: WCP).</figcaption>
-</figure>
+:::figure{w=70}
+![Gear pitch diagram](../img/1b/gears/gear-diagram.webp)
+Illustration of a gear's pitch diameter and outer diameter. (Image source: WCP).
+:::
 
 ### Modeling Gear Transmissions
 
 When modeling, an easy way to set the center-to-center distance between two gears is to draw two circles sized to the gears' pitch diameters and then set the two circles to be tangent to each other. For example, if you need to mesh a 20T gear and a 60T gear, you can draw a `20/20 = 1"` and a `60/20 = 3"` circle and add a tangent constraint between the two circles.
 
-<figure>
-<ContentImage src="/learning-course/stage1/1b/gears/gear-cad.webp" alt="CAD gear modeling" style="width:60%" />
-<figcaption>Modeling gear C-C distance by constraining two pitch diameter construction circles tangent. The diameters of the circle are calculated by dividing the tooth count by DP, which is 20 in this case.</figcaption>
-</figure>
+:::figure{w=60}
+![CAD gear modeling](../img/1b/gears/gear-cad.webp)
+Modeling gear C-C distance by constraining two pitch diameter construction circles tangent. The diameters of the circle are calculated by dividing the tooth count by DP, which is 20 in this case.
+:::
 
 It's recommended to input the pitch diameter fraction (Eg: `(60/20)"`) rather than the calculated pitch diameter (Eg: Only inputting `3"` as the dimension) so that you can easily see what the circle represents (a gear, sprocket, or pulley) and how many teeth it has.
 

@@ -5,7 +5,6 @@ description: The best practices for inserting parts into assemblies and organizi
 
 import Aside from '../../../components/Aside.astro';
 import LinkButton from '../../../components/LinkButton.astro';
-import ContentImage from '../../../components/ContentImage.astro';
 
 Assuming you have already named your parts and organized your work within the rest of the document, creating a well-organized assembly is very straightforward.
 
@@ -17,10 +16,10 @@ The `Origin Cube` Featurescript inserts a 2" transparent cube at the origin of t
   Origin Cube Featurescript
 </LinkButton>
 
-<figure>
-<ContentImage src="/best-practices/originCubeFeature.webp" width="60%" />
-<figcaption>Inserting the Origin Cube feature</figcaption>
-</figure>
+:::figure{w=60}
+![Inserting the Origin Cube feature](./img/originCubeFeature.webp)
+Inserting the Origin Cube feature
+:::
 
 <Aside type="tip">
 The origin cube has the option of importing a number of useful constants and functions, including bolt hole sizes, gear outer diameter, and a center-to-center calculator.
@@ -56,17 +55,17 @@ The Stage 2C Slapdown Intake is a subsystem with a static portion and a pivoting
   Stage 2C - Slapdown Intake
 </LinkButton>
 
-![|center](/best-practices/slapdown-intake-example/slapdown-intake-mate-connector.webp)
+![](./img/slapdown-intake-example/slapdown-intake-mate-connector.webp)
 
 This mate connector exists in both subassemblies.
 
-![|center](/best-practices/slapdown-intake-example/slapdown-intake-static-connectors.webp)
+![](./img/slapdown-intake-example/slapdown-intake-static-connectors.webp)
 
-![|center](/best-practices/slapdown-intake-example/slapdown-intake-arm-connectors.webp)
+![](./img/slapdown-intake-example/slapdown-intake-arm-connectors.webp)
 
 The static assembly is fastened to the origin and the arm assembly revolves using the pivot mate connector owned by both instances of the origin cube.
 
-![|center](/best-practices/slapdown-intake-example/slapdown-intake-top-level.webp)
+![](./img/slapdown-intake-example/slapdown-intake-top-level.webp)
 
 ### Example: Stage 2D - Cascade Elevator
 
@@ -76,19 +75,19 @@ The Stage 2D Cascade Elevator is a subsystem with a static portion and two subas
   Stage 2D - Cascade Elevator
 </LinkButton>
 
-![|center](/best-practices/elevatorAssembly.webp)
+![](./img/elevatorAssembly.webp)
 
 ### Example: 3647 Millennium Falcons 2024 Intake
 
-![|center|Top Level Assembly: 0200-A-Intake. Notice that there is only two mates. The revolute is between the two intake pivot mate connectors, which are attached to the respective origin cubes.](/best-practices/0200-A.webp)
+![Top Level Assembly: 0200-A-Intake. Notice that there is only two mates. The revolute is between the two intake pivot mate connectors, which are attached to the respective origin cubes.](./img/0200-A.webp)
 
-![|center|Stationary Components Assembly: 0210-A-Intake Base. The components are group mated and the origin cube is fastened to the origin.](/best-practices/0210-A.webp)
+![Stationary Components Assembly: 0210-A-Intake Base. The components are group mated and the origin cube is fastened to the origin.](./img/0210-A.webp)
 
-![|center|Stationary Components PS: 0210-A-Intake Base. Notice the intake pivot mate connector, derived from the orange main layout sketch.](/best-practices/0210-PS.webp)
+![Stationary Components PS: 0210-A-Intake Base. Notice the intake pivot mate connector, derived from the orange main layout sketch.](./img/0210-PS.webp)
 
-![|center|Moving Components Assembly: 0220-A-Intake Arm. The components are group mated and the origin cube is fastened to the origin.](/best-practices/0220-A.webp)
+![Moving Components Assembly: 0220-A-Intake Arm. The components are group mated and the origin cube is fastened to the origin.](./img/0220-A.webp)
 
-![|center|Moving Components PS: 0220-Intake Arm. Notice the intake pivot mate connector, derived from the orange main layout sketch.](/best-practices/0220-PS.webp)
+![Moving Components PS: 0220-Intake Arm. Notice the intake pivot mate connector, derived from the orange main layout sketch.](./img/0220-PS.webp)
 
 ### Simplified Models
 
@@ -98,7 +97,7 @@ Use simplified modules from FRCDesignLib wherever possible to minimize primitive
 
 :::center
 <video controls poster="/best-practices/minimizePrimitives.webp">
-  <source src="/best-practices/minimizePrimitives.webm" type="video/webm" />
+  <source src="./img/minimizePrimitives.webm" type="video/webm" />
 </video>
 :::
 
@@ -111,4 +110,4 @@ Use simplified modules from FRCDesignLib wherever possible to minimize primitive
 
 See a well-organized assembly here:
 
-![|center](/best-practices/assembly.webp)
+![](./img/assembly.webp)

@@ -38,8 +38,12 @@
  */
 import { Image } from 'astro:assets';
 
-// Import all images from src/assets/content for optimization (exclude GIFs - they can exceed pixel limits)
-const allImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/content/**/*.{webp,png,jpg,jpeg}', { eager: true });
+// Import all images from both locations for optimization (exclude GIFs - they can exceed pixel limits)
+const contentImages = import.meta.glob<{ default: ImageMetadata }>('/src/content/docs/**/img/**/*.{webp,png,jpg,jpeg}', { eager: true });
+const assetImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/content/**/*.{webp,png,jpg,jpeg}', { eager: true });
+
+// Merge both image sources
+const allImages = { ...contentImages, ...assetImages };
 
 interface SlideImage {
   src: string;
@@ -47,9 +51,46 @@ interface SlideImage {
   caption?: string;
 }
 
+interface SlideAttributes {
+  width?: string;
+  border?: string;
+  align?: 'left' | 'center' | 'right';
+}
+
 interface Props {
   images?: SlideImage[];
   scale?: number;
+}
+
+// Parse hash attributes from URL (e.g., #w=80&border&align=left)
+function parseHashAttributes(url: string): { cleanUrl: string; attrs: SlideAttributes } {
+  const hashIndex = url.indexOf('#');
+  if (hashIndex === -1) {
+    return { cleanUrl: url, attrs: {} };
+  }
+
+  const cleanUrl = url.substring(0, hashIndex);
+  const hashStr = url.substring(hashIndex + 1);
+  const attrs: SlideAttributes = {};
+
+  const parts = hashStr.split('&');
+  for (const part of parts) {
+    if (part.includes('=')) {
+      const [key, ...valueParts] = part.split('=');
+      const value = valueParts.join('=').replace(/_/g, ' ');
+      if (key === 'w') {
+        attrs.width = `${value}%`;
+      } else if (key === 'align') {
+        attrs.align = value as 'left' | 'center' | 'right';
+      } else if (key === 'border') {
+        attrs.border = value;
+      }
+    } else if (part === 'border') {
+      attrs.border = '5px solid #ADADAD';
+    }
+  }
+
+  return { cleanUrl, attrs };
 }
 
 const { images: propImages, scale = 0.8 } = Astro.props;
@@ -61,7 +102,15 @@ const scalePercent = `${clampedScale * 100}%`;
 
 // Helper to get optimized image from path
 function getOptimizedImage(srcPath: string): ImageMetadata | null {
-  // Convert /folder/image.webp to /src/assets/content/folder/image.webp
+  // Try relative path first (for ../img/... style paths)
+  const normalizedSrc = srcPath.replace(/^\.\.\//, '').replace(/^\.\//, '');
+  for (const [key, value] of Object.entries(allImages)) {
+    if (key.endsWith(normalizedSrc) || key.includes(normalizedSrc)) {
+      return value.default;
+    }
+  }
+
+  // Try absolute path style (for /folder/image.webp)
   const assetPath = `/src/assets/content${srcPath}`;
   const imageModule = allImages[assetPath];
   return imageModule?.default || null;
@@ -72,6 +121,7 @@ interface ParsedSlide {
   src: string;
   alt: string;
   caption: string;
+  attrs: SlideAttributes;
 }
 
 function parseSequentialContent(content: string): ParsedSlide[] {
@@ -86,13 +136,29 @@ function parseSequentialContent(content: string): ParsedSlide[] {
   }
 
   imageMatches.forEach((match, index) => {
-    const attrs = match[1] || '';
-    const srcMatch = attrs.match(/src=["']([^"']+)["']/);
-    const src = srcMatch ? srcMatch[1] : '';
-    const altMatch = attrs.match(/alt=["']([^"']*?)["']/);
+    const tagAttrs = match[1] || '';
+    const srcMatch = tagAttrs.match(/src=["']([^"']+)["']/);
+    const rawSrc = srcMatch ? srcMatch[1] : '';
+    const altMatch = tagAttrs.match(/alt=["']([^"']*?)["']/);
     const alt = altMatch ? altMatch[1] : '';
 
-    if (!src) return;
+    if (!rawSrc) return;
+
+    // Parse hash attributes from the URL (in case they're still there)
+    const { cleanUrl: src, attrs: hashAttrs } = parseHashAttributes(rawSrc);
+
+    // Also check for data-slide-* attributes (set by remark-image-attributes plugin)
+    const dataBorderMatch = tagAttrs.match(/data-slide-border=["']([^"']+)["']/);
+    const dataWidthMatch = tagAttrs.match(/data-slide-width=["']([^"']+)["']/);
+    const dataAlignMatch = tagAttrs.match(/data-slide-align=["']([^"']+)["']/);
+
+    // Merge attributes (data-* attributes take priority as they're set by the plugin)
+    const attrs: SlideAttributes = {
+      ...hashAttrs,
+      ...(dataBorderMatch && { border: dataBorderMatch[1] }),
+      ...(dataWidthMatch && { width: `${dataWidthMatch[1]}%` }),
+      ...(dataAlignMatch && { align: dataAlignMatch[1] as 'left' | 'center' | 'right' })
+    };
 
     const captionIndex = (index * 2) + 2;
     let caption = '';
@@ -106,7 +172,7 @@ function parseSequentialContent(content: string): ParsedSlide[] {
         .trim();
     }
 
-    slides.push({ src, alt, caption });
+    slides.push({ src, alt, caption, attrs });
   });
 
   return slides;
@@ -147,11 +213,15 @@ if (sequentialSlides.length > 0) {
   slides = sequentialSlides;
 } else if (propImages && propImages.length > 0) {
   const legacyCaptions = parseLegacyCaptions(rawContent, propImages.length);
-  slides = propImages.map((img, index) => ({
-    src: img.src,
-    alt: img.alt || '',
-    caption: img.caption || legacyCaptions[index] || ''
-  }));
+  slides = propImages.map((img, index) => {
+    const { cleanUrl: src, attrs } = parseHashAttributes(img.src);
+    return {
+      src,
+      alt: img.alt || '',
+      caption: img.caption || legacyCaptions[index] || '',
+      attrs
+    };
+  });
 }
 
 // Process image sources - convert YouTube URLs to embeds
@@ -193,7 +263,8 @@ function processSource(src: string): ProcessedSource {
 const processedImages = slides.map((slide) => ({
   ...processSource(slide.src),
   alt: slide.alt,
-  caption: slide.caption
+  caption: slide.caption,
+  attrs: slide.attrs
 }));
 
 // For client-side, we need image dimensions for scaling calculations
@@ -203,7 +274,8 @@ const slidesDataForClient = processedImages.map(slide => ({
   alt: slide.alt,
   caption: slide.caption,
   width: slide.optimizedImage?.width || null,
-  height: slide.optimizedImage?.height || null
+  height: slide.optimizedImage?.height || null,
+  attrs: slide.attrs
 }));
 const slidesData = JSON.stringify(slidesDataForClient);
 const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
@@ -424,14 +496,14 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
     max-width: 100%;
     height: auto;
     border-radius: 0.25rem;
-    object-fit: contain;
+    display: block;
   }
 
   .slide-media :global(video) {
     max-width: 100%;
     height: auto;
     border-radius: 0.25rem;
-    object-fit: contain;
+    display: block;
   }
 
   .youtube-wrapper {
@@ -823,7 +895,7 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
           const video = media?.querySelector('video') as HTMLVideoElement;
 
           if (img && imageDimensions[index]) {
-            // Scale image to reference height
+            // Scale image to reference height (border wrapper will add to total height)
             const dim = imageDimensions[index]!;
             const scaledWidth = referenceHeight * dim.aspectRatio;
             img.style.height = `${referenceHeight}px`;
@@ -836,6 +908,7 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
             youtubeWrapper.style.height = `${referenceHeight}px`;
             youtubeWrapper.style.width = `${scaledWidth}px`;
           } else if (video && imageDimensions[index]) {
+            // Scale video to reference height (border wrapper will add to total height)
             const dim = imageDimensions[index]!;
             const scaledWidth = referenceHeight * dim.aspectRatio;
             video.style.height = `${referenceHeight}px`;
@@ -999,6 +1072,9 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
         const existingVideo = lightboxMedia.querySelector('video');
         if (existingVideo) existingVideo.pause();
 
+        // Get border style from attrs
+        const borderStyle = slide.attrs?.border ? `border: ${slide.attrs.border};` : '';
+
         // Show loading spinner (inline styles since dynamically created)
         lightboxMedia.innerHTML = `<div style="position:absolute;display:flex;justify-content:center;align-items:center;inset:0;"><div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.3);border-top-color:#43A047;border-radius:50%;animation:spin 0.8s linear infinite;"></div></div>`;
 
@@ -1021,6 +1097,7 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
           video.controls = true;
           video.innerHTML = `<source src="${slide.url}" type="video/${slide.url.split('.').pop()}">`;
           video.style.opacity = '0';
+          if (borderStyle) video.style.cssText += borderStyle;
           lightboxMedia.appendChild(video);
           video.onloadeddata = () => {
             video.style.opacity = '1';
@@ -1032,6 +1109,7 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
           img.src = slide.url;
           img.alt = slide.alt || '';
           img.style.opacity = '0';
+          if (borderStyle) img.style.cssText += borderStyle;
           lightboxMedia.appendChild(img);
           img.onload = () => {
             img.style.opacity = '1';

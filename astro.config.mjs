@@ -2,7 +2,8 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import remarkGlossary from './src/plugins/remark-glossary';
 import remarkCenter from './src/plugins/remark-center';
-import rehypeImageFigure from './src/plugins/rehype-image-figure';
+import remarkFigure from './src/plugins/remark-figure';
+import remarkImageAttributes from './src/plugins/remark-image-attributes';
 
 import cloudflare from '@astrojs/cloudflare';
 
@@ -15,8 +16,8 @@ export default defineConfig({
   },
 
   markdown: {
-    remarkPlugins: [remarkCenter, remarkGlossary],
-    rehypePlugins: [rehypeImageFigure],
+    remarkPlugins: [remarkCenter, remarkFigure, remarkGlossary, remarkImageAttributes],
+    rehypePlugins: [],
   },
 
   integrations: [

@@ -26,7 +26,7 @@ A community-driven learning course and resource hub for FRC Design and CAD, usin
 │   ├── content/
 │   │   └── docs/             # MDX documentation pages
 │   ├── data/                 # Static data files
-│   ├── plugins/              # Remark/Rehype plugins
+│   ├── plugins/              # Remark/Rehype plugins (center, figure, glossary, image-attributes)
 │   ├── starlightOverrides/   # Custom Starlight component overrides
 │   │   ├── Footer.astro      # Custom footer
 │   │   ├── Header.astro      # Custom header with navigation
@@ -137,66 +137,108 @@ This works with any content including text, images, videos, or other elements. T
 
 ## Images
 
-Standard markdown images are automatically optimized and **centered by default**.
+### Figure Directive
 
-### Basic Image
+Use the `:::figure` block directive for creating semantic figures with captions:
+
+```markdown
+:::figure
+![Alt text](/path/to/image.webp)
+Caption text here
+:::
+```
+
+**With custom width** (percentage of container):
+
+```markdown
+:::figure{w=70}
+![Alt text](/path/to/image.webp)
+Caption text here (at 70% width)
+:::
+```
+
+**With border:**
+
+```markdown
+:::figure{border}
+![Alt text](/path/to/image.webp)
+Caption with default border
+:::
+```
+
+**With both width and border:**
+
+```markdown
+:::figure{w=60 border}
+![Alt text](/path/to/image.webp)
+Caption at 60% width with border
+:::
+```
+
+Attributes:
+- `w`: Width as a percentage (e.g., `w=70` for 70% width). Omit for 100% width.
+- `border`: Adds a gray border around the image
+
+The figure directive:
+- Centers the image and caption automatically
+- Renders as semantic `<figure>` and `<figcaption>` HTML elements
+- Supports markdown formatting in captions (links, bold, etc.)
+- Images are automatically optimized when using relative paths
+
+### Basic Markdown Images
+
+Standard markdown images work and are automatically centered:
 
 ```markdown
 ![Alt text](/path/to/image.webp)
 ```
 
-### Extended Image Syntax
+### Image Attributes
 
-Add modifiers after the alt text, separated by `|`:
-
-```markdown
-![alt |caption |width |align |border](/path/to/image.webp)
-```
-
-**Modifiers (in order):**
-
-| Position | Modifier | Description | Example |
-|----------|----------|-------------|---------|
-| 1 | alt | Alt text for the image | `Robot photo` |
-| 2 | caption | Caption text (wraps in figure) | `\|The 2024 robot` |
-| 3 | width | Max width as percentage | `\|60%` |
-| 4 | align | Alignment: `center` (default), `left`, `right`, `none` | `\|left` |
-| 5 | border | CSS border value | `\|2px solid red` |
-
-**Examples:**
+Add width, alignment, and border to images using URL hash syntax:
 
 ```markdown
-<!-- Centered (default) -->
-![Robot photo](/images/robot.webp)
-
-<!-- With caption (centered) -->
-![Robot photo |Team 1234's 2024 robot](/images/robot.webp)
-
-<!-- With caption and width -->
-![Gearbox diagram |The main gearbox |60%](/images/gearbox.webp)
-
-<!-- Left aligned with caption -->
-![CAD model |Intake assembly |80% |left](/images/intake.webp)
-
-<!-- Width only, no caption (use empty caption) -->
-![Small diagram | |50%](/images/diagram.webp)
-
-<!-- No alignment wrapper -->
-![Icon | | |none](/images/icon.webp)
-
-<!-- With border -->
-![Screenshot | |80% | |2px solid #ccc](/images/screenshot.webp)
-
-<!-- Full example with all options -->
-![Robot |Competition photo |60% |center |1px solid red](/images/robot.webp)
+![Alt text](/path/to/image.webp#w=80)
 ```
+
+**Width** (percentage of container):
+
+```markdown
+![Alt text](/path/to/image.webp#w=60)
+```
+
+**Alignment** (left, center, right - default is center):
+
+```markdown
+![Alt text](/path/to/image.webp#align=left)
+![Alt text](/path/to/image.webp#align=right)
+```
+
+**Border** (adds a gray border):
+
+```markdown
+![Alt text](/path/to/image.webp#border)
+```
+
+**Combine multiple attributes** with `&`:
+
+```markdown
+![Alt text](/path/to/image.webp#w=50&border&align=right)
+```
+
+Attributes:
+- `w`: Width as a percentage (e.g., `w=60` for 60% width)
+- `align`: Alignment (`left`, `center`, `right`). Default is `center`.
+- `border`: Adds default border (5px solid gray), or specify custom: `border=2px_solid_red` (use underscores for spaces)
 
 ### Image Location
 
-Place images in `src/assets/content/` for automatic optimization. The path in markdown should match the folder structure without the `src/assets/content` prefix:
+Place images in `src/assets/content/` for automatic optimization. The path should match the folder structure without the `src/assets/content` prefix:
 
 - File location: `src/assets/content/learning-course/stage1/image.webp`
-- Markdown path: `![](/learning-course/stage1/image.webp)`
+- Component path: `src="/learning-course/stage1/image.webp"`
+
+For multiple images, use the Slides component instead.
 
 ## Features
 

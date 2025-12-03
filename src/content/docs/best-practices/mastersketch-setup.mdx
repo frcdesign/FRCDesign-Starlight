@@ -4,7 +4,6 @@ description: The best practices to follow when creating main layout sketches.
 ---
 
 import Aside from '../../../components/Aside.astro';
-import ContentImage from '../../../components/ContentImage.astro';
 
 A main layout sketch is a series of sketches that capture the major dimensions of each mechanism, field element interactions, and robot size constraints. Then, the main layout sketch(es) are inserted into each mechanism's part studio and the individual components are then modeled around the imported layout sketch. This enables much easier integration with a top-down design approach.
 
@@ -20,10 +19,10 @@ This isn't an extensive list, and things can vary from team to team and from arc
 
 All important measurements that drive the geometry of the robot exist in the layout sketches part studio. They can all be easily viewed and changed together, as opposed to if you had to go through each subsystem to make changes to the geometry to try to make things fit in the top-level robot assembly.
 
-<figure>
-<ContentImage src="/best-practices/1778-2024-MS-Part-Studio.webp" style="border:5px solid #ADADAD" />
-<figcaption>1778 Chill Out's 2024 Robot Main Layout Sketches</figcaption>
-</figure>
+:::figure{border}
+![1778 Chill Out's 2024 Robot Main Layout Sketches](./img/1778-2024-MS-Part-Studio.webp)
+1778 Chill Out's 2024 Robot Main Layout Sketches
+:::
 
 Main layout sketches always start with your drivetrain, bumpers, initial configuration, and extension limits. Field elements are sketched next. You can use hard alignment against bumpers to ensure your geometry can score pieces without much software or mechanical complexity.
 
@@ -48,10 +47,10 @@ Effective layout sketching requires you to stay organized. This means:
 - You can also give your sketches [different colors](https://www.youtube.com/watch?v=ZG_gVeGdI5c) to differentiate between them
 - Sketch all the possible states of each moving subsystem
 
-<figure>
-<ContentImage src="/learning-course/stage1d/exampleMasterSketch.webp" width="70%" style="border:5px solid #ADADAD" />
-<figcaption>3647's 2024 Robot Main Layout Sketches</figcaption>
-</figure>
+:::figure{w=70 border}
+![3647's 2024 Robot Main Layout Sketches](./img/example-master-sketch.webp)
+3647's 2024 Robot Main Layout Sketches
+:::
 
 Layout sketching is an art that can require some practice to get the hang of. While Stage 3 will help you learn and practice doing full layout sketches, [this tutorial](https://www.youtube.com/watch?v=Bd_XzBw5V_U) can help you get started if you are unsure.
 

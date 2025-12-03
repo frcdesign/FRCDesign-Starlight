@@ -6,7 +6,6 @@ sidebar:
 ---
 
 import Aside from '../../../../../components/Aside.astro';
-import ContentImage from '../../../../../components/ContentImage.astro';
 
 ## Top Down Design Methodology
 
@@ -19,10 +18,10 @@ Top-down design offers a holistic approach, allowing for better system integrati
 To achieve this, a ***main layout sketch*** is utilized. Sometimes these are also referred to as "master" sketches. The main layout sketch is a series of sketches that capture the major dimensions of each mechanism, field element interactions, and robot size constraints. Then, the main layout sketch(es) are inserted into each mechanism's part studio and the individual components are then modeled around the imported layout sketch. More information on layout sketches can be found on the [Layout Sketch Best Practices](/best-practices/mastersketch-setup/) page.
 
 <Aside type="example" title="Example Main Layout Sketch">
-<figure>
-<ContentImage src="/learning-course/stage1/1d/example-master-sketch.webp" alt="Example main layout sketch" style="width:60%" />
-<figcaption>Example of robot main layout sketches. Each mechanism has a number of layout sketches that capture the important details. (Photo Credit: FRC 3647)</figcaption>
-</figure>
+:::figure{w=60}
+![Example main layout sketch](../img/1d/example-master-sketch.webp)
+Example of robot main layout sketches. Each mechanism has a number of layout sketches that capture the important details. (Photo Credit: FRC 3647)
+:::
 </Aside>
 
 

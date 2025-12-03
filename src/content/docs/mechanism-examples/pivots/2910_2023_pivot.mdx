@@ -5,14 +5,11 @@ description: A custom dead-axle pivot with creative chain tensioning
 
 import LinkButton from '../../../../components/LinkButton.astro';
 import Slides from '../../../../components/Slides.astro';
-import ContentImage from '../../../../components/ContentImage.astro';
 
-<figure>
-  <a href="https://cad.onshape.com/documents/9b839dcfb57e2325343c7e68/w/d4eb9bd29f2760b8b1531c60/e/f0179551d0ae559b6caa8dd6">
-    <ContentImage src="/mechanism-examples/pivots/2910/2910_2023_pivot.webp" alt="2910 Dead Axle Pivot" style="width:60%" />
-  </a>
-  <figcaption>A custom dead-axle pivot with a creative chain tensioning solution.</figcaption>
-</figure>
+:::figure{w=60}
+[![2910 Dead Axle Pivot](../img/pivots/2910/2910_2023_pivot.webp)](https://cad.onshape.com/documents/9b839dcfb57e2325343c7e68/w/d4eb9bd29f2760b8b1531c60/e/f0179551d0ae559b6caa8dd6)
+A custom dead-axle pivot with a creative chain tensioning solution.
+:::
 
 ### Links
 
@@ -30,13 +27,13 @@ import ContentImage from '../../../../components/ContentImage.astro';
 The pivot is driven by 2 mirrored dual falcon 500 gearboxes. These gearboxes are incredibly compact and thoughtful design decisions have been made throughout the whole pivot to reduce part count. One method utilized in this gearbox is to use a Thunderhex bearing retention technique in which each shaft is turned down from 1/2" Hex to 13.75mm (Thunderhex diameter) on each end, which fully constrains each flange bearing as long as the two plates are compressed.
 
 <Slides>
-  ![2910 Gearbox](/mechanism-examples/pivots/2910/2910gearbox.webp)
+  ![2910 Gearbox](../img/pivots/2910/2910gearbox.webp)
   Dual Falcon 500 gearbox design
 
-  ![Thunderhex bearing retention](/mechanism-examples/pivots/2910/thunderhex_example.webp)
+  ![Thunderhex bearing retention](../img/pivots/2910/thunderhex_example.webp)
   Thunderhex bearing retention technique utilizing turned hex flanges, bearing flanges, and fixed plates.
 
-  ![Exploded view](/mechanism-examples/pivots/2910/2910_exploded.webp)
+  ![Exploded view](../img/pivots/2910/2910_exploded.webp)
   Exploded view showing assembly
 </Slides>
 
@@ -44,7 +41,7 @@ All of these plates are heavily lightened to increase the robots top speed and a
 
 ### Mechanical Link
 
-![Pivot Link |center|60%](/mechanism-examples/pivots/2910/pivot_link.webp)
+![Pivot Link](../img/pivots/2910/pivot_link.webp)
 
 The second stage shaft runs across the robot to link the two gearboxes, which is essential to eliminate any torsion in the arm that would be caused by unevenly driving each side of the pivot independently.
 
@@ -52,15 +49,15 @@ The second stage shaft runs across the robot to link the two gearboxes, which is
 
 The third stage is an additional reduction that doubles as a tensioning mechanism, reusing the mechanical link shaft as an idler shaft to pivot around, adjusting the center to center distance of the final chain run.
 
-![Chain tensioning mechanism |center|80%](/mechanism-examples/pivots/2910/planetgear_idler.webp)
+![Chain tensioning mechanism](../img/pivots/2910/planetgear_idler.webp)
 
 ### Triangular Superstructure
 
 <Slides>
-  ![Triangular structure](/mechanism-examples/pivots/2910/triangles.webp)
+  ![Triangular structure](../img/pivots/2910/triangles.webp)
   Triangles are strong! This superstructure is incompressible.
 
-  ![Triangular structure detail](/mechanism-examples/pivots/2910/triangles2.webp)
+  ![Triangular structure detail](../img/pivots/2910/triangles2.webp)
   When a force is applied to compress any side there is always an opposite side in tension to counteract that force.
 </Slides>
 
