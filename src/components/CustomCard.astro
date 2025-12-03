@@ -60,11 +60,6 @@ const { title, subTitle, href, ...attributes } = Astro.props;
         border-bottom-color: transparent;
         border-right-color: transparent;
 
-        /* UPDATED SHADOW:
-           - 0px Offset: Centers the shadow so it bleeds onto the TOP as well.
-           - 40px Blur: Creates a soft cloud/glow effect.
-           - 0.5 Opacity: Visible against dark backgrounds.
-        */
         box-shadow: 0 0 40px -5px rgba(0, 0, 0, 0.5);
         
         z-index: 10;
