@@ -1,0 +1,112 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'a'> {
+	title: string;
+    /** Optional text to display next to the title (non-hyperlinked) */
+    subTitle?: string;
+}
+
+const { title, subTitle, href, ...attributes } = Astro.props;
+---
+
+<div class="custom-card">
+	<div class="card-header">
+		<a href={href} class="title-link" {...attributes}>
+			<span class="title" set:html={title} />
+		</a>
+        {/* Render the subtitle if it exists */}
+        {subTitle && <span class="card-subtitle" set:html={subTitle} />}
+	</div>
+	<div class="card-body">
+		<slot />
+	</div>
+</div>
+
+<style>
+	@layer starlight.components {
+		.custom-card {
+			/* Layout matches Card.astro (vertical stack) */
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+
+			/* Visuals match LinkCard.astro (Borders, Shadow, Padding) */
+			border: 1px solid var(--sl-color-gray-5);
+			border-radius: 0.5rem;
+			padding: 1rem;
+			background-color: var(--sl-color-black);
+            
+            /* HEIGHT FIXES */
+            height: 100%;
+
+            /* BASE SHADOW & TRANSITION */
+			box-shadow: var(--sl-shadow-sm);
+            transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+		}
+
+		/* HOVER STATE UPDATES */
+		.custom-card:hover {
+            /* Stronger shadow for the "lift" effect */
+            box-shadow: var(--sl-shadow-xl, 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1));
+			
+            /* Subtle border highlight */
+			border-color: var(--sl-color-gray-2);
+		}
+
+        .card-header {
+            /* Align title and subtitle on the same line */
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; 
+            flex-wrap: wrap; 
+        }
+
+		.title-link {
+			text-decoration: none;
+			line-height: var(--sl-line-height-headings);
+			color: var(--sl-color-white);
+			font-weight: 600;
+			font-size: var(--sl-text-lg);
+		}
+
+		.title-link[href] {
+			color: var(--sl-color-text-accent);
+		}
+
+		.title-link:hover {
+			text-decoration: underline;
+		}
+
+        /* STYLE FOR THE SUBTITLE PROP */
+        .card-subtitle {
+            color: var(--sl-color-gray-3);
+            font-size: var(--sl-text-lg);
+            font-weight: normal;
+            /* ADDED: Italic styling */
+            font-style: italic; 
+        }
+
+		.card-body {
+			color: var(--sl-color-gray-3);
+			line-height: 1.5;
+
+            /* FLEX CONFIGURATION */
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            gap: 0.75rem; 
+		}
+
+        /* RESET MARGINS */
+        .card-body > :global(*) {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* ALIGNMENT FIX */
+        .card-body > :global(.aside) {
+            margin-top: auto !important;
+        }
+	}
+</style>
