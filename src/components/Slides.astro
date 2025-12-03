@@ -1072,9 +1072,6 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
         const existingVideo = lightboxMedia.querySelector('video');
         if (existingVideo) existingVideo.pause();
 
-        // Get border style from attrs
-        const borderStyle = slide.attrs?.border ? `border: ${slide.attrs.border};` : '';
-
         // Show loading spinner (inline styles since dynamically created)
         lightboxMedia.innerHTML = `<div style="position:absolute;display:flex;justify-content:center;align-items:center;inset:0;"><div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.3);border-top-color:#43A047;border-radius:50%;animation:spin 0.8s linear infinite;"></div></div>`;
 
@@ -1097,7 +1094,6 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
           video.controls = true;
           video.innerHTML = `<source src="${slide.url}" type="video/${slide.url.split('.').pop()}">`;
           video.style.opacity = '0';
-          if (borderStyle) video.style.cssText += borderStyle;
           lightboxMedia.appendChild(video);
           video.onloadeddata = () => {
             video.style.opacity = '1';
@@ -1109,7 +1105,6 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
           img.src = slide.url;
           img.alt = slide.alt || '';
           img.style.opacity = '0';
-          if (borderStyle) img.style.cssText += borderStyle;
           lightboxMedia.appendChild(img);
           img.onload = () => {
             img.style.opacity = '1';
