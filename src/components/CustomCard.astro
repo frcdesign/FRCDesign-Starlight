@@ -26,26 +26,25 @@ const { title, subTitle, href, ...attributes } = Astro.props;
 <style>
 	@layer starlight.components {
 		.custom-card {
-			/* Layout matches Card.astro (vertical stack) */
+			/* Layout */
 			display: flex;
 			flex-direction: column;
 			gap: 0.5rem;
 
-			/* Visuals match LinkCard.astro (Borders, Shadow, Padding) */
+			/* Styling */
 			border: 1px solid var(--sl-color-gray-5);
 			border-radius: 0.5rem;
 			padding: 1rem;
 			background-color: var(--sl-color-black);
             
-            /* HEIGHT FIXES */
             height: 100%;
 
-            /* BASE SHADOW & TRANSITION */
+            /* Base Shadow and Transition */
 			box-shadow: var(--sl-shadow-sm);
             transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
 		}
 
-		/* HOVER STATE UPDATES */
+		/* Hover State Updates */
 		.custom-card:hover {
             /* Stronger shadow for the "lift" effect */
             box-shadow: var(--sl-shadow-xl, 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1));
@@ -78,12 +77,11 @@ const { title, subTitle, href, ...attributes } = Astro.props;
 			text-decoration: underline;
 		}
 
-        /* STYLE FOR THE SUBTITLE PROP */
+        /* Style for the subtitle prop */
         .card-subtitle {
             color: var(--sl-color-gray-3);
             font-size: var(--sl-text-lg);
             font-weight: normal;
-            /* ADDED: Italic styling */
             font-style: italic; 
         }
 
@@ -91,20 +89,20 @@ const { title, subTitle, href, ...attributes } = Astro.props;
 			color: var(--sl-color-gray-3);
 			line-height: 1.5;
 
-            /* FLEX CONFIGURATION */
+            /* Flex Configuration */
             display: flex;
             flex-direction: column;
             flex-grow: 1;
             gap: 0.75rem; 
 		}
 
-        /* RESET MARGINS */
+        /* Reset Margins */
         .card-body > :global(*) {
             margin-top: 0 !important;
             margin-bottom: 0 !important;
         }
 
-        /* ALIGNMENT FIX */
+        /* Align "Aside" Components to Bottom */
         .card-body > :global(.aside) {
             margin-top: auto !important;
         }
