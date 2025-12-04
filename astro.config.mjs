@@ -36,8 +36,11 @@ export default defineConfig({
         Sidebar: './src/starlightOverrides/Sidebar.astro',
         Pagination: './src/starlightOverrides/Pagination.astro',
         Hero: './src/starlightOverrides/Hero.astro',
+        TableOfContents: './src/starlightOverrides/TableOfContents.astro',
       },
-      tableOfContents: false,
+      // TOC is disabled globally but can be enabled per-directory in src/config/tocConfig.ts
+      // or per-page via frontmatter (tableOfContents: true)
+      tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 3 },
       // Sidebar configuration is now managed in src/config/sidebarConfig.ts
       // This allows different sidebars per top-level navigation section
     }),

@@ -247,6 +247,22 @@ aside.sidebar {
 }
 
 /* ==========================================================================
+   Right Sidebar / Table of Contents
+   ========================================================================== */
+
+/* Fix right sidebar positioning for custom header height
+   The header consists of: green top bar (~3.5rem) + navigation bar (~2rem) = ~5.5rem
+   Adding extra padding for visual breathing room */
+@media (min-width: 72rem) {
+    .right-sidebar,
+    .right-sidebar-container .right-sidebar,
+    aside.right-sidebar-container .right-sidebar {
+        /* Use nav height plus additional spacing */
+        padding-top: calc(var(--sl-nav-height) + 1rem) !important;
+    }
+}
+
+/* ==========================================================================
    Glossary Terms
    ========================================================================== */
 
