@@ -3,11 +3,12 @@ title: FRCDesignLib
 description: FRCDesignLib is a library of FRC COTS components and assemblies maintained by the community.
 ---
 
-import Aside from '../../../components/Aside.astro';
-import YouTube from '../../../components/YouTube.astro';
-import LinkButton from '../../../components/LinkButton.astro'
+import Aside from '@components/Aside.astro';
+import YouTube from '@components/YouTube.astro';
+import LinkButton from '@components/LinkButton.astro'
+import ContentFigure from '@components/ContentFigure.astro';
 
-![FRCDesignLib Banner](img/frcdesignlib-banner.webp)
+<ContentFigure src="./img/frcdesignlib-banner.webp" alt="FRCDesignLib Banner" />
 
 FRCDesignLib is a library of FRC COTS components and assemblies maintained by the community. The typical way to use it is through the FRCDesignApp, which allows you to insert or derive those components into your documents easily.
 
@@ -29,7 +30,7 @@ After subscribing, the FRCDesignLib inserter won't show up in already open docum
 </Aside>
 
 <Aside type="video" title="Video Tutorial" collapse open>
-<YouTube id="sgEnAByelWs" />
+<ContentFigure src="https://www.youtube.com/watch?v=sgEnAByelWs" />
 </Aside>
 
 

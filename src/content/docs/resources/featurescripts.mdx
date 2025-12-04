@@ -4,9 +4,9 @@ description: A comprehensive list of FRC-relevant Featurescripts for Onshape to 
 ---
 
 import Aside from '@components/Aside.astro';
-import Youtube from '@components/YouTube.astro';
 import { CardGrid } from '@astrojs/starlight/components';
 import CustomCard from '@components/CustomCard.astro';
+import ContentFigure from '@components/ContentFigure.astro';
 
 Onshape has its own scripting language to create custom features to automate aspects of design called [Featurescript](https://www.onshape.com/features/custom-features). There are a lot of featurescripts (what we call the custom features) that make designing for FRC much easier.
 
@@ -20,7 +20,7 @@ These featurescripts are must haves to enhance your Onshape workflow. Many of th
 <CardGrid>
 <CustomCard title="Origin Cube Featurescript" subTitle="" href="https://cad.onshape.com/documents/321c197a842fc5f1a29e6621/w/fc3cdd5ca7edcd93e02f13cc/e/c66db2b954da7f29d438195a">
 <hr/>
-![Origin Cube](img/featurescripts/origin-cube.webp)
+<ContentFigure src="./img/featurescripts/origin-cube.webp" alt="Origin Cube" width="80%" />
 
 - Used to create an origin reference for assembly mating
 - Optionally import design constants like bolt hole sizes, heat set insert hole sizes, etc
@@ -28,28 +28,28 @@ These featurescripts are must haves to enhance your Onshape workflow. Many of th
 - See [Assembly Best Practices](/best-practices/assembly-setup/#the-origin-cube) for more information on usage
 
 <Aside type="video" title="Video Example" collapse>
-<Youtube id="3m4QLn2aSXQ" />
+<ContentFigure src="https://www.youtube.com/watch?v=3m4QLn2aSXQ" />
 </Aside>
 
 </CustomCard>
 <CustomCard title="Belt & Chain Gen" subTitle="" href="https://cad.onshape.com/documents/53c0b14cad92676c14e04e97/w/1271c254ccb0a79563210195/e/7394c4a86d8d6c35c9a12041">
 
 <hr/>
-![Belt & Chain Gen](img/featurescripts/belt-chain-gen.webp)
+<ContentFigure src="./img/featurescripts/belt-chain-gen.webp" alt="Belt & Chain Gen" width="80%" />
 
 - Used in conjunction with Origin Cube FRC Functions to create highly customizable belts and chains
 - Highly parametric - pulley/sprocket tooth count is automatically calculated from sketch pitch diameter.
 - Create multi pulley, double sided belt, and multi sprocket transmissions with options for both toothed and round idlers
 
 <Aside type="video" title="Video Example" collapse>
-<Youtube id="n_kc2RV-qgI" />
+<ContentFigure src="https://www.youtube.com/watch?v=n_kc2RV-qgI" />
 </Aside>
 
 </CustomCard>
 <CustomCard title="Robot Shaft" subTitle="(Alex's Featurescripts)" href="https://cad.onshape.com/documents/9cffa92db8b62219498f89af/w/06b332ccabc9d2e0aa0abf88/e/2e6e4b559832eeff8391e933">
 
 <hr/>
-![Robot Shaft](img/featurescripts/robot-shaft.webp)
+<ContentFigure src="./img/featurescripts/robot-shaft.webp" alt="Robot Shaft" width="80%" />
 
 - Generates a shaft, with options for hex, rounded hex (13.75mm OD), MAXSpline, etc.
 - Options for retention type on both ends
@@ -59,7 +59,7 @@ These featurescripts are must haves to enhance your Onshape workflow. Many of th
 <CustomCard title="Robot Spacer" subTitle="(Alex's Featurescripts)" href="https://cad.onshape.com/documents/9cffa92db8b62219498f89af/w/06b332ccabc9d2e0aa0abf88/e/2e6e4b559832eeff8391e933">
 
 <hr/>
-![Robot Spacer](img/featurescripts/robot-spacer.webp)
+<ContentFigure src="./img/featurescripts/robot-spacer.webp" alt="Robot Spacer" width="80%" />
 
 - Generates a spacer, with options for round, 3/8" hex, 1/2" hex, MAXSpline, etc.
 - Can be generated in-place and with offsets
@@ -68,58 +68,58 @@ These featurescripts are must haves to enhance your Onshape workflow. Many of th
 <CustomCard title="Extrude Individual" subTitle="(Julia's Featurescripts)" href="https://cad.onshape.com/documents/95c00401c440b44ad8799ef5/w/1f1ebce01a3b8eb6fa102975/e/7f62400703032fab9a7a3320">
 
 <hr/>
-![Extrude Individual](img/featurescripts/extrude-individual.webp)
+<ContentFigure src="./img/featurescripts/extrude-individual.webp" alt="Extrude Individual" width="80%" />
 
 - Can extrude multiple regions as different parts with one feature, even if regions are adjacent
 - Commonly used with tube converter to make punched aluminum tubes from a top view sketch
 
 <Aside type="video" title="Video Example" collapse>
-<Youtube id="fetauwXgK3s" />
+<ContentFigure src="https://www.youtube.com/watch?v=fetauwXgK3s" />
 </Aside>
 
 </CustomCard>
 <CustomCard title="Tube Converter" subTitle="(Julia's Featurescripts)" href="https://cad.onshape.com/documents/95c00401c440b44ad8799ef5/w/1f1ebce01a3b8eb6fa102975/e/7f62400703032fab9a7a3320">
 
 <hr/>
-![Tube Converter](img/featurescripts/tube-converter.webp)
+<ContentFigure src="./img/featurescripts/tube-converter.webp" alt="Tube Converter" width="80%" />
 
 - Converts extrusions into punched tube, with customization and presets for hole pattern, wall thickness, and profile.
 - Can be slow - try moving to the end of the part studio
 
 <Aside type="video" title="Video Example" collapse>
-<Youtube id="DXHe4AOPSqM" />
+<ContentFigure src="https://www.youtube.com/watch?v=DXHe4AOPSqM" />
 </Aside>
 
 </CustomCard>
 <CustomCard title="Part Lighten" subTitle="(2471 Featurescripts)" href="https://cad.onshape.com/documents/028ca8fb10baf53e1f6fce96/v/821c8b51ed0953526b51926e/e/a8b9e45297aac9f5688c871d">
 
 <hr/>
-![Part Lighten](img/featurescripts/part-lighten.webp)
+<ContentFigure src="./img/featurescripts/part-lighten.webp" alt="Part Lighten" width="80%" />
 
 - Better control over ribs, cut depth, fillets, etc.
 - Gives a nice estimate of how much weight is being saved
 
 <Aside type="video" title="Video Example" collapse>
-<Youtube id="nA4YgMts6Vw" />
+<ContentFigure src="https://www.youtube.com/watch?v=nA4YgMts6Vw" />
 </Aside>
 
 </CustomCard>
 <CustomCard title="FilletXpert (Fillet All Edges)" subTitle="(Julia's Featurescripts)" href="https://cad.onshape.com/documents/95c00401c440b44ad8799ef5/w/1f1ebce01a3b8eb6fa102975/e/7f62400703032fab9a7a3320">
 
 <hr/>
-![Fillet All Edges](img/featurescripts/fillet-all-edges.webp)
+<ContentFigure src="./img/featurescripts/fillet-all-edges.webp" alt="Fillet All Edges" width="80%" />
 
 - After selecting a face, it adds a fillet to the corners of that face (all edges normal to the selected face)
 
 <Aside type="video" title="Video Example" collapse>
-<Youtube id="MBtSlzxsuqw" />
+<ContentFigure src="https://www.youtube.com/watch?v=MBtSlzxsuqw" />
 </Aside>
 
 </CustomCard>
 <CustomCard title="Spur Gear" subTitle="" href="https://cad.onshape.com/documents/5742c8cde4b06c68b362d748/w/b493e0cb681bbf9497d9f4b3/e/01a666571e625f8b819fd75b">
 
 <hr/>
-![Spur Gear](img/featurescripts/spur-gear.webp)
+<ContentFigure src="./img/featurescripts/spur-gear.webp" alt="Spur Gear" width="80%" />
 
 - Generates a spur gear with with many different options
 - Can be useful for 3D-printed parts and custom sector gears
@@ -128,12 +128,12 @@ These featurescripts are must haves to enhance your Onshape workflow. Many of th
 <CustomCard title="3D Printed Mass" subTitle="(Julia's Featurescripts)" href="https://cad.onshape.com/documents/95c00401c440b44ad8799ef5/w/1f1ebce01a3b8eb6fa102975/e/7f62400703032fab9a7a3320">
 
 <hr/>
-![3D Printed Mass](img/featurescripts/3D-printed.webp)
+<ContentFigure src="./img/featurescripts/3D-printed.webp" alt="3D Printed Mass" width="80%" />
 
 - Modifies 3D-printed parts to have accurate mass with given material, infill, and wall thickness
 
 <Aside type="video" title="Video Example" collapse>
-<Youtube id="hEfen1lNLiM" />
+<ContentFigure src="https://www.youtube.com/watch?v=hEfen1lNLiM" />
 </Aside>
 
 </CustomCard>
@@ -180,7 +180,7 @@ Below is a list of other featurescripts that can be useful but are more niche.
 - Generates a spacer, with options for round, 3/8" hex, and 1/2" hex
 
 <Aside type="video" title="Video Example" collapse>
-<Youtube id="Wnz442Dv-uw" />
+<ContentFigure src="https://www.youtube.com/watch?v=Wnz442Dv-uw" />
 </Aside>
 
 </CustomCard>
@@ -257,7 +257,7 @@ Below is a list of other featurescripts that can be useful but are more niche.
 - Uses sketch regions to determine pocket and rib placement
 
 <Aside type="video" title="Video Example" collapse>
-<Youtube id="8d2p9likmfU" />
+<ContentFigure src="https://www.youtube.com/watch?v=8d2p9likmfU" />
 </Aside>
 
 </CustomCard>
