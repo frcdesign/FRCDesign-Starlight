@@ -6,350 +6,226 @@ A community-driven learning course and resource hub for FRC Design and CAD, usin
 
 ```
 .
-├── public/                    # Static assets (favicon)
+├── public/                        # Static assets (favicon, videos)
 ├── src/
 │   ├── assets/
-│   │   ├── content/          # Optimized images for documentation
-│   │   ├── footer/           # Footer assets
-│   │   ├── header/           # Header assets
-│   │   ├── home/             # Homepage assets
-│   │   └── universal/        # Shared assets
-│   ├── components/           # Custom Astro components
-│   │   ├── Aside.astro       # Styled callout boxes (note, tip, caution, danger, example)
-│   │   ├── Countdown.astro   # Countdown timer component
-│   │   ├── Glossary.astro    # Glossary term definitions
-│   │   ├── HomeCard.astro    # Homepage card component
-│   │   ├── LinkButton.astro  # Styled link buttons
-│   │   ├── Slides.astro      # Image/video slideshow with lightbox
-│   │   └── YouTube.astro     # YouTube video embeds
-│   ├── config/               # Sidebar configuration
+│   │   ├── content/               # Optimized images referenced by absolute path
+│   │   ├── footer/                # Footer assets
+│   │   ├── header/                # Header assets
+│   │   ├── home/                  # Homepage assets
+│   │   └── universal/             # Shared assets (logo, icons)
+│   ├── components/
+│   │   ├── content/               # Components used inside MDX pages
+│   │   │   ├── Aside.astro        # Callout boxes (note, tip, caution, danger, example, video)
+│   │   │   ├── ContentFigure.astro# Images, GIFs, YouTube videos, inline icons
+│   │   │   ├── ContentRow.astro   # Side-by-side ContentFigure layout
+│   │   │   ├── LinkButton.astro   # Styled link buttons
+│   │   │   ├── LinkCard.astro     # Linked card component
+│   │   │   └── Slides.astro       # Image/video slideshow with lightbox
+│   │   ├── general/               # Site-wide utility components
+│   │   │   └── Glossary.astro     # Glossary term tooltip definitions
+│   │   └── homepage/              # Components used on the homepage
+│   │       ├── Countdown.astro    # Countdown timer
+│   │       ├── CustomCard.astro   # Feature card (used with CardGrid)
+│   │       └── HomeCard.astro     # Homepage section card
+│   ├── config/                    # Sidebar configuration
 │   ├── content/
-│   │   └── docs/             # MDX documentation pages
-│   ├── data/                 # Static data files
-│   ├── plugins/              # Remark/Rehype plugins (center, figure, glossary, image-attributes)
-│   ├── starlightOverrides/   # Custom Starlight component overrides
-│   │   ├── Footer.astro      # Custom footer
-│   │   ├── Header.astro      # Custom header with navigation
-│   │   ├── Hero.astro        # Custom hero component
-│   │   ├── Pagination.astro  # Custom pagination
-│   │   └── Sidebar.astro     # Custom sidebar
-│   └── styles/               # Global styles
-├── astro.config.mjs          # Astro configuration
+│   │   └── docs/                  # MDX documentation pages
+│   ├── data/                      # Static data files (glossary terms, etc.)
+│   ├── plugins/                   # Remark plugins
+│   │   ├── remark-center.ts       # :::center block directive
+│   │   └── remark-glossary.ts     # Auto-linking glossary terms
+│   ├── starlightOverrides/        # Custom Starlight component overrides
+│   │   ├── Footer.astro
+│   │   ├── Header.astro
+│   │   ├── Hero.astro
+│   │   ├── Pagination.astro
+│   │   ├── Sidebar.astro
+│   │   └── TableOfContents.astro
+│   └── styles/                    # Global CSS
+├── astro.config.mjs               # Astro + Starlight configuration
 ├── package.json
 └── tsconfig.json
 ```
 
-## Custom Components
+## Content Components
+
+All content components are imported from `@components/content/` in MDX files.
+
+### ContentFigure
+
+The primary component for all images, GIFs, and videos. Handles optimization automatically — no per-file image imports needed.
+
+```mdx
+import ContentFigure from '@components/content/ContentFigure.astro';
+
+<!-- Image (resolved via glob, optimized automatically) -->
+<ContentFigure src="../img/example.webp" alt="Description" />
+
+<!-- With caption, width, border, and alignment -->
+<ContentFigure src="../img/example.webp" alt="Description" width="70%" border align="center">
+  Caption with **markdown** and [links](url)
+</ContentFigure>
+
+<!-- YouTube (bare video ID or any YouTube URL) -->
+<ContentFigure src="VIDEO_ID">Video caption</ContentFigure>
+<ContentFigure src="https://www.youtube.com/watch?v=VIDEO_ID" width="80%" />
+
+<!-- Animated GIF / looping video -->
+<ContentFigure src="../img/animation.webp" gif />
+<ContentFigure src="../img/animation.webm" gif width="60%" />
+
+<!-- Inline icon (renders as inline <img>, no figure wrapper) -->
+<ContentFigure src="../img/icon.webp" alt="Icon description" inline />
+```
+
+Props:
+- `src`: Image path, YouTube URL, bare YouTube video ID, or animated media path
+- `alt`: Alt text for accessibility
+- `width`: CSS width of the figure (default: `100%`)
+- `border`: Add a border — boolean for default style, or string for custom CSS (e.g. `"2px dashed red"`)
+- `align`: `"left"`, `"center"`, or `"right"` (default: `"center"`)
+- `gif`: Render as autoplay looping video/image with no controls
+- `inline`: Render as an inline `<img>` without the figure wrapper (for icons in text)
+
+### ContentRow
+
+Places multiple `ContentFigure` components side by side.
+
+```mdx
+import ContentRow from '@components/content/ContentRow.astro';
+
+<ContentRow>
+  <ContentFigure src="../img/left.webp" alt="Left" />
+  <ContentFigure src="../img/right.webp" alt="Right" />
+</ContentRow>
+```
+
+Props:
+- `gap`: Space between figures (default: `"0.5rem"`)
+
+### Slides
+
+Slideshow with lightbox support. Each slide is an image (or YouTube embed) immediately followed by a caption.
+
+```mdx
+import Slides from '@components/content/Slides.astro';
+
+<Slides>
+  ![](../img/step1.webp)
+  Caption for step 1
+
+  ![](../img/step2.webp)
+  Caption for step 2
+
+  ![](https://www.youtube.com/embed/VIDEO_ID)
+  Caption for a YouTube slide
+</Slides>
+```
+
+Props:
+- `scale`: Width of the slideshow as a fraction (default: `0.8` = 80%)
+
+Supported media: images (`.webp`, `.png`, `.jpg`), YouTube URLs/embeds, video files (`.webm`, `.mp4`).
 
 ### Aside
 
-Styled callout boxes with optional collapse functionality.
+Styled callout boxes with optional collapse.
 
 ```mdx
-import Aside from '@components/Aside.astro';
+import Aside from '@components/content/Aside.astro';
 
 <Aside type="tip">This is a tip!</Aside>
 <Aside type="note" title="Custom Title">Content here</Aside>
 <Aside type="caution" collapse>Collapsible content</Aside>
 ```
 
-Types: `note`, `tip`, `caution`, `danger`, `example`
-
-### Slides
-
-Image and video slideshow with lightbox support. Images are automatically optimized when placed in `src/assets/content/`.
-
-**Format:** Each slide is an image immediately followed by its caption:
-
-```mdx
-import Slides from '@components/Slides.astro';
-
-<Slides>
-  ![alt text](/path/to/image1.webp)
-  Caption for slide 1
-
-  ![](/path/to/image2.webp)
-  Caption for slide 2
-
-  ![](https://www.youtube.com/embed/VIDEO_ID)
-  Caption for YouTube video
-</Slides>
-```
-
-**With custom scale** (0.1 to 1, default is 0.8):
-
-```mdx
-<Slides scale={0.6}>
-  ![](/path/to/image.webp)
-  A smaller slideshow at 60% width
-</Slides>
-```
-
-Props:
-- `scale`: Controls the width of the slideshow (default: `0.8` = 80% width)
-
-Supported media types:
-- Images (`.webp`, `.png`, `.jpg`, `.jpeg`) - automatically optimized
-- YouTube videos (watch URLs, embed URLs, or short URLs) - displayed at 16:9
-- Video files (`.webm`, `.mp4`)
-
-### YouTube
-
-YouTube video embed with optional caption.
-
-```mdx
-import YouTube from '@components/YouTube.astro';
-
-<YouTube id="VIDEO_ID" />
-<YouTube url="https://www.youtube.com/watch?v=VIDEO_ID">
-  Optional caption with **markdown** support
-</YouTube>
-```
+Types: `note`, `tip`, `caution`, `danger`, `example`, `video`
 
 ### LinkButton
 
-Styled button link component.
+Styled button link.
 
 ```mdx
-import LinkButton from '@components/LinkButton.astro';
+import LinkButton from '@components/content/LinkButton.astro';
 
 <LinkButton href="/path">Button Text</LinkButton>
-<LinkButton href="/path" center>Centered Button</LinkButton>
-<LinkButton href="/path" blank={false}>Internal Link (no new tab)</LinkButton>
+<LinkButton href="https://example.com" center external>Centered External Link</LinkButton>
 ```
 
 Props:
 - `href` (required): Link URL
-- `center`: Centers the button (default: `false`)
-- `blank`: Opens in new tab (default: `true`)
+- `center`: Centers the button
+- `external`: Opens in a new tab
 
-## Centered Text
+### CustomCard
 
-Use the `:::center` block directive to center text content:
-
-```markdown
-:::center
-**Centered text with markdown**
-:::
-```
-
-This works with any content including text, images, videos, or other elements. The directive uses the [remark-directive](https://github.com/remarkjs/remark-directive) syntax (already included in Starlight).
-
-## CustomCard
-Cards with styling custom for the website. Can be used with [CardGrid](https://starlight.astro.build/components/card-grids/)
-
-```mdx
-import CustomCard from '@components/CustomCard.astro';
-
-<CustomCard title="Visible title" subTitle="Italicized unlinked text next to title" href="hyperlink for the title">
-
-   Any markdown text, images, components or styling.
-
-</CustomCard>
-
-<CustomCard title="Visible title" subTitle="Italicized unlinked text next to title" href="hyperlink for the title" />
-```
-
-Props:
-- `title`: Bold card title
-- `subTitle`: Italicized text next to the title
-- `href`: Link to make the title text a hyperlink
-
-Use it with CardGrid as follows:
+Feature card, intended for use with Starlight's `CardGrid`.
 
 ```mdx
 import { CardGrid } from '@astrojs/starlight/components';
-import CustomCard from '@components/CustomCard.astro';
+import CustomCard from '@components/homepage/CustomCard.astro';
 
 <CardGrid>
-
-<CustomCard title="Visible title" subTitle="Italicized unlinked text next to title" href="hyperlink for the title">
-
-   Any markdown text, images, components or styling.
-
-</CustomCard>
-
-<CustomCard title="Visible title" subTitle="Italicized unlinked text next to title" href="hyperlink for the title">
-
-   Any markdown text, images, components or styling.
-
-</CustomCard>
-
+  <CustomCard title="Card Title" subTitle="Subtitle" href="https://example.com">
+    Card body content — markdown, images, components.
+    <Aside type="video" title="Demo" collapse>
+      <ContentFigure src="VIDEO_ID" />
+    </Aside>
+  </CustomCard>
 </CardGrid>
 ```
 
-## Images
+Props:
+- `title`: Bold card title (also the link text when `href` is set)
+- `subTitle`: Italicized text next to the title
+- `href`: Makes the title a hyperlink and shows a copy-link button
 
-### Figure Directive
+## Centered Text
 
-Use the `:::figure` block directive for creating semantic figures with captions:
+Use `:::center` to center any content:
 
 ```markdown
-:::figure
-![Alt text](/path/to/image.webp)
-Caption text here
+:::center
+**Centered text or formula**
 :::
 ```
-
-**With custom width** (percentage of container):
-
-```markdown
-:::figure{w=70}
-![Alt text](/path/to/image.webp)
-Caption text here (at 70% width)
-:::
-```
-
-**With border:**
-
-```markdown
-:::figure{border}
-![Alt text](/path/to/image.webp)
-Caption with default border
-:::
-```
-
-**With both width and border:**
-
-```markdown
-:::figure{w=60 border}
-![Alt text](/path/to/image.webp)
-Caption at 60% width with border
-:::
-```
-
-Attributes:
-- `w`: Width as a percentage (e.g., `w=70` for 70% width). Omit for 100% width.
-- `border`: Adds a gray border around the image
-
-The figure directive:
-- Centers the image and caption automatically
-- Renders as semantic `<figure>` and `<figcaption>` HTML elements
-- Supports markdown formatting in captions (links, bold, etc.)
-- Images are automatically optimized when using relative paths
-
-### Basic Markdown Images
-
-Standard markdown images work and are automatically centered:
-
-```markdown
-![Alt text](/path/to/image.webp)
-```
-
-### Image Attributes
-
-Add width, alignment, and border to images using URL hash syntax:
-
-```markdown
-![Alt text](/path/to/image.webp#w=80)
-```
-
-**Width** (percentage of container):
-
-```markdown
-![Alt text](/path/to/image.webp#w=60)
-```
-
-**Alignment** (left, center, right - default is center):
-
-```markdown
-![Alt text](/path/to/image.webp#align=left)
-![Alt text](/path/to/image.webp#align=right)
-```
-
-**Border** (adds a gray border):
-
-```markdown
-![Alt text](/path/to/image.webp#border)
-```
-
-**Combine multiple attributes** with `&`:
-
-```markdown
-![Alt text](/path/to/image.webp#w=50&border&align=right)
-```
-
-Attributes:
-- `w`: Width as a percentage (e.g., `w=60` for 60% width)
-- `align`: Alignment (`left`, `center`, `right`). Default is `center`.
-- `border`: Adds default border (5px solid gray), or specify custom: `border=2px_solid_red` (use underscores for spaces)
-
-### Image Location
-
-Place images in `src/assets/content/` for automatic optimization. The path should match the folder structure without the `src/assets/content` prefix:
-
-- File location: `src/assets/content/learning-course/stage1/image.webp`
-- Component path: `src="/learning-course/stage1/image.webp"`
-
-For multiple images, use the Slides component instead.
-
-## Features
-
-- **Custom Header**: Green branded header with navigation tabs, search, and theme toggle
-- **Theme Switching**: Light/dark mode with persistent preference
-- **Image Optimization**: Automatic image optimization for images in `src/assets/content/`
-- **Image Lightbox**: Click any image to view full-screen with keyboard navigation and captions
-- **Glossary System**: Automatic tooltip definitions for technical terms
-- **Responsive Design**: Mobile-friendly with unified hamburger menu navigation
 
 ## Getting Started
 
 ### Prerequisites
 
-- **Node.js** (version 18 or higher): Download from [nodejs.org](https://nodejs.org/)
-- **Git**: Download from [git-scm.com](https://git-scm.com/)
-- A code editor (e.g., [VS Code](https://code.visualstudio.com/))
+- **Node.js** 18 or higher — [nodejs.org](https://nodejs.org/)
+- **Git** — [git-scm.com](https://git-scm.com/)
+- A code editor (e.g. [VS Code](https://code.visualstudio.com/))
 
-### Setup Instructions
+### Setup
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/frcdesign/FRCDesign.org.git
-   cd FRCDesign.org
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Open in browser**
-
-   Visit [http://localhost:4321](http://localhost:4321) to see the site running locally.
-
-5. **Make changes**
-
-   Edit files in `src/content/docs/` to modify content. The browser will automatically reload when you save changes.
-
-### Verify Installation
-
-To check your Node.js and npm versions:
 ```bash
-node --version   # Should be 18.x or higher
-npm --version    # Should be 9.x or higher
+git clone https://github.com/frcdesign/FRCDesign.org.git
+cd FRCDesign.org
+npm install
+npm run dev
 ```
+
+Visit [http://localhost:4321](http://localhost:4321).
 
 ## Commands
 
-| Command           | Action                                       |
-| :---------------- | :------------------------------------------- |
-| `npm install`     | Install dependencies                         |
-| `npm run dev`     | Start local dev server at `localhost:4321`   |
-| `npm run build`   | Build production site to `./dist/`           |
-| `npm run preview` | Preview build locally before deploying       |
+| Command           | Action                                     |
+| :---------------- | :----------------------------------------- |
+| `npm install`     | Install dependencies                       |
+| `npm run dev`     | Start dev server at `localhost:4321`       |
+| `npm run build`   | Build production site to `./dist/`         |
+| `npm run preview` | Preview production build locally           |
 
 ## Deployment
 
-This site is configured for deployment on Cloudflare Pages using the `@astrojs/cloudflare` adapter.
+Deployed on Cloudflare Pages via the `@astrojs/cloudflare` adapter.
 
 ## Contributing
 
-See the [Contribution Guide](/contribution/methodsofcontributing/) on the website for details on how to contribute to FRCDesign.org.
+See the [Contribution Guide](https://frcdesign.org/contribution/methodsofcontributing/) on the website.
 
 ## Links
 
