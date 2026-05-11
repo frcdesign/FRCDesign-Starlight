@@ -1,11 +1,12 @@
----
+﻿---
 title: "Exercise 4: Telescoping Hook"
 description: Model a telescoping hook
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import Slides from '../../../../../components/Slides.astro';
-import YouTube from '../../../../../components/YouTube.astro';
+import Aside from '@components/content/Aside.astro';
+import Slides from '@components/content/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import ContentRow from '@components/content/ContentRow.astro';
 
 In this exercise, you will be modeling a telescoping climber. This mechanism features [WCP GreyT telescoping bearing blocks](https://wcproducts.com/products/greyt-telescope) and [REV MAXPlanetary](https://www.revrobotics.com/frc/maxplanetary-system/) mounting gearbox plates. Be sure to pay close attention to hook and gearbox sketches when modeling.
 
@@ -19,13 +20,12 @@ Even if you have the capability to fabricate every part, relying on COTS parts a
 This helps ensure your time is spent where it makes the most impact, rather than on re-inventing parts that are already readily available.
 
 <Aside type="example" title="Exercise 4 COTS Components">
-:::figure
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-  ![GreyT Telescope](../img/1c/telescope/greyt.webp)
-  ![MAXPlanetary](../img/1c/telescope/maxplanetary.webp)
-</div>
+<ContentRow>
+  <ContentFigure src="../img/1c/telescope/greyt.webp" alt="GreyT Telescope" />
+  <ContentFigure src="../img/1c/telescope/maxplanetary.webp" alt="MAXPlanetary" />
+</ContentRow>
+
 The telescoping bearing blocks have complex geometry that would be difficult and time consuming to manufacture for most teams. The REV MAXPlanetary is an easy way to get a large gearbox reduction without the need for a custom gearbox. (Photo Credits: WCP, REV)
-:::
 </Aside>
 
 ## Crush Blocks
@@ -37,7 +37,7 @@ Crush blocks distribute the load, allowing for full clamping force while maintai
 Alternatively, a "crush plate" can also be utilized to distribute the fastener force to achieve a similar effect as a crush block.
 
 <Aside type="example" title="Crush Blocks and Crush Plates">
-![Crush block and crush plate](../img/1c/telescope/crush-block-plate.webp)
+<ContentFigure src="../img/1c/telescope/crush-block-plate.webp" alt="Crush block and crush plate" />
 </Aside>
 
 ## Part Studio Instructions
@@ -139,6 +139,6 @@ Make sure to have you and/or a more experienced member/mentor of your team [**re
 Section views are a helpful tool that allow you to reveal the internal features of a part or assembly by slicing through it along a specified plane. You can select a plane, planar face, cylinder, cone, or mate connector to use as the sectioning plane. You can also choose to include or exclude specific parts from the section view.
 
 <Aside type="tip" title="Creating a Section View">
-<YouTube id="6oiVBMGkCOs">Creating a section view to get a better view of the pinning bolt.</YouTube>
+<ContentFigure src="6oiVBMGkCOs">Creating a section view to get a better view of the pinning bolt.</ContentFigure>
 </Aside>
 

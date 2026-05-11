@@ -1,15 +1,13 @@
----
+﻿---
 title: 2910 Charged Up Drivebase
 description: A drivebase with cross tubes featuring wire grommets
 ---
 
-import LinkButton from '../../../../../components/LinkButton.astro';
-import Slides from '../../../../../components/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import LinkButton from '@components/content/LinkButton.astro';
+import Slides from '@components/content/Slides.astro';
 
-:::figure{w=80}
-[![2910 Charged Up Drivebase](./img/2910_2023_dt.webp)](https://cad.onshape.com/documents/cd06c24a1f9c6c76ba35c8b1/v/9eafb52c8bd8f3b9e5b17882/e/fb73561fc4c787b4c7e5d9d3)
-Swerve drivetrain featuring MK4i swerve modules, a pocketed bellypan, and a billet brass frame-rail for weight distribution.
-:::
+<a href="https://cad.onshape.com/documents/cd06c24a1f9c6c76ba35c8b1/v/9eafb52c8bd8f3b9e5b17882/e/fb73561fc4c787b4c7e5d9d3"><ContentFigure src="./img/2910_2023_dt.webp" alt="2910 Charged Up Drivebase" width="80%">Swerve drivetrain featuring MK4i swerve modules, a pocketed bellypan, and a billet brass frame-rail for weight distribution.</ContentFigure></a>
 
 ### Links
 
@@ -23,7 +21,7 @@ This drivebase embodies all fundamentals of good drivebase design, including the
 
 ### Rigidity
 
-![2910 Top Down View](./img/2910topdown.webp)
+<ContentFigure src="./img/2910topdown.webp" alt="2910 Top Down View" />
 
 This drivebase is constructed primarily from 1/8 inch box tube, with important cross-members providing rigidity to the structure. Drivebases must be built extremely tough, as they will experience the brunt of each collision while robots travel across the field at high speed. The bellypan offers extra rigidity by holding the frame members parallel with each other.
 

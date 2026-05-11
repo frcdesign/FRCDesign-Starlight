@@ -1,10 +1,11 @@
----
+﻿---
 title: Assembly Best Practices
 description: The best practices for inserting parts into assemblies and organizing them.
 ---
 
-import Aside from '../../../components/Aside.astro';
-import LinkButton from '../../../components/LinkButton.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
+import LinkButton from '@components/content/LinkButton.astro';
 
 Assuming you have already named your parts and organized your work within the rest of the document, creating a well-organized assembly is very straightforward.
 
@@ -16,10 +17,7 @@ The `Origin Cube` Featurescript inserts a 2" transparent cube at the origin of t
   Origin Cube Featurescript
 </LinkButton>
 
-:::figure{w=60}
-![Inserting the Origin Cube feature](./img/originCubeFeature.webp)
-Inserting the Origin Cube feature
-:::
+<ContentFigure src="./img/originCubeFeature.webp" alt="Inserting the Origin Cube feature" width="60%">Inserting the Origin Cube feature</ContentFigure>
 
 <Aside type="tip">
 The origin cube has the option of importing a number of useful constants and functions, including bolt hole sizes, gear outer diameter, and a center-to-center calculator.
@@ -55,17 +53,17 @@ The Stage 2C Slapdown Intake is a subsystem with a static portion and a pivoting
   Stage 2C - Slapdown Intake
 </LinkButton>
 
-![](./img/slapdown-intake-example/slapdown-intake-mate-connector.webp)
+<ContentFigure src="./img/slapdown-intake-example/slapdown-intake-mate-connector.webp" />
 
 This mate connector exists in both subassemblies.
 
-![](./img/slapdown-intake-example/slapdown-intake-static-connectors.webp)
+<ContentFigure src="./img/slapdown-intake-example/slapdown-intake-static-connectors.webp" />
 
-![](./img/slapdown-intake-example/slapdown-intake-arm-connectors.webp)
+<ContentFigure src="./img/slapdown-intake-example/slapdown-intake-arm-connectors.webp" />
 
 The static assembly is fastened to the origin and the arm assembly revolves using the pivot mate connector owned by both instances of the origin cube.
 
-![](./img/slapdown-intake-example/slapdown-intake-top-level.webp)
+<ContentFigure src="./img/slapdown-intake-example/slapdown-intake-top-level.webp" />
 
 ### Example: Stage 2D - Cascade Elevator
 
@@ -75,19 +73,19 @@ The Stage 2D Cascade Elevator is a subsystem with a static portion and two subas
   Stage 2D - Cascade Elevator
 </LinkButton>
 
-![](./img/elevatorAssembly.webp)
+<ContentFigure src="./img/elevatorAssembly.webp" />
 
 ### Example: 3647 Millennium Falcons 2024 Intake
 
-![Top Level Assembly: 0200-A-Intake. Notice that there is only two mates. The revolute is between the two intake pivot mate connectors, which are attached to the respective origin cubes.](./img/0200-A.webp)
+<ContentFigure src="./img/0200-A.webp" alt="Top Level Assembly: 0200-A-Intake. Notice that there is only two mates. The revolute is between the two intake pivot mate connectors, which are attached to the respective origin cubes." />
 
-![Stationary Components Assembly: 0210-A-Intake Base. The components are group mated and the origin cube is fastened to the origin.](./img/0210-A.webp)
+<ContentFigure src="./img/0210-A.webp" alt="Stationary Components Assembly: 0210-A-Intake Base. The components are group mated and the origin cube is fastened to the origin." />
 
-![Stationary Components PS: 0210-A-Intake Base. Notice the intake pivot mate connector, derived from the orange main layout sketch.](./img/0210-PS.webp)
+<ContentFigure src="./img/0210-PS.webp" alt="Stationary Components PS: 0210-A-Intake Base. Notice the intake pivot mate connector, derived from the orange main layout sketch." />
 
-![Moving Components Assembly: 0220-A-Intake Arm. The components are group mated and the origin cube is fastened to the origin.](./img/0220-A.webp)
+<ContentFigure src="./img/0220-A.webp" alt="Moving Components Assembly: 0220-A-Intake Arm. The components are group mated and the origin cube is fastened to the origin." />
 
-![Moving Components PS: 0220-Intake Arm. Notice the intake pivot mate connector, derived from the orange main layout sketch.](./img/0220-PS.webp)
+<ContentFigure src="./img/0220-PS.webp" alt="Moving Components PS: 0220-Intake Arm. Notice the intake pivot mate connector, derived from the orange main layout sketch." />
 
 ### Simplified Models
 
@@ -110,4 +108,4 @@ Use simplified modules from FRCDesignLib wherever possible to minimize primitive
 
 See a well-organized assembly here:
 
-![](./img/assembly.webp)
+<ContentFigure src="./img/assembly.webp" />

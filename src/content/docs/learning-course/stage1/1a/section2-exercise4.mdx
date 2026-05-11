@@ -1,9 +1,10 @@
----
+﻿---
 title: "1A: Onshape Fundamentals - Section 2"
 description: Create a motor mounting plate
 ---
 
-import Aside from '../../../../../components/Aside.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
 
 ## Exercise 4: Motor Mounting Plate
 
@@ -13,9 +14,7 @@ To get started, find the "Exercise 4: Motor Mounting" part studio in the "Sectio
 
 **Using the reference image and dimensions** listed below, sketch out and extrude the motor mounting plate on the front of the provided tube:
 
-:::figure{w=50}
-![](../img/1a/motor-mount.webp)
-:::
+<ContentFigure src="../img/1a/motor-mount.webp" width="50%" />
 
 - Create a 2.5" circle above the tube made out of construction geometry to represent the motor.
 - The cutout at the center of the plate is 1.25", and all the other holes are 0.196" diameter (the clearance fit for #10-32, the standard bolt size for most FRC components).

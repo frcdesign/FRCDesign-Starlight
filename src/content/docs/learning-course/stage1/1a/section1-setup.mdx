@@ -1,11 +1,12 @@
----
+﻿---
 title: "1A: Onshape Fundamentals - Section 1"
 description: Introduction and setup for Stage 1A Onshape Fundamentals
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import LinkButton from '../../../../../components/LinkButton.astro';
-import YouTube from '../../../../../components/YouTube.astro';
+import Aside from '@components/content/Aside.astro';
+import LinkButton from '@components/content/LinkButton.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import ContentRow from '@components/content/ContentRow.astro';
 
 ## Introduction and Setup
 
@@ -26,24 +27,14 @@ Make sure the [required course tools](/learning-course/course-setup/required-cou
 We will start off with Box Tubes, since they provide the primary structure of your robot. Box tubes are used in many places, from the drivetrain to the superstructure.
 They are strong, lightweight, and easy to work with. You will have to make countless box tubes throughout your FRC career, so it's important to get comfortable with them.
 
-:::figure{w=80}
-![Example of a box tube with a pre-punched hole pattern](../img/1a/box-tube-example.webp)
-Example of a box tube with a pre-punched hole pattern
-:::
+<ContentFigure src="../img/1a/box-tube-example.webp" alt="Example of a box tube with a pre-punched hole pattern" width="80%">Example of a box tube with a pre-punched hole pattern</ContentFigure>
 
 ### Example Usage
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-  :::figure
-  ![4414's 2022 box tube superstructure in CAD](../img/1a/ht-superstructure.webp)
-  4414's 2022 box tube superstructure in CAD
-  :::
-
-  :::figure{w=80}
-  ![4414's 2022 robot](../img/1a/hightide-real.webp)
-  4414's 2022 robot
-  :::
-</div>
+<ContentRow>
+  <ContentFigure src="../img/1a/ht-superstructure.webp" alt="4414's 2022 box tube superstructure in CAD">4414's 2022 box tube superstructure in CAD</ContentFigure>
+  <ContentFigure src="../img/1a/hightide-real.webp" alt="4414's 2022 robot" width="80%">4414's 2022 robot</ContentFigure>
+</ContentRow>
 
 From the side, a box tube can be represented as a simple rectangle.
 Box tubing is typically referred to by its size, eg: 2x1, 1x1, and 2x2 (Spoken as "two-by-one", "one-by-one", and "two-by-two"). For the rest of the learning course, we will use this notation when referring to box tube.
@@ -52,10 +43,7 @@ Box tubing is typically referred to by its size, eg: 2x1, 1x1, and 2x2 (Spoken a
 - **2 inch × 1 inch**
 - **2 inch x 2 inch**
 
-:::figure
-![Box tube cross sections (1x1 and 2x1)](../img/1a/toob.webp)
-Box tube cross sections (1x1 and 2x1)
-:::
+<ContentFigure src="../img/1a/toob.webp" alt="Box tube cross sections (1x1 and 2x1)">Box tube cross sections (1x1 and 2x1)</ContentFigure>
 
 We'll be working with these increments throughout the stages, keep them in mind!
 
@@ -69,7 +57,7 @@ Copy this document to use for all of the exercises in 1A. A tutorial is provided
   Stage 1A Document Link
 </LinkButton>
 
-<YouTube id="Jrq30Tgtm2I">How to copy an Onshape document</YouTube>
+<ContentFigure src="Jrq30Tgtm2I">How to copy an Onshape document</ContentFigure>
 
 
 Once the document is copied, move on to Exercise 0 using the page navigation buttons below.

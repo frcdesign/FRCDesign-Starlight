@@ -1,11 +1,12 @@
----
+﻿---
 title: Assembly
 description: Assembly modeling
 sidebar:
   order: 5
 ---
 
-import Slides from '../../../../../components/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Slides from '@components/content/Slides.astro';
 
 ## Assembly
 
@@ -42,7 +43,4 @@ Start by **creating a new assembly tab called `Drivetrain Assembly`** in the `Dr
 
 As was mentioned in 1A, When selecting rivets to insert from the part library, you'll notice they have a configuration for **grip length**. The grip length of a rivet is the total thickness of material it can fasten together. Make sure you choose the appropriate grip length or they can either come out easily or not fasten the material together.
 
-:::figure{border}
-![Pop rivet installation steps](../img/1d/pop-rivet-steps.webp)
-Image Credit: https://animalia-life.club/qa/pictures/types-of-pop-rivets
-:::
+<ContentFigure src="../img/1d/pop-rivet-steps.webp" alt="Pop rivet installation steps" border>Image Credit: https://animalia-life.club/qa/pictures/types-of-pop-rivets</ContentFigure>

@@ -1,9 +1,11 @@
----
+﻿---
 title: "1A: Onshape Fundamentals - Section 3"
 description: Create a gusset for the chassis
 ---
 
-import Aside from '../../../../../components/Aside.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import ContentRow from '@components/content/ContentRow.astro';
+import Aside from '@components/content/Aside.astro';
 
 ## Exercise 3: Gusset Setup
 
@@ -13,21 +15,10 @@ This is a quick setup for the next activity.
 
 Find the "S3 Exercise 3" part studio in the "Section 3" folder in your copy of the template document. **Create a gusset** to connect the middle box tube to the outer frame.
 
-<div style="display: flex; gap: 20px; align-items: flex-start;">
-  <div style="flex: 1;">
-    :::figure{w=120}
-    ![The chassis you'll be working with](../img/1a/s3e3-example.webp)
-    The chassis you'll be working with
-    :::
-  </div>
-
-  <div style="flex: 1;">
-    :::figure{w=80}
-    ![Example of the gusset](../img/1a/gusset.webp)
-    Example of the gusset
-    :::
-  </div>
-</div>
+<ContentRow>
+  <ContentFigure src="../img/1a/s3e3-example.webp" alt="The chassis you'll be working with" width="120%">The chassis you'll be working with</ContentFigure>
+  <ContentFigure src="../img/1a/gusset.webp" alt="Example of the gusset" width="80%">Example of the gusset</ContentFigure>
+</ContentRow>
 
 ---
 

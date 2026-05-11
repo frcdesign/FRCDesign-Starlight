@@ -1,11 +1,11 @@
----
+﻿---
 title: "1A: Onshape Fundamentals - Section 1"
 description: Build a box tube superstructure
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import LinkButton from '../../../../../components/LinkButton.astro';
-import YouTube from '../../../../../components/YouTube.astro';
+import Aside from '@components/content/Aside.astro';
+import LinkButton from '@components/content/LinkButton.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
 
 ## Exercise 5: Building a Box Superstructure
 
@@ -13,17 +13,11 @@ import YouTube from '../../../../../components/YouTube.astro';
 
 Frames made out of box tube can be added to the top of a drivetrain for extra mounting for more parts of subsystems, like a shooter or an arm.
 
-:::figure{w=60 border}
-![973's 2022 Superstructure](../img/1a/exercise-5-973-example.webp)
-973's 2022 Superstructure
-:::
+<ContentFigure src="../img/1a/exercise-5-973-example.webp" alt="973's 2022 Superstructure" width="60%" border>973's 2022 Superstructure</ContentFigure>
 
 In this exercise we'll be adding a simple box tube frame to the drivetrain you made previously.
 
-:::figure{w=80}
-![Final Box Tube Frame](../img/1a/exercise5-frame.webp)
-Final Box Tube Frame
-:::
+<ContentFigure src="../img/1a/exercise5-frame.webp" alt="Final Box Tube Frame" width="80%">Final Box Tube Frame</ContentFigure>
 
 ---
 
@@ -33,10 +27,7 @@ Final Box Tube Frame
 2. Start by inserting the **origin cube featurescript** that you added in [required course tools](/learning-course/course-setup/required-course-tools/featurescripts). Remember you can look things up using `Alt + C`!
 3. Make a new sketch, select the `right plane`, and start copying this sketch. Figure out the constraints you need yourself to replicate it perfectly.
 
-:::figure
-![Box superstructure sketch](../img/1a/exercise5-frame-sketch.webp)
-Box superstructure sketch
-:::
+<ContentFigure src="../img/1a/exercise5-frame-sketch.webp" alt="Box superstructure sketch">Box superstructure sketch</ContentFigure>
 
 <Aside type="note" title="Origin Placement">
 The wheels are the 1.75-inch blocks on the corners of the tube. If that's the case, where is the origin placed in the side layout sketch? Why do you think it's placed there? Imagine if you looked at the robot in real life to the side.
@@ -62,14 +53,11 @@ So far, sketches have been created on default planes and mate connectors. In ord
 This is called modeling with "design intent." There are many different ways to model something, but you can choose specific ways based on what your intent for a part or the overall design is. This can also help you avoid creative blocks and keep your CAD from creating errors when the design changes.
 </Aside>
 
-:::figure{w=80}
-![Box superstructure sketch](../img/1a/side profile.webp)
-Box superstructure sketch
-:::
+<ContentFigure src="../img/1a/side profile.webp" alt="Box superstructure sketch" width="80%">Box superstructure sketch</ContentFigure>
 
 Watch a demonstration of this sketching technique below.
 
-<YouTube id="_b2Gf8IiEEA">Sketching on a tube face</YouTube>
+<ContentFigure src="_b2Gf8IiEEA">Sketching on a tube face</ContentFigure>
 
 Now that you've seen a demonstration, **try to complete the box tube structure** by creating a sketch on the face of the cross tube and projecting lines from the layout sketch into the new sketch with the `use` tool.
 
@@ -96,7 +84,7 @@ After you come back, **try to improve or correct any mistakes you find**. Once y
 
 Follow the short video below to learn how to rename your features, then rename the sketches and features in your part studio. Moving forward, we want to **always name our sketches and features**.
 
-<YouTube id="ELdwPyFnm4Y">Renaming features in Onshape</YouTube>
+<ContentFigure src="ELdwPyFnm4Y">Renaming features in Onshape</ContentFigure>
 
 
 After you're done renaming your features, move on to the next exercise.

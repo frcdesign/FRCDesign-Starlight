@@ -1,0 +1,37 @@
+---
+/**
+ * ContentRow component - Lay multiple ContentFigures side by side
+ *
+ * Usage in MDX:
+ * <ContentRow>
+ *   <ContentFigure src="./img/a.webp" alt="A">Caption A</ContentFigure>
+ *   <ContentFigure src="./img/b.webp" alt="B">Caption B</ContentFigure>
+ * </ContentRow>
+ *
+ * Props:
+ * - gap: Space between figures (default "0.5rem")
+ */
+
+interface Props {
+  gap?: string;
+}
+
+const { gap = '0.5rem' } = Astro.props;
+---
+
+<div class="content-row" style={`gap: ${gap};`}>
+  <slot />
+</div>
+
+<style>
+  .content-row {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .content-row :global(.content-figure) {
+    flex: 1;
+    min-width: 0;
+  }
+</style>

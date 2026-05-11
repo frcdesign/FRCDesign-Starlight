@@ -1,10 +1,11 @@
----
+﻿---
 title: "1A: Onshape Fundamentals - Section 1"
 description: Adding cross rails to a drivetrain
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import YouTube from '../../../../../components/YouTube.astro';
+import Aside from '@components/content/Aside.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import ContentRow from '@components/content/ContentRow.astro';
 
 ## Drivetrains
 
@@ -13,7 +14,7 @@ They're usually built out of box tube and have to be strong enough to survive to
 
 Check out the video below to see a drivetrain in action. Spot where box tube is used.
 
-<YouTube id="iDWhp80-axc">Drivetrain in action</YouTube>
+<ContentFigure src="iDWhp80-axc">Drivetrain in action</ContentFigure>
 
 ---
 
@@ -25,21 +26,10 @@ You will be adding extra cross rails to the drivetrain in the part studio. This 
 
 **Use the `extrude` tool and `tube converter` to create cross rails for the drivetrain**. Use what you learned in the previous exercise to try to figure it out. Good luck!
 
-<div style="display: flex; gap: 5px; align-items: flex-start;">
-  <div style="flex: 1;">
-    :::figure{w=90}
-    ![Missing Cross Rails](../img/1a/dt-top.webp)
-    Missing Cross Rails
-    :::
-  </div>
-
-  <div style="flex: 1;">
-    :::figure{w=90}
-    ![Complete Drivetrain](../img/1a/drivetrain-example.webp)
-    Complete Drivetrain
-    :::
-  </div>
-</div>
+<ContentRow>
+  <ContentFigure src="../img/1a/dt-top.webp" alt="Missing Cross Rails">Missing Cross Rails</ContentFigure>
+  <ContentFigure src="../img/1a/drivetrain-example.webp" alt="Complete Drivetrain">Complete Drivetrain</ContentFigure>
+</ContentRow>
 
 <Aside type="tip" title="Think About This While You Work">
 Which extrude setting makes sure the cross rails end up in the right spot?
@@ -55,10 +45,7 @@ Use the same settings for `Tube Converter` as you did for the previous exercise.
 
 Your Part Studio should match what you'd build in real life. If it overlaps like this, how do you fix it?
 
-:::figure{w=70}
-![Make sure your parts don't overlap!](../img/1a/noclipping.webp)
-Make sure your parts don't overlap!
-:::
+<ContentFigure src="../img/1a/noclipping.webp" alt="Make sure your parts don't overlap!" width="70%">Make sure your parts don't overlap!</ContentFigure>
 
 Always check that your CAD makes sense physically.
 
@@ -68,7 +55,7 @@ Always check that your CAD makes sense physically.
 
 Once the two tubes are created, the appearance of the drivetrain tubes can be changed so it looks nicer. Watch the video, then change all of the tubes to a color of your choosing.
 
-<YouTube id="Wr5-n--PbuI">Changing part appearance</YouTube>
+<ContentFigure src="Wr5-n--PbuI">Changing part appearance</ContentFigure>
 
 
 When you're done changing the appearance of the tubes, move on to the next exercise.

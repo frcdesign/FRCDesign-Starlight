@@ -1,10 +1,11 @@
----
+﻿---
 title: Performance Tuning
 description: Optimizing Onshape performance for your system
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import Slides from '../../../../../components/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
+import Slides from '@components/content/Slides.astro';
 
 ## Performance Tuning
 
@@ -24,15 +25,15 @@ If you are using Chrome, You can try modifying the following settings to improve
 
 - First, type `chrome://settings/` in your search bar to navigate to chrome settings. Make sure that "Use graphics acceleration when available" is enabled. Relaunch chrome if you have updated it to enable it.
 
-  ![Graphics acceleration setting](/learning-course/course-setup/performance-tuning/graphicsacceleration.webp)
+  <ContentFigure src="../img/performance-tuning/graphicsacceleration.webp" alt="Graphics acceleration setting" />
 
 - Go to `chrome://flags/` and enable "Override Software Rendering List":
 
-  ![Override rendering list](/learning-course/course-setup/performance-tuning/override-rendering-list.png)
+  <ContentFigure src="../img/performance-tuning/override-rendering-list.webp" alt="Override rendering list" />
 
 - Finally, Try adjusting your ANGLE graphics backend:
 
-  ![ANGLE backend](/learning-course/course-setup/performance-tuning/ANGLE-backend.png)
+  <ContentFigure src="../img/performance-tuning/ANGLE-backend.webp" alt="ANGLE backend" />
 
 Please note that performance will depend on your individual computer setup. We suggest the following process:
 
@@ -43,19 +44,19 @@ Please note that performance will depend on your individual computer setup. We s
 Repeat these steps for each backend and use whichever is the most performant. Here are some examples all taken from the same machine.
 
 <Slides>
-  ![](/learning-course/course-setup/performance-tuning/performance-examples/default.png)
+  ![](../img/performance-tuning/default.webp)
   The default configuration
 
-  ![](/learning-course/course-setup/performance-tuning/performance-examples/opengl.png)
+  ![](../img/performance-tuning/opengl.webp)
   OpenGL
 
-  ![](/learning-course/course-setup/performance-tuning/performance-examples/D3D9.png)
+  ![](../img/performance-tuning/D3D9.webp)
   Direct3D 9
 
-  ![](/learning-course/course-setup/performance-tuning/performance-examples/D3D11.png)
+  ![](../img/performance-tuning/D3D11.webp)
   Direct3D 11
 
-  ![](/learning-course/course-setup/performance-tuning/performance-examples/D3D11on12.png)
+  ![](../img/performance-tuning/D3D11on12.webp)
   Direct3D 11 on 12
 </Slides>
 

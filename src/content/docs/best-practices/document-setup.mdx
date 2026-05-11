@@ -1,9 +1,10 @@
----
+﻿---
 title: Document Setup
 description: The best practices for document setup for an FRC robot.
 ---
 
-import Aside from '../../../components/Aside.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
 
 In general, an FRC robot is too complicated and has too many parts to be created entirely within a single document. Doing so is possible, but will result in bad loading times, and likely poor organization.
 
@@ -20,7 +21,7 @@ To connect these documents to each other, we make use of a few key Onshape featu
 
 Here is a diagram showing the full file structure:
 
-![](./img/docsetup2.webp)
+<ContentFigure src="./img/docsetup2.webp" />
 
 :::center
 *Blue: Derive, Red: Import*
@@ -32,8 +33,8 @@ Sometimes the "main robot" document is combined with the "concept" document. In 
 
 You can see an example of this document structure here. Note the combination of the framework and main documents.
 
-![](./img/docsetup3.webp)
+<ContentFigure src="./img/docsetup3.webp" />
 
-![](./img/docsetup4.webp)
+<ContentFigure src="./img/docsetup4.webp" />
 
 The document structure isn't set in stone; as long as it helps your team fulfill the goal of top-down design and uses separate documents to split up the versions of mechanisms, you can place your main layout sketches wherever you want (main document, concept document, or the drivetrain document).

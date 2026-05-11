@@ -1,10 +1,11 @@
----
+﻿---
 title: "1A: Onshape Fundamentals - Section 1"
 description: Learn to create box tubes in Onshape
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import YouTube from '../../../../../components/YouTube.astro';
+import Aside from '@components/content/Aside.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import ContentRow from '@components/content/ContentRow.astro';
 
 ## Exercise 1: Making Your First Tube
 
@@ -18,7 +19,7 @@ In this exercise you'll be:
 
 Inside of the document you copied and navigated through previously, follow along with this video to create your box tubes and finish the exercise. The `extrude` tool will be introduced through this.
 
-<YouTube id="FdD1BTQndEo">Making your first tube in Onshape</YouTube>
+<ContentFigure src="FdD1BTQndEo">Making your first tube in Onshape</ContentFigure>
 
 <Aside type="note" title="As you work through the exercise, notice how:">
 
@@ -31,21 +32,10 @@ Inside of the document you copied and navigated through previously, follow along
 
 ### Reference Images
 
-<div style="display: flex; gap: 20px; align-items: flex-start;">
-  <div style="flex: 1;">
-    :::figure
-    ![Extrude your rectangles to create box tubes.](../img/1a/extrude-setup.webp)
-    Extrude your rectangles to create box tubes.
-    :::
-  </div>
-
-  <div style="flex: 1;">
-    :::figure
-    ![Completed box tube geometry.](../img/1a/tube-result.webp)
-    Completed box tube geometry.
-    :::
-  </div>
-</div>
+<ContentRow>
+  <ContentFigure src="../img/1a/extrude-setup.webp" alt="Extrude your rectangles to create box tubes.">Extrude your rectangles to create box tubes.</ContentFigure>
+  <ContentFigure src="../img/1a/tube-result.webp" alt="Completed box tube geometry.">Completed box tube geometry.</ContentFigure>
+</ContentRow>
 
 ### Extrude Tool Info
 
@@ -61,10 +51,7 @@ You can define the end of the extrude depending on an arbitrary length or by usi
 
 When using the Tube Converter (as shown in the video), make sure your settings match:
 
-:::figure{w=90}
-![Tube Converter settings example](../img/1a/tube-converter-settings.webp)
-Tube Converter settings example
-:::
+<ContentFigure src="../img/1a/tube-converter-settings.webp" alt="Tube Converter settings example" width="90%">Tube Converter settings example</ContentFigure>
 
 If the Tube Converter isn't behaving as expected:
 
