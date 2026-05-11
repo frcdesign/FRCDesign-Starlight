@@ -1,10 +1,11 @@
----
+﻿---
 title: "Exercise 7: Vertical Rollers"
 description: Model vertical rollers
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import Slides from '../../../../../components/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
+import Slides from '@components/content/Slides.astro';
 
 In this exercise, you will be modeling some vertical rollers. This mechanism features the Configurable Tube Roller System assembly and a 3D printed motor spacer. Be sure to pay attention to the layout sketch and assembly mating when modeling.
 
@@ -15,10 +16,7 @@ Rather than using multiple spacers to connect two components, we can opt to use 
 If you have a 3D printer, this can be a good option.
 
 <Aside type="example" title="3D Printed Spacer Block">
-:::figure{w=65}
-![3D printed spacer block](../img/1c/vertical-rollers/3dp-spacer.webp)
-Multiple spacers can be combined into single 3D printed block to reduce part count.
-:::
+<ContentFigure src="../img/1c/vertical-rollers/3dp-spacer.webp" alt="3D printed spacer block" width="65%">Multiple spacers can be combined into single 3D printed block to reduce part count.</ContentFigure>
 </Aside>
 
 ## Part Studio Instructions

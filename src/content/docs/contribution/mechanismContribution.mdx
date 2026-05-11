@@ -1,9 +1,9 @@
----
+﻿---
 title: Contributing to Mechanism Examples
 description: A guide to contributing mechanism examples to the website.
 ---
 
-import Aside from '../../../components/Aside.astro';
+import Aside from '@components/content/Aside.astro';
 
 The [mechanism examples](/mechanism-examples/) pages are the ones that would benefit the most from outside contribution. You can add examples from other teams, of course, but adding your own mechanism and going behind the design and performance on it will be ideal. If adding an example from another team, try to interview them for their input and more accurate information.
 
@@ -75,10 +75,7 @@ description: Brief description of the mechanism
 
 # mechanism-example-name
 
-:::figure{w=80}
-![alt-text](/mechanism-examples/category/image.webp)
-Caption describing the mechanism
-:::
+<ContentFigure width="80%" />
 
 ### Links
 [CAD Link](https://cad.onshape.com/...)

@@ -1,10 +1,11 @@
----
+﻿---
 title: "Exercise 6: Direction Swap"
 description: Model a direction swap mechanism
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import Slides from '../../../../../components/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
+import Slides from '@components/content/Slides.astro';
 
 In this exercise, you will be modeling a power transmission with a direction swap gear.
 This mechanism features features a 1:1 gear transmission that inverts the direction of the motor, which can be useful when you want two different shafts to be powered by the same motor but spin in opposite directions.
@@ -19,10 +20,7 @@ If you want to use aluminum spacers but do not have access to machinery to cut t
 However, they can be pricy and only come in certain lengths, though you can easily get around this by designing for standard spacer lengths.
 
 <Aside type="example" title="Spacer Stock">
-:::figure
-![Different spacer types](../img/1c/direction-swap/spacers.webp)
-Spacers can be 3D printed (left), purchased as COTS pre-cut spacers (center), or fabricated in-house from spacer stock (right). (Image Source: WCP)
-:::
+<ContentFigure src="../img/1c/direction-swap/spacers.webp" alt="Different spacer types">Spacers can be 3D printed (left), purchased as COTS pre-cut spacers (center), or fabricated in-house from spacer stock (right). (Image Source: WCP)</ContentFigure>
 </Aside>
 
 When modeling, it is recommended to use the `Spacer` Featurescript for spacers that you will fabricate in house (e.g. 3D printing or using [round tube stock](https://wcproducts.com/products/shaft-stock)) and use the configurable FRCDesignLib spacers for COTS spacers.
@@ -104,12 +102,6 @@ Driven dimensions,on the other hand, are light gray and reflect existing geometr
 To toggle between them, right-click the dimension and select "Driving/Driven" from the context menu - useful when a new dimension would over-constrain the sketch or when you need to inspect geometry without changing it.
 
 <Aside type="tip" title="Switching Between Driving and Driven Dimensions">
-:::figure
-<video width="100%" controls>
-  <source src="/learning-course/stage1/1c/driven-dims.webm" type="video/webm" />
-  Your browser does not support the video tag.
-</video>
-Switch a dimension from driving to driven and vice versa by right-clicking the dimension. Notice that the driven dimension will update based on other features.
-:::
+Right-click the dimension and select "Driving/Driven" from the context menu.
 </Aside>
 

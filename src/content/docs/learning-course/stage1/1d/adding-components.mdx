@@ -1,12 +1,13 @@
----
+﻿---
 title: Adding More Components
 description: Adding additional components to the design
 sidebar:
   order: 6
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import Slides from '../../../../../components/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
+import Slides from '@components/content/Slides.astro';
 
 ## Adding More Components
 
@@ -21,9 +22,7 @@ Start by **navigating to the `Drivetrain` Part Studio** in the `Drivetrain` fold
 <Aside type="tip" title="Manually Define Mounting Holes">
 When you project the holes off of the tube or use the gusset featurescript, those references can break easily if the tube converter or length of the tube gets changed. Try to dimension manually defined holes from the edge of the tube or only project one hole and use a linear pattern to minimize the amount of things you need to fix if something changes.
 
-:::figure{w=60 border}
-![Manually defined mounting holes](../img/1d/define-holes.webp)
-:::
+<ContentFigure src="../img/1d/define-holes.webp" alt="Manually defined mounting holes" width="60%" border />
 </Aside>
 
 <Slides>
@@ -59,9 +58,7 @@ Your assembly should weigh approximately 37.2lbs.
 
 Your tab manager should have the following tabs and folder:
 
-:::figure
-![Tab manager view](../img/1d/tab-manager.webp)
-:::
+<ContentFigure src="../img/1d/tab-manager.webp" alt="Tab manager view" />
 </Aside>
 
 ### Level of Detail

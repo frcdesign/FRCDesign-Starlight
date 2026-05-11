@@ -1,10 +1,11 @@
----
+﻿---
 title: "Exercise: Mounting Electronics"
 description: Mount electronics on the robot
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import Slides from '../../../../../components/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
+import Slides from '@components/content/Slides.astro';
 
 ## Exercise: Mounting Electronics
 
@@ -39,15 +40,10 @@ Every robot is also required to have a Robot Signal Light (RSL). An easy locatio
 
 **Add mounting for an RSL to your Stage 1D drivetrain.** You can take inspiration from the following image.
 
-:::figure{w=80 border}
-![RSL mount constructed out of 1/8" thick polycarbonate plate](../img/1e/elec/elec-rsl.webp)
-RSL mount constructed out of 1/8" thick polycarbonate plate. The mounting hole for the classic RSL is 1" in diameter. Both the classic and new RSL models can be found in FRCDesignLib.
-:::
+<ContentFigure src="../img/1e/elec/elec-rsl.webp" alt="RSL mount constructed out of 1/8 inch thick polycarbonate plate" width="80%" border>RSL mount constructed out of 1/8" thick polycarbonate plate. The mounting hole for the classic RSL is 1" in diameter. Both the classic and new RSL models can be found in FRCDesignLib.</ContentFigure>
 
 ### Radio
 
 Each robot is also required to have a radio. The radio should be mounted on the robot following Vivid Hosting's [radio mounting guidelines](https://frc-radio.vivid-hosting.net/getting-started/usage/mounting-your-radio "Vivid Hosting Radio Mounting Guidelines").
 
-:::figure{w=80 border}
-![Radio mounting](../img/1e/elec/elec-radio.webp)
-:::
+<ContentFigure src="../img/1e/elec/elec-radio.webp" alt="Radio mounting" width="80%" border />

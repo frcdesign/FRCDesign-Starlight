@@ -1,10 +1,11 @@
----
+﻿---
 title: "1A: Onshape Fundamentals - Section 2"
 description: Learn the plate workflow in Onshape
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import YouTube from '../../../../../components/YouTube.astro';
+import Aside from '@components/content/Aside.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import ContentRow from '@components/content/ContentRow.astro';
 
 ## Introduction
 
@@ -18,10 +19,10 @@ Plates have two main functions in FRC: they allow you to **connect structural pi
 
 Below are two examples of plates being used in FRC.
 
-<div class="grid cards">
-  ![](../img/1a/9442-plate.webp)
-  ![](../img/1a/604-plate.webp)
-</div>
+<ContentRow>
+  <ContentFigure src="../img/1a/9442-plate.webp" />
+  <ContentFigure src="../img/1a/604-plate.webp" />
+</ContentRow>
 :::center
 *Gussets being used to mount mechanisms and hold frames together (Photo Credits: FRC 604, FRC 9442)*
 :::
@@ -34,7 +35,7 @@ It's this arbitrary hole spacing that is key to think about when designing plate
 
 A plate sketch is composed of circles for the holes, arcs for larger corner fillets, and lines to complete the shape. When making the shape of a plate think about the shape that would be made by tying a string around all of the mounting holes on a given plate. Here is a video demonstrating this concept for a very basic plate. No need to follow along here, just watch.
 
-<YouTube id="mXzX9wmipV8">Plate workflow demonstration</YouTube>
+<ContentFigure src="mXzX9wmipV8">Plate workflow demonstration</ContentFigure>
 
 This video also shows off the `tangent` constraint! This is one of the most frequently used constraints when designing plates since each mounting hole will have an arc around it to form the perimeter of the plate. The tangent constraint allows us to create a tangent line for an arc or circle. This is important to "smooth" out our plate. We don't want sharp edges!
 

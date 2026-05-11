@@ -1,15 +1,13 @@
----
+﻿---
 title: 3 Stage Cascade Elevator
 description: Chain driven 3 stage elevator featuring a plate based carriage
 ---
 
-import LinkButton from '../../../../../components/LinkButton.astro';
-import Aside from '../../../../../components/Aside.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import LinkButton from '@components/content/LinkButton.astro';
+import Aside from '@components/content/Aside.astro';
 
-:::figure{w=35}
-![3 Stage Cascade Elevator](./img/3_stage_elevator.webp)
-Chain driven 3 stage elevator featuring a plate based carriage. Uses TTB COTS Rigging and WCP Elevator Blocks.
-:::
+<ContentFigure src="./img/3_stage_elevator.webp" alt="3 Stage Cascade Elevator" width="35%">Chain driven 3 stage elevator featuring a plate based carriage. Uses TTB COTS Rigging and WCP Elevator Blocks.</ContentFigure>
 
 <Aside type="note">
 This model has not been built or tested in real life. It will be phased out as new mechanism examples are added.

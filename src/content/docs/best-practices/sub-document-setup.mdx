@@ -1,10 +1,11 @@
----
+﻿---
 title: Sub-Document Setup
 description: The best practices to follow with organizing your mechanism documents in Onshape.
 ---
 
-import Aside from '../../../components/Aside.astro';
-import LinkButton from '../../../components/LinkButton.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
+import LinkButton from '@components/content/LinkButton.astro';
 
 Each subsystem document should have at least one part studio and one assembly associated with it.
 
@@ -14,7 +15,7 @@ The Stage 2A Basic Shooter is a simple subsystem with no moving parts. This cont
   Stage 2A - Basic Shooter
 </LinkButton>
 
-![](./img/shooterAssembly.webp)
+<ContentFigure src="./img/shooterAssembly.webp" />
 
 ### Subsystems with Multiple Degrees of Freedom
 
@@ -32,7 +33,7 @@ The Stage 2C Slapdown Intake is a subsystem with a static portion and a pivoting
   Stage 2C - Slapdown Intake
 </LinkButton>
 
-![](./img/subassembly.webp)
+<ContentFigure src="./img/subassembly.webp" />
 
 The Stage 2D Cascade Elevator is a subsystem with a static portion and two subassemblies that slide linearly. This contains a part studio, a static frame/gearbox assembly, assemblies for the first stage and carriage, and a top-level assembly combining the 3 subassemblies with slider mates.
 
@@ -40,4 +41,4 @@ The Stage 2D Cascade Elevator is a subsystem with a static portion and two subas
   Stage 2D Cascade Elevator
 </LinkButton>
 
-![](./img/elevatorAssembly.webp)
+<ContentFigure src="./img/elevatorAssembly.webp" />

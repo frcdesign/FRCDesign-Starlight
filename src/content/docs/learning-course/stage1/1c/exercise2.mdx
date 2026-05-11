@@ -1,10 +1,11 @@
----
+﻿---
 title: "Exercise 2: Dead Axle Rollers"
 description: Model dead axle rollers
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import Slides from '../../../../../components/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
+import Slides from '@components/content/Slides.astro';
 
 In this exercise, you will be modeling some dead axle rollers. To spin things, whether it be rollers, wheels, or even arms, two types of axles can be utilized: "live" and "dead" axles.
 
@@ -14,10 +15,7 @@ You'll learn more about live and dead axle design in Stage 2, but for now, all y
 For live axle, the shaft spins on fixed bearings, while for dead axle, the bearings are on the spinning component. Take a look at the visual below to better understand.
 
 <Aside type="example" title="Live vs Dead Axle Rollers">
-:::figure{w=65}
-![Dead vs Live Axle comparison](../img/1c/dead-axle-rollers/dead-vs-live.webp)
-Section view of a dead axle (left) and live axle (right) roller. The dead axle roller sits on bearings and needs to be directly powered (in this case, through the integrated pulley). The live axle roller is powered from a pulley farther down the hex shaft.
-:::
+<ContentFigure src="../img/1c/dead-axle-rollers/dead-vs-live.webp" alt="Dead vs Live Axle comparison" width="65%">Section view of a dead axle (left) and live axle (right) roller. The dead axle roller sits on bearings and needs to be directly powered (in this case, through the integrated pulley). The live axle roller is powered from a pulley farther down the hex shaft.</ContentFigure>
 </Aside>
 
 ## Part Studio Instructions

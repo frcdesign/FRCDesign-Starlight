@@ -1,4 +1,4 @@
----
+﻿---
 title: Contribution Style Guide
 description: The style guide for contribution according to the goals of the website.
 ---
@@ -55,7 +55,7 @@ Keep in mind that FRC design trends are temporary and transient.
 
 - Compress images to .webp format using [squoosh](https://squoosh.app/)
 - Embed longer videos using the YouTube component, and shorter videos with a webm file
-- Add images using markdown syntax: `![Alt text](/path/to/image.webp)`
+- Add images using markdown syntax: `<ContentFigure src="/path/to/image.webp" alt="Alt text" />`
 
 ### Brand Standards
 
@@ -75,7 +75,8 @@ You can use "you" when writing, when it makes writing less awkward. However, try
 - External links should generally open in a new tab
 - Links to CAD documents should use the LinkButton component:
   ```mdx
-  import LinkButton from '../../../components/LinkButton.astro';
+  import ContentFigure from '@components/content/ContentFigure.astro';
+import LinkButton from '@components/content/LinkButton.astro';
 
   <LinkButton href="https://cad.onshape.com/..." variant="primary">CAD Link</LinkButton>
   ```

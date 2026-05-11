@@ -1,13 +1,14 @@
----
+﻿---
 title: Top Level Assembly
 description: Creating the top level assembly
 sidebar:
   order: 7
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import LinkButton from '../../../../../components/LinkButton.astro';
-import Slides from '../../../../../components/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
+import LinkButton from '@components/content/LinkButton.astro';
+import Slides from '@components/content/Slides.astro';
 
 ## Top Level Robot Assembly
 
@@ -38,9 +39,7 @@ Start by, **creating a new assembly tab above the `Main Layout Sketch` part stud
 
 <Aside type="tip" title="Verification">
 Your tab manager should now look like this:
-:::figure
-![Tab manager with top level assembly](../img/1d/tab-manager-2.webp)
-:::
+<ContentFigure src="../img/1d/tab-manager-2.webp" alt="Tab manager with top level assembly" />
 </Aside>
 
 That's all there is to the top level robot assembly! The use of the origin cube makes it very easy to mate together assemblies. In later stages you will explore how to create flexible assemblies (arms, elevators, etc) with the origin cube. If you are interested, you can get a sneak peek [here](/best-practices/assembly-setup/#utilizing-origin-cube-for-flexible-assemblies).

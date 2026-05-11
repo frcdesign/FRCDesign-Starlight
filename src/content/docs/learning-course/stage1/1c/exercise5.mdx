@@ -1,10 +1,11 @@
----
+﻿---
 title: "Exercise 5: Flipped Gearbox"
 description: Model a flipped gearbox
 ---
 
-import Aside from '../../../../../components/Aside.astro';
-import Slides from '../../../../../components/Slides.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
+import Aside from '@components/content/Aside.astro';
+import Slides from '@components/content/Slides.astro';
 
 Starting with exercise 5, only an outline of the design process and key details will be provided to you. This is to prepare you for stage 2, where the exercises are less guided.
 
@@ -88,9 +89,6 @@ Catch errors in the CAD rather than in real life! Always double and triple check
 
 <Aside type="caution" title="Interference Detection">
 If an interference is detected with the Check Interference tool, it will highlight the intersected volumes in red.
-:::figure{w=80}
-![Interference check](../img/1c/flipped-gearbox/interference-check.webp)
-Interference between a motor and plate detected by the Check Interference tool.
-:::
+<ContentFigure src="../img/1c/flipped-gearbox/interference-check.webp" alt="Interference check" width="80%">Interference between a motor and plate detected by the Check Interference tool.</ContentFigure>
 </Aside>
 
