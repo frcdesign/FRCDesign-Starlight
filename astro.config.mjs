@@ -3,8 +3,12 @@ import starlight from '@astrojs/starlight';
 import remarkGlossary from './src/plugins/remark-glossary';
 import remarkCenter from './src/plugins/remark-center';
 import cloudflare from '@astrojs/cloudflare';
+import sitemap from '@astrojs/sitemap';
+
+const sitemapExcludedPaths = ['/test-content-figure/'];
 
 export default defineConfig({
+  site: 'https://star.frcdesign.org',
   prefetch: true,
   image: {
     service: {
@@ -40,6 +44,9 @@ export default defineConfig({
       tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 3 },
       // Sidebar configuration is now managed in src/config/sidebarConfig.ts
       // This allows different sidebars per top-level navigation section
+    }),
+    sitemap({
+      filter: (page) => !sitemapExcludedPaths.includes(new URL(page).pathname),
     }),
   ],
 
