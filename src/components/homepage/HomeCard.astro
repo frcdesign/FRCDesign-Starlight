@@ -46,25 +46,9 @@ const icons = {
     overflow: hidden;
   }
 
-  .home-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-color) 0%, #66bb6a 50%, var(--accent-color) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
   .home-card:hover {
     border-color: var(--accent-color);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(67, 160, 71, 0.25);
-  }
-
-  .home-card:hover::before {
-    opacity: 1;
   }
 
   .home-card-icon {
