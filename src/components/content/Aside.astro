@@ -12,9 +12,10 @@ interface Props {
   type?: 'note' | 'tip' | 'caution' | 'danger' | 'example' | 'video';
   title?: string;
   collapse?: boolean;
+  class?: string;
 }
 
-const { type = 'note', title, collapse = false } = Astro.props;
+const { type = 'note', title, collapse = false, class: className } = Astro.props;
 
 const titles: Record<string, string> = {
   note: 'Note',
@@ -38,7 +39,7 @@ const icons: Record<string, string> = {
 ---
 
 {collapse ? (
-  <details class={`aside aside--${type}`}>
+  <details class:list={['aside', `aside--${type}`, className]}>
     <summary>
       <span class="aside-icon" set:html={icons[type]} />
       <span class="aside-title">{displayTitle}</span>
@@ -51,7 +52,7 @@ const icons: Record<string, string> = {
     </div>
   </details>
 ) : (
-  <div class={`aside aside--${type}`}>
+  <div class:list={['aside', `aside--${type}`, className]}>
     <div class="aside-header">
       <span class="aside-icon" set:html={icons[type]} />
       <span class="aside-title">{displayTitle}</span>

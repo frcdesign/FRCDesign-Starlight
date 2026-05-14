@@ -43,7 +43,7 @@
  * Props:
  * - src: ImageMetadata (from glob import), image path string, YouTube URL, YouTube video ID, or animated media path
  * - alt: Alt text for accessibility (images only)
- * - width: Width of the figure (e.g., "60%", "400px") - defaults to 100%
+ * - width: Width of the figure (e.g., "60%", "400px") - defaults to 70%
  * - border: Add a border (boolean for default style, or string for custom CSS border)
  * - align: Alignment of the figure ("left", "center", "right") - defaults to "center"
  * - gif: Treat src as animated media (renders as autoplay looping video or img, no optimization)
@@ -68,7 +68,8 @@ interface Props {
   inline?: boolean;
 }
 
-const { src, alt = '', width = '100%', border = false, align = 'center', class: className, gif = false, inline = false } = Astro.props;
+const { src, alt = '', width = '70%', border = false, align = 'center', class: className, gif = false, inline = false } = Astro.props;
+const hasExplicitWidth = Astro.props.width !== undefined;
 
 // Check if src is already an ImageMetadata object (from glob import)
 const isImageMetadata = typeof src === 'object' && src !== null && 'src' in src;
@@ -158,6 +159,12 @@ if (!isYouTube && !isGif) {
 }
 
 const hasCaption = Astro.slots.has('default');
+const figureStyle = [
+  hasExplicitWidth ? `--content-figure-flex: 0 1 ${width};` : '',
+  hasExplicitWidth ? `--content-figure-width: ${width};` : '',
+  `max-width: ${width};`,
+  `margin: ${marginStyle};`,
+].filter(Boolean).join(' ');
 ---
 
 {inline ? (
@@ -167,7 +174,7 @@ const hasCaption = Astro.slots.has('default');
     <img src={typeof src === 'string' ? src : ''} alt={alt} style="display: inline; vertical-align: middle;" loading="lazy" />
   )
 ) : (
-<figure class:list={['content-figure', className]} style={`max-width: ${width}; margin: ${marginStyle};`}>
+<figure class:list={['content-figure', className]} style={figureStyle}>
   {isGif ? (
     <div class:list={['content-figure-image']} style={hasBorder ? `border: ${borderStyle};` : undefined}>
       {isGifVideo ? (
@@ -230,6 +237,7 @@ const hasCaption = Astro.slots.has('default');
 <style>
   .content-figure {
     display: block;
+    padding-top: 1rem;
   }
 
   /* Image styles */

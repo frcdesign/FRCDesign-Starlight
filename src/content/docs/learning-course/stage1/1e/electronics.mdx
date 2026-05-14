@@ -11,7 +11,7 @@ import Aside from '@components/content/Aside.astro';
 To make wiring the robot and later inspecting the wiring easier, enough space should be left around each electrical component. You should work with your electrical teammates to determine the best location for the various control system parts. Teams typically try to mount their electronics on the bellypan, permitted there is space.
 
 <Aside type="example">
-<ContentFigure src="../img/1e/elec/elec-example.webp" alt="Example layout of various different electronic components on a bellypan" width="80%">Example layout of various different electronic components on a bellypan. (Photo Credit: FRC 3647)</ContentFigure>
+<ContentFigure src="../img/1e/elec/elec-example.webp" alt="Example layout of various different electronic components on a bellypan" width="50%">Example layout of various different electronic components on a bellypan. (Photo Credit: FRC 3647)</ContentFigure>
 </Aside>
 
 ### Electronic Components
@@ -19,12 +19,13 @@ To make wiring the robot and later inspecting the wiring easier, enough space sh
 A list of typical electrical components found on FRC robots is provided below, as well as a recommended mounting location. Again, mounting locations are highly dependent on the rest of your robot, make sure to always coordinate with your electrical team to decide what is best.
 
 
-<Aside type="note" title="FRC Electrical Components">
+<Aside type="note" title="FRC Electrical Components" class="electrical-components-table">
 | **Component** | **Function** | **Suggested Location** | **Image** |
 |---|---|---|---|
 | REV Power Distribution Hub (PDH) or  CTRE Power Distribution Panel (PDP) | Distributes power to all other components | Bellypan | <ContentFigure src="../img/1e/elec-components/pdh.webp" alt="PDH" /> |
 | Main Breaker | Is used to turn on/off the robot and protect electronics from events with extremely high current drawn | Somewhere easily accessible and close to the PDH and Battery | <ContentFigure src="../img/1e/elec-components/mbreak.webp" alt="Main Breaker" /> |
-| RoboRIO | Central controller for all robot operations | Bellypan | <ContentFigure src="../img/1e/elec-components/rio.webp" alt="RoboRIO" /> |
+| RoboRIO (Retired for 2027)| Central controller for all robot operations | Bellypan | <ContentFigure src="../img/1e/elec-components/rio.webp" alt="RoboRIO" /> |
+| SystemCore | Central controller for all robot operations | Bellypan | <ContentFigure src="../img/1e/elec-components/systemcore.webp" alt="SystemCore" /> |
 | Integrated motor controller (eg: Falcon 500, Kraken X60) | Powers and controls the  integrated motor | No electrical mounting required | <ContentFigure src="../img/1e/elec-components/kx60.webp" alt="Integrated motor controller" /> |
 | Discrete motor controller  (eg: Spark Max, Talon SRX) | Required to power and control some motors  (eg: NEO, CIM) | Near the controlled motor  or on the bellypan | <ContentFigure src="../img/1e/elec-components/smax.webp" alt="Discrete motor controller" /> |
 | Robot Radio | Allows the robot to establish wireless connections to the field or driver station | Follow Vivid Hosting's [radio mounting guidelines](https://frc-radio.vivid-hosting.net/getting-started/usage/mounting-your-radio "Vivid Hosting Radio Mounting Guidelines"). | <ContentFigure src="../img/1e/elec-components/vh109.webp" alt="Robot Radio" /> |
@@ -33,3 +34,64 @@ A list of typical electrical components found on FRC robots is provided below, a
 | Voltage Regulator Module | Can be used for custom circuits | Bellypan | <ContentFigure src="../img/1e/elec-components/vrm.webp" alt="Voltage Regulator Module" /> |
 | Pneumatics Hub | Controls pneumatic components | Bellypan | <ContentFigure src="../img/1e/elec-components/pcm.webp" alt="Pneumatics Hub" /> |
 </Aside>
+
+<style is:global>{`
+  .electrical-components-table .aside-content {
+    overflow-x: auto;
+  }
+
+  .electrical-components-table table {
+    table-layout: fixed;
+    width: 100%;
+    min-width: 760px;
+    margin: 0;
+  }
+
+  .electrical-components-table th,
+  .electrical-components-table td {
+    vertical-align: middle;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .electrical-components-table th:nth-child(1),
+  .electrical-components-table td:nth-child(1) {
+    width: 23%;
+  }
+
+  .electrical-components-table th:nth-child(2),
+  .electrical-components-table td:nth-child(2) {
+    width: 30%;
+  }
+
+  .electrical-components-table th:nth-child(3),
+  .electrical-components-table td:nth-child(3) {
+    width: 27%;
+  }
+
+  .electrical-components-table th:nth-child(4),
+  .electrical-components-table td:nth-child(4) {
+    width: 20%;
+    text-align: center;
+  }
+
+  .electrical-components-table td:nth-child(4) .content-figure {
+    max-width: 8rem !important;
+    margin: 0 auto !important;
+    padding-top: 0;
+  }
+
+  .electrical-components-table td:nth-child(4) .content-figure-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 5rem;
+  }
+
+  .electrical-components-table td:nth-child(4) .figure-img {
+    width: auto !important;
+    height: auto !important;
+    max-width: 8rem;
+    max-height: 6.5rem;
+    object-fit: contain;
+  }
+`}</style>
