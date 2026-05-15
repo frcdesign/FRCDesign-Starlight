@@ -341,7 +341,6 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
                 { label: "3005's Charged Up Drivebase", slug: 'mechanism-examples/drivebase/swerve/3005_2023_dt' },
                 { label: "6328's Crescendo Drivebase", slug: 'mechanism-examples/drivebase/swerve/6328_2024_dt' },
                 { label: "5460's Crescendo Drivebase", slug: 'mechanism-examples/drivebase/swerve/5460_2023_dt' },
-                { label: "972's Crescendo Drivebase", slug: 'mechanism-examples/drivebase/swerve/972_2024_dt' },
               ],
             },
             { label: 'Tank', slug: 'mechanism-examples/drivebase/tank' },
@@ -356,11 +355,8 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               collapsed: true,
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/intake/slapdown' },
-                { label: "1678's Crescendo Intake", slug: 'mechanism-examples/intake/slapdown/1678_2024_intake' },
                 { label: "1778's Crescendo Intake", slug: 'mechanism-examples/intake/slapdown/1778_2024_intake' },
-                { label: "6423's Crescendo Intake", slug: 'mechanism-examples/intake/slapdown/6423_2024_intake' },
                 { label: "3847's Rapid React Intake", slug: 'mechanism-examples/intake/slapdown/3847_2022_intake' },
-                { label: "2910's IR @ Home Intake", slug: 'mechanism-examples/intake/slapdown/2910_2021_intake' },
               ],
             },
             {
@@ -369,8 +365,6 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/intake/linkage' },
                 { label: "1678's Rapid React Intake", slug: 'mechanism-examples/intake/linkage/1678_2022_intake' },
-                { label: "6800's Rapid React Intake", slug: 'mechanism-examples/intake/linkage/6800_2022_intake' },
-                { label: "4089's Rapid React Intake", slug: 'mechanism-examples/intake/linkage/4089_2022_intake' },
               ],
             },
             { label: 'UTB Intakes', slug: 'mechanism-examples/intake/utb' },
@@ -386,10 +380,6 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/shooter' },
                 { label: "1678's Rapid React Shooter", slug: 'mechanism-examples/shooter/1678_2022_shooter' },
-                { label: "6328's Crescendo Shooter", slug: 'mechanism-examples/shooter/6328_2024_shooter' },
-                { label: "2910's Rapid React Shooter", slug: 'mechanism-examples/shooter/2910_2022_shooter' },
-                { label: "6800's Rapid React Shooter", slug: 'mechanism-examples/shooter/6800_2022_shooter' },
-                { label: "2910's IR @ Home Shooter", slug: 'mechanism-examples/shooter/2910_2021_shooter' },
               ],
             },
             { label: 'End Effectors', slug: 'mechanism-examples/end-effector' },
@@ -431,9 +421,7 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               collapsed: true,
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/pivots' },
-                { label: '6328 A-Frame Pivot', slug: 'mechanism-examples/pivots/6328_2023_pivot' },
                 { label: '2910 Dead Axle Pivot', slug: 'mechanism-examples/pivots/2910_2023_pivot' },
-                { label: '1690 Lantern Gear Pivot', slug: 'mechanism-examples/pivots/1690_2024_pivot' },
                 { label: '5460 Dead Axle Pivot', slug: 'mechanism-examples/pivots/5460_2023_pivot' },
               ],
             },
