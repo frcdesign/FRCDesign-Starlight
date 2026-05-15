@@ -245,7 +245,7 @@ const icons: Record<string, string> = {
   }
 
   /* Ensure images inside asides maintain aspect ratio */
-  .aside-content :global(img) {
+  .aside-content :global(img:not(.slide-img)) {
     max-width: 100%;
     height: auto !important;
     width: auto !important;
@@ -257,7 +257,7 @@ const icons: Record<string, string> = {
     text-align: center;
   }
 
-  .aside-content :global(figure img) {
+  .aside-content :global(figure img:not(.slide-img)) {
     max-width: 100%;
     height: auto !important;
     width: auto !important;

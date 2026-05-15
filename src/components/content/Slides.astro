@@ -302,7 +302,7 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
               ) : slide.optimizedImage ? (
                 <Image src={slide.optimizedImage} alt={slide.alt} loading="lazy" class="slide-img" />
               ) : (
-                <img src={slide.url} alt={slide.alt} loading="lazy" />
+                <img src={slide.url} alt={slide.alt} loading="lazy" class="slide-img" />
               )}
             </div>
           </div>
@@ -494,6 +494,7 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
   .slide-media :global(img),
   .slide-media :global(.slide-img) {
     max-width: 100%;
+    max-height: min(52vh, 500px);
     height: auto;
     border-radius: 0.25rem;
     display: block;
@@ -501,6 +502,7 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
 
   .slide-media :global(video) {
     max-width: 100%;
+    max-height: min(52vh, 500px);
     height: auto;
     border-radius: 0.25rem;
     display: block;
@@ -508,6 +510,7 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
 
   .youtube-wrapper {
     width: 100%;
+    max-height: min(52vh, 500px);
     aspect-ratio: 16 / 9;
   }
 
@@ -879,10 +882,15 @@ const slideId = `slides-${Math.random().toString(36).substr(2, 9)}`;
           }
         });
 
-        // The widest image takes 100% width of wrapper (which is scale% of container)
-        // Calculate height based on wrapper width and widest aspect ratio
+        // The widest image takes 100% width of wrapper (which is scale% of container).
+        // Tall or square-only slide decks can otherwise make the slideshow as tall as
+        // the content column is wide, so cap the frame to a comfortable viewport size.
         const wrapperWidth = slidesWrapper.offsetWidth;
-        referenceHeight = wrapperWidth / widestAspectRatio;
+        const naturalReferenceHeight = wrapperWidth / widestAspectRatio;
+        const maxViewportHeight = Math.max(280, Math.min(500, window.innerHeight * 0.52));
+        const maxColumnHeight = wrapperWidth * 0.56;
+        const maxReferenceHeight = Math.min(maxViewportHeight, maxColumnHeight);
+        referenceHeight = Math.min(naturalReferenceHeight, maxReferenceHeight);
 
         // Set wrapper height
         slidesWrapper.style.height = `${referenceHeight}px`;

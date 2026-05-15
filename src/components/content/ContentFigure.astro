@@ -141,6 +141,14 @@ function getOptimizedImage(srcPath: string): ImageMetadata | null {
 // gif=true: animated media (webm/mp4 → <video>, others → <img>)
 const isGif = gif;
 const isGifVideo = isGif && typeof src === 'string' && (src.endsWith('.webm') || src.endsWith('.mp4'));
+const gifImageSource = isGif && !isGifVideo
+  ? (isImageMetadata
+      ? (src as ImageMetadata).src
+      : typeof src === 'string'
+        ? getOptimizedImage(src)?.src || src
+        : '')
+  : '';
+const gifVideoSource = isGifVideo && typeof src === 'string' ? src : '';
 
 const isYouTube = !isGif && isYouTubeSource(src);
 const videoId = isYouTube && typeof src === 'string' ? extractVideoId(src) : '';
@@ -186,11 +194,11 @@ const figureStyle = [
           class="figure-img"
           aria-label={alt}
         >
-          <source src={typeof src === 'string' ? src : ''} type={typeof src === 'string' && src.endsWith('.mp4') ? 'video/mp4' : 'video/webm'} />
+          <source src={gifVideoSource} type={typeof src === 'string' && src.endsWith('.mp4') ? 'video/mp4' : 'video/webm'} />
         </video>
       ) : (
         <img
-          src={typeof src === 'string' ? src : ''}
+          src={gifImageSource}
           alt={alt}
           class="figure-img"
           loading="lazy"
