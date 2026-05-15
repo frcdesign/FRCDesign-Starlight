@@ -15,6 +15,8 @@ const skippedProtocols = new Set(['data:', 'mailto:', 'tel:', 'javascript:']);
 const checked = new Set();
 const crawled = new Set();
 const broken = [];
+const invalidOnshapeLinks = [];
+const seenOnshapeLinks = new Set();
 const queue = [];
 
 if (process.env.LINK_CHECK_SKIP_BUILD === '1') {
@@ -33,11 +35,22 @@ try {
   server.close();
 }
 
-if (broken.length > 0) {
-  console.error(`\nFound ${broken.length} broken local link(s):`);
-  for (const item of broken) {
-    console.error(`- ${item.status} ${item.url}`);
-    console.error(`  linked from ${item.from}`);
+if (broken.length > 0 || invalidOnshapeLinks.length > 0) {
+  if (invalidOnshapeLinks.length > 0) {
+    console.error(`\nFound ${invalidOnshapeLinks.length} Onshape link(s) that are not workspace links:`);
+    for (const item of invalidOnshapeLinks) {
+      console.error(`- ${item.url}`);
+      console.error(`  linked from ${item.from}`);
+      console.error('  Onshape document links must use /w/ workspace URLs, not /v/ version URLs.');
+    }
+  }
+
+  if (broken.length > 0) {
+    console.error(`\nFound ${broken.length} broken local link(s):`);
+    for (const item of broken) {
+      console.error(`- ${item.status} ${item.url}`);
+      console.error(`  linked from ${item.from}`);
+    }
   }
   process.exit(1);
 }
@@ -106,19 +119,46 @@ function extractLocalUrls(html, baseUrl) {
   const srcsetPattern = /\ssrcset=["']([^"']+)["']/gi;
 
   for (const match of html.matchAll(attrPattern)) {
-    const url = normalizeLocalUrl(decodeHtml(match[1]), baseUrl);
+    const rawUrl = decodeHtml(match[1]);
+    checkOnshapeLink(rawUrl, baseUrl);
+    const url = normalizeLocalUrl(rawUrl, baseUrl);
     if (url) urls.push({ url });
   }
 
   for (const match of html.matchAll(srcsetPattern)) {
     for (const candidate of decodeHtml(match[1]).split(',')) {
       const urlPart = candidate.trim().split(/\s+/)[0];
+      checkOnshapeLink(urlPart, baseUrl);
       const url = normalizeLocalUrl(urlPart, baseUrl);
       if (url) urls.push({ url });
     }
   }
 
   return urls;
+}
+
+function checkOnshapeLink(rawUrl, baseUrl) {
+  if (!rawUrl) return;
+
+  let parsed;
+  try {
+    parsed = new URL(rawUrl, baseUrl);
+  } catch {
+    return;
+  }
+
+  if (parsed.hostname !== 'cad.onshape.com') return;
+  if (!parsed.pathname.startsWith('/documents/')) return;
+  if (parsed.pathname.includes('/w/') && !parsed.pathname.includes('/v/')) return;
+
+  const key = `${parsed.href}\n${baseUrl}`;
+  if (seenOnshapeLinks.has(key)) return;
+
+  seenOnshapeLinks.add(key);
+  invalidOnshapeLinks.push({
+    url: parsed.href,
+    from: baseUrl,
+  });
 }
 
 function normalizeLocalUrl(rawUrl, baseUrl) {
@@ -155,6 +195,8 @@ function fetchWithTimeout(url, options, timeoutMs) {
 
 function decodeHtml(value) {
   return value
+    .replaceAll(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(Number.parseInt(hex, 16)))
+    .replaceAll(/&#([0-9]+);/g, (_, decimal) => String.fromCodePoint(Number.parseInt(decimal, 10)))
     .replaceAll('&amp;', '&')
     .replaceAll('&quot;', '"')
     .replaceAll('&#39;', "'")
