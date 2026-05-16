@@ -428,39 +428,6 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
     },
   ],
 
-  // Other Resources section (maps to /resources in content)
-  '/other-resources': [
-    {
-      label: 'Resources',
-      items: [
-        { label: 'Overview', slug: 'resources' },
-        { label: 'Glossary', slug: 'resources/glossary' },
-        {
-          label: 'CAD Resources',
-          collapsed: true,
-          items: [
-            { label: 'FRCDesignLib', slug: 'resources/frcdesignlib' },
-            { label: 'KrayonCAD', slug: 'resources/krayoncad' },
-            { label: 'Featurescript List', slug: 'resources/featurescripts' },
-            { label: 'Featurescript Help', slug: 'resources/featurescript-help' },
-          ],
-        },
-        {
-          label: 'Design Challenges',
-          collapsed: true,
-          items: [
-            { label: 'Overview', slug: 'resources/design-challenges' },
-            { label: 'Week 1 | Swerve Drivebase', slug: 'resources/design-challenges/week1' },
-            { label: 'Week 2 | Gearboxes', slug: 'resources/design-challenges/week2' },
-            { label: 'Week 3 | Ball Shooter', slug: 'resources/design-challenges/week3' },
-            { label: 'Week 4 | Intake', slug: 'resources/design-challenges/week4' },
-            { label: 'Week 5 | Tilt Shift', slug: 'resources/design-challenges/week5' },
-          ],
-        },
-      ],
-    },
-  ],
-
   // Contribution section
   '/contribution': [
     {

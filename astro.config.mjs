@@ -4,6 +4,7 @@ import remarkGlossary from './src/plugins/remark-glossary';
 import remarkCenter from './src/plugins/remark-center';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
+import { remarkMdxGlobalImports } from './src/plugins/remark-mdx-global-imports.ts';
 
 const sitemapExcludedPaths = ['/test-content-figure/'];
 
@@ -17,7 +18,7 @@ export default defineConfig({
   },
 
   markdown: {
-    remarkPlugins: [remarkCenter, remarkGlossary],
+    remarkPlugins: [remarkCenter, remarkGlossary, remarkMdxGlobalImports],
     rehypePlugins: [],
   },
 

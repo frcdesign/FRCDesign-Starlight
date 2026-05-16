@@ -3,7 +3,6 @@ title: Methods of Contributing
 description: A guide to publicly contributing to the website, including setting up an IDE and local preview for editing.
 ---
 
-import Aside from '@components/content/Aside.astro';
 
 ## Public Contribution
 
@@ -85,6 +84,10 @@ Windows installers will almost always need to be the 64-bit version if there is 
 
 <Aside type="tip">
 All the website files and folders are contained in the `src/content/docs` folder.
+</Aside>
+
+<Aside type="note" title="Adding a new page">
+If you create a new `.mdx` file you must also add an entry for it in `src/config/sidebarConfig.ts`, otherwise the page will exist but won't appear in the navigation. Find the section that matches where your page lives and add a line like `{ label: 'Your Page Title', slug: 'section/your-filename' }`. See the [Style Guide](/contribution/styleguide#adding-a-new-page) for full details.
 </Aside>
 
 6. Whenever you reach a good point to stop where you want to save your changes to the cloud, you want to make what's called a "commit", which is where the changes are saved to the branch. You then have to "push" any commits to get them uploaded to the cloud, otherwise they will remain local. You can do this through VS Code or GitHub Desktop, but we'll go through GitHub Desktop to keep all version control actions centralized there.
