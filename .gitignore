@@ -1,5 +1,7 @@
 # build output
 dist/
+public/social-cards/
+.tmp-old-frcdesign/
 # generated types
 .astro/
 
