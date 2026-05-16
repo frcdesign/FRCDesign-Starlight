@@ -205,13 +205,12 @@ const categories = [
   <div class="featured-grid">
     {inDepthExamples.map((example) => (
       <article class="featured-card">
-        <a href={example.href} aria-label={`Open ${example.title}`}></a>
         <div class="featured-image">
           <Image src={example.image} alt={example.imageAlt} loading="lazy" />
         </div>
         <div class="featured-body">
           <p class="category-label">{example.category}</p>
-          <h3>{example.title}</h3>
+          <h3><a href={example.href} class="featured-card-link">{example.title}</a></h3>
           <p set:html={renderGlossaryDescription(example.description)} />
         </div>
       </article>
@@ -475,7 +474,6 @@ const categories = [
   .featured-card,
   .library-card {
     position: relative;
-    overflow: hidden;
     display: grid;
     grid-template-rows: auto 1fr;
     height: 100%;
@@ -485,10 +483,16 @@ const categories = [
     background: var(--sl-color-black);
   }
 
-  .featured-card > a {
+  .featured-card-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .featured-card-link::after {
+    content: '';
     position: absolute;
     inset: 0;
-    z-index: 2;
+    z-index: 1;
   }
 
   .featured-card:hover {
@@ -503,6 +507,10 @@ const categories = [
     border-bottom: 1px solid var(--sl-color-gray-5);
     background: var(--sl-color-gray-7);
     box-sizing: border-box;
+  }
+
+  .featured-image {
+    border-radius: 8px 8px 0 0;
   }
 
   .featured-image img,
@@ -531,6 +539,7 @@ const categories = [
   }
 
   .featured-body h3,
+  .featured-body h3 a,
   .library-body h3,
   .library-body h3 a {
     margin: 0;
@@ -566,6 +575,7 @@ const categories = [
     min-height: 0;
     border-right: 0;
     border-bottom: 0;
+    border-radius: 8px 0 0 8px;
   }
 
   .library-image img {
@@ -610,6 +620,7 @@ const categories = [
       height: clamp(11rem, 48vw, 16rem);
       border-right: 0;
       border-bottom: 1px solid var(--sl-color-gray-5);
+      border-radius: 8px 8px 0 0;
     }
 
     .library-card .library-body {
@@ -624,6 +635,7 @@ const categories = [
   .featured-body :global(.glossary-term),
   .library-body :global(.glossary-term) {
     position: relative;
+    z-index: 2;
     cursor: help;
     text-decoration: underline;
     text-decoration-style: dotted;
