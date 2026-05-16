@@ -302,6 +302,28 @@ for (const section of sidebarSections) {
 
 <script is:inline>
   (() => {
+    const initImageSpinners = () => {
+      for (const img of document.querySelectorAll('img:not(.global-lightbox-image):not([data-img-spinner-init])')) {
+        img.dataset.imgSpinnerInit = 'true';
+        if (img.complete && img.naturalWidth > 0) continue;
+        img.dataset.imgLoading = 'true';
+        const onDone = () => { delete img.dataset.imgLoading; };
+        img.addEventListener('load', onDone, { once: true });
+        img.addEventListener('error', onDone, { once: true });
+      }
+    };
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      initImageSpinners();
+    } else {
+      document.addEventListener('DOMContentLoaded', initImageSpinners);
+    }
+    document.addEventListener('astro:page-load', initImageSpinners);
+  })();
+</script>
+
+<script is:inline>
+  (() => {
     const storageKey = "starlight-theme";
 
     const getStoredTheme = () => {
