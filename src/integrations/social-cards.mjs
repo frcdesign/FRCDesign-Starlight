@@ -21,6 +21,8 @@ const cardFileFromRoute = (route) =>
 const cardPathFromRoute = (route) =>
   route === '/' ? '/social-cards/index.png' : `/social-cards${route}index.png`;
 
+const workerEntrypointFromOutDir = (outDir) => path.join(outDir, '_worker.js', 'index.js');
+
 const listHtmlFiles = async (dir) => {
   const entries = await fs.readdir(dir, { withFileTypes: true });
   const files = [];
@@ -60,6 +62,42 @@ const socialTags = (imageUrl) =>
     `<meta name="twitter:image" content="${imageUrl}">`,
   ].join('');
 
+const patchCloudflareWorkerEntrypoint = async (outDir) => {
+  const workerEntrypoint = workerEntrypointFromOutDir(outDir);
+  if (!(await hasFile(workerEntrypoint))) return;
+
+  const source = await fs.readFile(workerEntrypoint, 'utf8');
+  if (source.includes('__frcdesignSocialCardWorker')) return;
+
+  const exportStatement = 'export { __astrojsSsrVirtualEntry as default, pageMap };';
+  if (!source.includes(exportStatement)) return;
+
+  const wrapper = `
+const __frcdesignSocialCardPathPattern = /(property="og:image"|name="twitter:image") content="(\\/social-cards\\/[^"]+)"/g;
+const __frcdesignSocialCardWorker = {
+\tasync fetch(request, env, context) {
+\t\tconst response = await __astrojsSsrVirtualEntry.fetch(request, env, context);
+\t\tconst contentType = response.headers.get('content-type') || '';
+
+\t\tif (!contentType.includes('text/html')) {
+\t\t\treturn response;
+\t\t}
+
+\t\tconst origin = new URL(request.url).origin;
+\t\tconst html = await response.text();
+\t\tconst updated = html.replace(__frcdesignSocialCardPathPattern, (_match, attribute, imagePath) => {
+\t\t\treturn \`\${attribute} content="\${origin}\${imagePath}"\`;
+\t\t});
+
+\t\treturn new Response(updated, response);
+\t},
+};
+
+export { __frcdesignSocialCardWorker as default, pageMap };`;
+
+  await fs.writeFile(workerEntrypoint, source.replace(exportStatement, wrapper));
+};
+
 export default function socialCardsIntegration() {
   let site;
   let outDir;
@@ -93,6 +131,8 @@ export default function socialCardsIntegration() {
 
           await fs.writeFile(htmlFile, updated);
         }
+
+        await patchCloudflareWorkerEntrypoint(outDir);
       },
     },
   };
