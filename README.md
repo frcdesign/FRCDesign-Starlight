@@ -1,3 +1,5 @@
+# THIS IS A DEVELOPMENT REPO NOT THE MAIN REPO.
+
 # FRCDesign.org
 
 A community-driven learning course and resource hub for FRC design and CAD, focused on Onshape. The site is built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build), and deploys with the Cloudflare adapter.

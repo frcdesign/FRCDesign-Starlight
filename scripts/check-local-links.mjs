@@ -8,8 +8,8 @@ const requestedPort = Number(process.env.LINK_CHECK_PORT || '0');
 let origin;
 const startPath = '/';
 const requestTimeoutMs = 15_000;
-const astroEntry = join(process.cwd(), 'node_modules', 'astro', 'astro.js');
-const distDir = join(process.cwd(), 'dist');
+const astroEntry = join(process.cwd(), 'node_modules', 'astro', 'bin', 'astro.mjs');
+const distDir = join(process.cwd(), 'dist', 'client');
 
 const skippedProtocols = new Set(['data:', 'mailto:', 'tel:', 'javascript:']);
 const checked = new Set();
@@ -173,6 +173,7 @@ function normalizeLocalUrl(rawUrl, baseUrl) {
 
   if (skippedProtocols.has(parsed.protocol)) return null;
   if (parsed.origin !== origin) return null;
+  if (parsed.pathname === '/_image') return null;
 
   parsed.hash = '';
   return parsed.href;
