@@ -178,6 +178,7 @@ const categories = [
         alt={`${heroImage.label} CAD render`}
         loading={index === 0 ? 'eager' : 'lazy'}
         class:list={['hero-rotator-image', { active: index === 0 }]}
+        data-no-lightbox
       />
     ))}
   </div>
@@ -687,6 +688,23 @@ const categories = [
       activeIndex = nextIndex;
       slides[activeIndex]?.classList.add('active');
     }, 3500);
+  }
+
+  if (rotator) {
+    rotator.style.cursor = 'pointer';
+    rotator.addEventListener('click', () => {
+      const activeImg = slides[activeIndex];
+      if (!activeImg) return;
+      const lightbox = document.getElementById('global-image-lightbox');
+      if (!lightbox) return;
+      const lightboxImg = lightbox.querySelector('.global-lightbox-image');
+      if (!lightboxImg) return;
+      lightboxImg.src = activeImg.src;
+      lightboxImg.alt = activeImg.alt || '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.documentElement.classList.add('lightbox-open');
+    });
   }
 
   for (const card of document.querySelectorAll('.library-card')) {
