@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "social-cards": "node scripts/social-cards.mjs",
     "check:links:local": "node scripts/check-local-links.mjs",
     "preview": "astro preview",
     "astro": "astro"
