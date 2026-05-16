@@ -675,82 +675,107 @@ const categories = [
 </style>
 
 <script>
-  const mechanismHero = document.querySelector('.mechanism-hero');
-  const mechanismContentPanel = mechanismHero?.closest('.content-panel');
-  const generatedTitlePanel = mechanismContentPanel?.previousElementSibling;
+  let rotatorIntervalId: ReturnType<typeof setInterval> | undefined;
 
-  if (generatedTitlePanel?.classList.contains('content-panel')) {
-    generatedTitlePanel.classList.add('mechanism-generated-title-panel-hidden');
-    generatedTitlePanel.querySelector('#_top')?.removeAttribute('id');
-  }
+  const initMechanismPage = () => {
+    // Only run on the mechanism examples landing page
+    if (!document.querySelector('[data-hero-rotator]')) return;
 
-  const getRandomItem = (items) => items[Math.floor(Math.random() * items.length)];
+    const mechanismHero = document.querySelector('.mechanism-hero');
+    const mechanismContentPanel = mechanismHero?.closest('.content-panel');
+    const generatedTitlePanel = mechanismContentPanel?.previousElementSibling;
 
-  const rotator = document.querySelector('[data-hero-rotator]');
-  const slides = Array.from(rotator?.querySelectorAll('.hero-rotator-image') ?? []);
-  let activeIndex = 0;
+    if (generatedTitlePanel?.classList.contains('content-panel')) {
+      generatedTitlePanel.classList.add('mechanism-generated-title-panel-hidden');
+      generatedTitlePanel.querySelector('#_top')?.removeAttribute('id');
+    }
 
-  if (slides.length > 1) {
-    window.setInterval(() => {
-      slides[activeIndex]?.classList.remove('active');
-      let nextIndex = activeIndex;
-      while (nextIndex === activeIndex && slides.length > 1) {
-        nextIndex = Math.floor(Math.random() * slides.length);
-      }
-      activeIndex = nextIndex;
-      slides[activeIndex]?.classList.add('active');
-    }, 3500);
-  }
+    const getRandomItem = (items: string[]) => items[Math.floor(Math.random() * items.length)];
 
-  if (rotator) {
-    rotator.style.cursor = 'pointer';
-    rotator.addEventListener('click', () => {
-      const activeImg = slides[activeIndex];
-      if (!activeImg) return;
-      const lightbox = document.getElementById('global-image-lightbox');
-      if (!lightbox) return;
-      const lightboxImg = lightbox.querySelector('.global-lightbox-image');
-      if (!lightboxImg) return;
-      lightboxImg.src = activeImg.src;
-      lightboxImg.alt = activeImg.alt || '';
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      document.documentElement.classList.add('lightbox-open');
-    });
-  }
+    const rotator = document.querySelector('[data-hero-rotator]');
+    const slides = Array.from(rotator?.querySelectorAll('.hero-rotator-image') ?? []) as HTMLImageElement[];
+    let activeIndex = 0;
 
-  for (const card of document.querySelectorAll('.library-card')) {
-    const image = card.querySelector('[data-category-image]');
-    if (!(image instanceof HTMLImageElement)) continue;
+    clearInterval(rotatorIntervalId);
+    if (slides.length > 1) {
+      rotatorIntervalId = setInterval(() => {
+        slides[activeIndex]?.classList.remove('active');
+        let nextIndex = activeIndex;
+        while (nextIndex === activeIndex && slides.length > 1) {
+          nextIndex = Math.floor(Math.random() * slides.length);
+        }
+        activeIndex = nextIndex;
+        slides[activeIndex]?.classList.add('active');
+      }, 3500);
+    }
 
-    const defaultSrc = image.dataset.defaultSrc || image.currentSrc || image.src;
-    const cardImages = JSON.parse(image.dataset.images || '[]').filter(Boolean);
-
-    const setCardImage = (nextSrc) => {
-      if (!nextSrc || image.src.endsWith(nextSrc)) return;
-      image.classList.add('is-swapping');
-      window.setTimeout(() => {
-        image.src = nextSrc;
-        image.addEventListener('load', () => {
-          image.classList.remove('is-swapping');
-        }, { once: true });
-      }, 140);
-    };
-
-    for (const trigger of card.querySelectorAll('[data-category-trigger]')) {
-      const triggerImages = JSON.parse(trigger.dataset.images || '[]').filter(Boolean);
-      trigger.addEventListener('mouseenter', () => {
-        const pool = triggerImages.length > 0 ? triggerImages : cardImages;
-        if (pool.length > 0) setCardImage(getRandomItem(pool));
-      });
-      trigger.addEventListener('focus', () => {
-        const pool = triggerImages.length > 0 ? triggerImages : cardImages;
-        if (pool.length > 0) setCardImage(getRandomItem(pool));
+    if (rotator && !(rotator as HTMLElement).dataset.clickAttached) {
+      (rotator as HTMLElement).dataset.clickAttached = 'true';
+      (rotator as HTMLElement).style.cursor = 'pointer';
+      rotator.addEventListener('click', () => {
+        const activeImg = slides[activeIndex];
+        if (!activeImg) return;
+        const lightbox = document.getElementById('global-image-lightbox');
+        if (!lightbox) return;
+        const lightboxImg = lightbox.querySelector('.global-lightbox-image') as HTMLImageElement | null;
+        if (!lightboxImg) return;
+        lightboxImg.src = activeImg.src;
+        lightboxImg.alt = activeImg.alt || '';
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.documentElement.classList.add('lightbox-open');
       });
     }
 
-    card.addEventListener('mouseleave', () => {
-      setCardImage(defaultSrc);
-    });
-  }
+    for (const card of document.querySelectorAll('.library-card')) {
+      if ((card as HTMLElement).dataset.hoverAttached) continue;
+      (card as HTMLElement).dataset.hoverAttached = 'true';
+      const image = card.querySelector('[data-category-image]');
+      if (!(image instanceof HTMLImageElement)) continue;
+
+      const defaultSrc = image.dataset.defaultSrc || image.currentSrc || image.src;
+      const cardImages = JSON.parse(image.dataset.images || '[]').filter(Boolean) as string[];
+
+      const setCardImage = (nextSrc: string) => {
+        if (!nextSrc || image.src.endsWith(nextSrc)) return;
+        image.classList.add('is-swapping');
+        window.setTimeout(() => {
+          image.src = nextSrc;
+          image.addEventListener('load', () => {
+            image.classList.remove('is-swapping');
+          }, { once: true });
+        }, 140);
+      };
+
+      for (const trigger of card.querySelectorAll('[data-category-trigger]')) {
+        const triggerImages = JSON.parse((trigger as HTMLElement).dataset.images || '[]').filter(Boolean) as string[];
+        trigger.addEventListener('mouseenter', () => {
+          const pool = triggerImages.length > 0 ? triggerImages : cardImages;
+          if (pool.length > 0) setCardImage(getRandomItem(pool));
+        });
+        trigger.addEventListener('focus', () => {
+          const pool = triggerImages.length > 0 ? triggerImages : cardImages;
+          if (pool.length > 0) setCardImage(getRandomItem(pool));
+        });
+      }
+
+      card.addEventListener('mouseleave', () => {
+        setCardImage(defaultSrc);
+      });
+    }
+  };
+
+  // Call directly for the initial page load (astro:page-load may fire before this
+  // deferred module executes on first visit, so we can't rely on it alone)
+  initMechanismPage();
+
+  // Re-run after Astro view-transition navigations (dom is replaced, so element
+  // guards reset automatically and fresh handlers are attached)
+  document.addEventListener('astro:page-load', initMechanismPage);
+
+  // Cancel the rotator before the dom swap so the interval doesn't outlive the page
+  document.addEventListener('astro:before-swap', () => {
+    clearInterval(rotatorIntervalId);
+    rotatorIntervalId = undefined;
+  });
 </script>
