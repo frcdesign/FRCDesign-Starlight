@@ -1,7 +1,7 @@
 /**
  * Remark plugin that auto-injects common component imports into every MDX file.
  * Contributors no longer need to manually import ContentFigure, Aside, Slides,
- * or LinkButton — they are available in all MDX pages automatically.
+ * or LinkButton. They are available in all MDX pages automatically.
  *
  * Runs in the remark pipeline (same as remarkCenter and remarkGlossary), which
  * Astro applies to all MDX files. Skips injection for any component already

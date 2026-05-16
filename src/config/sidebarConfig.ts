@@ -434,6 +434,7 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
       label: 'Contribution',
       items: [
         { label: 'Methods of Contributing', slug: 'contribution/methods-of-contributing' },
+        { label: 'Adding a Page', slug: 'contribution/adding-a-page' },
         { label: 'Contributing to Mech. Examples', slug: 'contribution/mechanism-contribution' },
         { label: 'Style Guide', slug: 'contribution/styleguide' },
         { label: 'Contributors', slug: 'contribution/contributors' },

@@ -8,7 +8,7 @@ description: A guide to publicly contributing to the website, including setting 
 
 Anyone can create content for the website without markdown knowledge or GitHub, though it is preferred you learn how to use both to lessen the workload of other contributors.
 
-In [the discord server](https://discord.gg/frcdesign), go to the "website-discussion" channel and ask if you can contribute the thing you want to by filling out this template:
+In [the discord server](https://discord.gg/25pk6Mnh8k), go to the "website-feedback" forum channel and make a post about what you want to contribute by filling out this template:
 
 ```
 Issue/content:
@@ -19,7 +19,7 @@ Using an alternate platform or forking on Github?:
 
 This is to make sure you don't waste your time if it's not something that won't get put on the website or something that someone has already started working on.
 
-If you're given approval to start working on it, an internal contributor will make a new post in the "public-website-contribution" forum channel or direct you to an existing post to work with and supplement another contributor if the content or issue has already started to be addressed.
+If you're given approval to start working on it, an internal contributor will mark the post as "green-lit" or direct you to an existing post to work with and supplement another contributor if the content or issue has already started to be addressed.
 
 When you start on your work, you may choose to either:
 
@@ -87,7 +87,7 @@ All the website files and folders are contained in the `src/content/docs` folder
 </Aside>
 
 <Aside type="note" title="Adding a new page">
-If you create a new `.mdx` file you must also add an entry for it in `src/config/sidebarConfig.ts`, otherwise the page will exist but won't appear in the navigation. Find the section that matches where your page lives and add a line like `{ label: 'Your Page Title', slug: 'section/your-filename' }`. See the [Style Guide](/contribution/styleguide#adding-a-new-page) for full details.
+If you create a new `.mdx` file you must also add an entry for it in `src/config/sidebarConfig.ts`, otherwise the page will exist but won't appear in the navigation. See [Adding a Page](/contribution/adding-a-page/) for full details.
 </Aside>
 
 6. Whenever you reach a good point to stop where you want to save your changes to the cloud, you want to make what's called a "commit", which is where the changes are saved to the branch. You then have to "push" any commits to get them uploaded to the cloud, otherwise they will remain local. You can do this through VS Code or GitHub Desktop, but we'll go through GitHub Desktop to keep all version control actions centralized there.
@@ -98,7 +98,7 @@ If you create a new `.mdx` file you must also add an entry for it in `src/config
 Clicking the "Fetch origin" button will fetch any commits to the current branch that anyone else has made and pushed to the cloud.
 </Aside>
 
-9. To keep your code up to date with the original repository's main branch, open the "branch" menu at the top of the screen and click "Update from main". If some commits get pulled to your branch from main, you can push to update your branch in the cloud again.
+9. To keep your branch up to date with the original repository's main branch, open the "branch" menu at the top of the screen and click "Update from main". If some commits get pulled to your branch from main, you can push to update your branch in the cloud again.
 
 <Aside type="tip">
 Make sure to update your branch from main frequently! If you don't, you may have to resolve big conflicts between your changes and changes someone else made to main. If you encounter conflicts, just follow the prompts in GitHub Desktop to open the conflicts in VS Code and solve them there. Once all conflicts are resolved, switch back to GitHub Desktop to complete the merge.

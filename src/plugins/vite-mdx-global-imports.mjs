@@ -1,7 +1,7 @@
 /**
  * Vite plugin that auto-injects common component imports into every MDX file.
  * Contributors no longer need to manually import ContentFigure, Aside, Slides,
- * or LinkButton — they are available in all MDX pages automatically.
+ * or LinkButton. They are available in all MDX pages automatically.
  *
  * Runs with enforce: 'pre' so it modifies the raw MDX source before Astro's
  * MDX compiler processes it. Imports are inserted after the frontmatter block
@@ -43,7 +43,7 @@ export function viteMdxGlobalImports() {
         };
       }
 
-      // No frontmatter — prepend directly
+      // No frontmatter block, just insert at the top
       return { code: `${toInject}\n${code}`, map: null };
     },
   };

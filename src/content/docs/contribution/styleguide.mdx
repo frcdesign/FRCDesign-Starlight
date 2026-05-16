@@ -1,6 +1,6 @@
-﻿---
+---
 title: Contribution Style Guide
-description: The style guide for contribution according to the goals of the website.
+description: Writing philosophy and standards for contributing content to FRCDesign.org.
 ---
 
 ## Futureproofing and Usefulness
@@ -49,15 +49,7 @@ Keep in mind that FRC design trends are temporary and transient.
 
 - Just because something is popular one season doesn't mean it's the end all be all. There was a time when WCD and sheet metal superstructures was all the rage, but that doesn't mean that we should recommend them in this guide. Try your best to think about why something is popular, and what benefits in design, function, and execution they actually bring to the table.
 
-## Standards
-
-### File Formats:
-
-- Compress images to .webp format using [squoosh](https://squoosh.app/)
-- Upload all videos to YouTube and pass the video ID or full URL to `ContentFigure`
-- Add images with a path relative to your MDX file: `<ContentFigure src="./img/example.webp" alt="Alt text" />`
-
-### Brand Standards
+## Brand Standards
 
 Adhere to brand standards when possible.
 
@@ -69,84 +61,3 @@ Adhere to brand standards when possible.
 - Check [The Blue Alliance](https://www.thebluealliance.com/) if you don't know how to spell a team's name
 
 You can use "you" when writing, when it makes writing less awkward. However, try avoiding excessively using it.
-
-### Links:
-
-- External links should generally open in a new tab
-- Links to CAD documents should use the LinkButton component:
-  ```mdx
-  <LinkButton href="https://cad.onshape.com/...">CAD Link</LinkButton>
-  <LinkButton href="https://cad.onshape.com/..." center>Centered CAD Link</LinkButton>
-  ```
-- Internal links should use relative paths: `[Link Text](/path/to/page)`
-
-### Frontmatter
-
-Every page starts with a frontmatter block between `---` markers. Required fields:
-
-- **`title`**: displayed in the browser tab, search results, and navigation
-- **`description`**: short summary for meta tags and search engines
-
-Optional fields:
-
-- **`tableOfContents: false`**: hide the table of contents (use on overview/index pages)
-- **`prev: false`** / **`next: false`**: remove the previous/next page navigation buttons
-- **`template: splash`**: full-width layout with no sidebar (used for mechanism example pages)
-
-```yaml
----
-title: Page Title
-description: One or two sentence summary.
----
-```
-
-```yaml
----
-title: Section Overview
-description: Overview of this section.
-tableOfContents: false
-prev: false
-next: false
----
-```
-
-### Table of Contents
-
-TOC is off by default. It can be enabled at three levels, applied in this priority order:
-
-1. **Per-page frontmatter** (highest priority) — overrides everything else:
-   ```yaml
-   tableOfContents: false  # force hide
-   tableOfContents: true   # force show
-   ```
-
-2. **Per-directory config** (`src/config/tocConfig.ts`) — enables TOC for all pages under a path without touching individual files. Currently enabled for `/design-handbook`. To enable for another section, add an entry:
-   ```ts
-   '/your-section': true,
-   // or with custom heading levels:
-   '/your-section': { minHeadingLevel: 2, maxHeadingLevel: 4 },
-   ```
-
-3. **Global default** (lowest priority) — TOC is disabled site-wide unless overridden by one of the above.
-
-TOC only shows headings between `##` (h2) and `###` (h3) by default.
-
-### Adding a New Page
-
-1. Create your `.mdx` file inside `src/content/docs/`
-2. Add the required frontmatter (`title` and `description`)
-3. Open `src/config/sidebarConfig.ts` and add an entry in the correct section:
-   ```ts
-   { label: 'Your Page Title', slug: 'section/your-page-filename' }
-   ```
-4. Run `npm run dev` and confirm the page appears in the sidebar
-
-If you skip step 3 the page will exist but won't be reachable through navigation.
-
-### Renaming or Moving a Page
-
-1. Rename or move the file
-2. Update the `slug` in `src/config/sidebarConfig.ts`
-3. Search for links to the old path in other `.mdx` files and update them
-
-Avoid renaming pages without good reason — it breaks external links, bookmarks, and search engine results.
