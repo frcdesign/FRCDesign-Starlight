@@ -566,6 +566,12 @@ html.sidebar-collapsed .sidebar-collapsed-toggle-wrapper {
     display: flex;
 }
 
+/* Right TOC panel uses --sl-sidebar-width for its content width; restore the
+   default so collapsing the left sidebar doesn't squish the TOC text. */
+html.sidebar-collapsed .right-sidebar-panel {
+    --sl-sidebar-width: 18.75rem !important;
+}
+
 /* ==========================================================================
    Image Alignment and Figures
    ========================================================================== */
