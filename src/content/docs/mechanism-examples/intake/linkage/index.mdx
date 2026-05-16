@@ -3,10 +3,21 @@ title: Linkage Intakes
 description: Examples of linkage intakes from FRC robots
 ---
 
+import MechanismCardGrid from '@components/content/MechanismCardGrid.astro';
+import intake1678 from './img/1678_2022_intake.webp';
+
+export const exampleCards = [
+  {
+    title: "1678's Rapid React 4-Bar Intake",
+    href: 'https://cad.onshape.com/documents/76cceb18fbc1c922c8217ec3/w/e35ea9353fc3c4781b8f8883/e/f4de020844649ab5f8786b52',
+    image: intake1678,
+    imageAlt: '1678 Rapid React four-bar intake CAD render',
+    description: 'A four-bar linkage intake for rapid ball acquisition.',
+  },
+];
+
 Over-the-bumper intakes deployed with a linkage, includes four-bar linkages.
 
-## Featured
+## CAD References
 
-### [1678's Rapid React 4-Bar Intake](./1678_2022_intake/)
-A four-bar linkage intake for rapid ball acquisition
-
+<MechanismCardGrid cards={exampleCards} />

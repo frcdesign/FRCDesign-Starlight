@@ -1,0 +1,112 @@
+---
+import { Image } from 'astro:assets';
+
+interface MechanismCard {
+  title: string;
+  href: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  description: string;
+}
+
+interface Props {
+  cards: MechanismCard[];
+}
+
+const { cards } = Astro.props;
+---
+
+<div class="mechanism-card-grid">
+  {cards.map((card) => (
+    <article class="mechanism-card">
+      <a href={card.href} aria-label={`Open ${card.title}`}></a>
+      <div class="mechanism-card-media">
+        <Image src={card.image} alt={card.imageAlt} loading="lazy" />
+      </div>
+      <div class="mechanism-card-body">
+        <h3>{card.title}</h3>
+        <p>{card.description}</p>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style>
+  .mechanism-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+    gap: 1rem;
+    margin-block: 1rem 2rem;
+  }
+
+  .mechanism-card {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    margin: 0 !important;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 8px;
+    background: var(--sl-color-black);
+  }
+
+  .mechanism-card > a {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .mechanism-card:hover {
+    border-color: var(--sl-color-accent-high);
+  }
+
+  .mechanism-card-media {
+    overflow: hidden;
+    height: clamp(14rem, 24vw, 20rem);
+    border-bottom: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-gray-7);
+  }
+
+  .mechanism-card-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: contain;
+    transition: transform 160ms ease;
+  }
+
+  .mechanism-card:hover img {
+    transform: scale(1.03);
+  }
+
+  .mechanism-card-body {
+    display: grid;
+    gap: 0.55rem;
+    padding: 1rem;
+  }
+
+  .mechanism-card-body h3 {
+    margin: 0;
+    color: var(--sl-color-white);
+  }
+
+  .mechanism-card-body p {
+    margin: 0;
+    color: var(--sl-color-gray-3);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 44rem) {
+    .mechanism-card-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .mechanism-card-media {
+      height: clamp(12rem, 58vw, 20rem);
+    }
+  }
+</style>

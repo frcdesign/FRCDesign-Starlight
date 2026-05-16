@@ -46,6 +46,7 @@
  * - width: Width of the figure (e.g., "60%", "400px") - defaults to 70%
  * - border: Add a border (boolean for default style, or string for custom CSS border)
  * - align: Alignment of the figure ("left", "center", "right") - defaults to "center"
+ * - captionPosition: Caption placement ("center", "left", "right") - defaults to "center"
  * - gif: Treat src as animated media (renders as autoplay looping video or img, no optimization)
  */
 import { Image } from 'astro:assets';
@@ -63,13 +64,15 @@ interface Props {
   width?: string;
   border?: boolean | string;
   align?: 'left' | 'center' | 'right';
+  captionPosition?: 'center' | 'left' | 'right';
   class?: string;
   gif?: boolean;
   inline?: boolean;
 }
 
-const { src, alt = '', width = '70%', border = false, align = 'center', class: className, gif = false, inline = false } = Astro.props;
+const { src, alt = '', width = '70%', border = false, align = 'center', captionPosition = 'center', class: className, gif = false, inline = false } = Astro.props;
 const hasExplicitWidth = Astro.props.width !== undefined;
+const hasSideCaption = captionPosition === 'left' || captionPosition === 'right';
 
 // Check if src is already an ImageMetadata object (from glob import)
 const isImageMetadata = typeof src === 'object' && src !== null && 'src' in src;
@@ -170,6 +173,7 @@ const hasCaption = Astro.slots.has('default');
 const figureStyle = [
   hasExplicitWidth ? `--content-figure-flex: 0 1 ${width};` : '',
   hasExplicitWidth ? `--content-figure-width: ${width};` : '',
+  hasSideCaption ? `--content-figure-media-width: ${width};` : '',
   `max-width: ${width};`,
   `margin: ${marginStyle};`,
 ].filter(Boolean).join(' ');
@@ -182,63 +186,74 @@ const figureStyle = [
     <img src={typeof src === 'string' ? src : ''} alt={alt} style="display: inline; vertical-align: middle;" loading="lazy" />
   )
 ) : (
-<figure class:list={['content-figure', className]} style={figureStyle}>
-  {isGif ? (
-    <div class:list={['content-figure-image']} style={hasBorder ? `border: ${borderStyle};` : undefined}>
-      {isGifVideo ? (
-        <video
-          autoplay
-          loop
-          muted
-          playsinline
-          class="figure-img"
-          aria-label={alt}
-        >
-          <source src={gifVideoSource} type={typeof src === 'string' && src.endsWith('.mp4') ? 'video/mp4' : 'video/webm'} />
-        </video>
+<figure class:list={['content-figure', `caption-${captionPosition}`, { 'has-side-caption': hasSideCaption && hasCaption }, className]} style={figureStyle}>
+  <div class="content-figure-inner">
+    {hasSideCaption && hasCaption && captionPosition === 'left' && (
+      <figcaption class="content-figure-caption">
+        <slot />
+      </figcaption>
+    )}
+
+    <div class="content-figure-media">
+      {isGif ? (
+        <div class:list={['content-figure-image']} style={hasBorder ? `border: ${borderStyle};` : undefined}>
+          {isGifVideo ? (
+            <video
+              autoplay
+              loop
+              muted
+              playsinline
+              class="figure-img"
+              aria-label={alt}
+            >
+              <source src={gifVideoSource} type={typeof src === 'string' && src.endsWith('.mp4') ? 'video/mp4' : 'video/webm'} />
+            </video>
+          ) : (
+            <img
+              src={gifImageSource}
+              alt={alt}
+              class="figure-img"
+              loading="lazy"
+            />
+          )}
+        </div>
+      ) : isYouTube ? (
+        <div class:list={['content-figure-video']} style={hasBorder ? `border: ${borderStyle};` : undefined}>
+          <iframe
+            src={embedUrl}
+            title="YouTube video"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
       ) : (
-        <img
-          src={gifImageSource}
-          alt={alt}
-          class="figure-img"
-          loading="lazy"
-        />
+        <div class:list={['content-figure-image']} style={hasBorder ? `border: ${borderStyle};` : undefined}>
+          {optimizedImage ? (
+            <Image
+              src={optimizedImage}
+              alt={alt}
+              class="figure-img"
+            />
+          ) : (
+            <img
+              src={typeof src === 'string' ? src : ''}
+              alt={alt}
+              class="figure-img"
+              loading="lazy"
+            />
+          )}
+        </div>
       )}
     </div>
-  ) : isYouTube ? (
-    <div class:list={['content-figure-video']} style={hasBorder ? `border: ${borderStyle};` : undefined}>
-      <iframe
-        src={embedUrl}
-        title="YouTube video"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        loading="lazy"
-      ></iframe>
-    </div>
-  ) : (
-    <div class:list={['content-figure-image']} style={hasBorder ? `border: ${borderStyle};` : undefined}>
-      {optimizedImage ? (
-        <Image
-          src={optimizedImage}
-          alt={alt}
-          class="figure-img"
-        />
-      ) : (
-        <img
-          src={typeof src === 'string' ? src : ''}
-          alt={alt}
-          class="figure-img"
-          loading="lazy"
-        />
-      )}
-    </div>
-  )}
-  {hasCaption && (
-    <figcaption class="content-figure-caption">
-      <slot />
-    </figcaption>
-  )}
+
+    {hasCaption && (!hasSideCaption || captionPosition === 'right') && (
+      <figcaption class="content-figure-caption">
+        <slot />
+      </figcaption>
+    )}
+  </div>
 </figure>
 )}
 
@@ -246,6 +261,29 @@ const figureStyle = [
   .content-figure {
     display: block;
     padding-top: 1rem;
+  }
+
+  .content-figure-inner {
+    display: block;
+  }
+
+  .content-figure-media {
+    width: 100%;
+  }
+
+  .content-figure.has-side-caption {
+    max-width: min(100%, 62rem) !important;
+  }
+
+  .content-figure.has-side-caption .content-figure-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(8rem, var(--content-figure-media-width, 70%));
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .content-figure.has-side-caption.caption-right .content-figure-inner {
+    grid-template-columns: minmax(8rem, var(--content-figure-media-width, 70%)) minmax(0, 1fr);
   }
 
   /* Image styles */
@@ -293,7 +331,24 @@ const figureStyle = [
     padding: 1rem 1rem 0.5rem;
   }
 
+  .content-figure.has-side-caption .content-figure-caption {
+    text-align: left;
+    padding: 0;
+  }
+
   .content-figure-caption :global(*) {
     font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  @media (max-width: 48rem) {
+    .content-figure.has-side-caption .content-figure-inner,
+    .content-figure.has-side-caption.caption-right .content-figure-inner {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .content-figure.has-side-caption .content-figure-caption {
+      padding: 0.5rem 1rem 0;
+    }
   }
 </style>

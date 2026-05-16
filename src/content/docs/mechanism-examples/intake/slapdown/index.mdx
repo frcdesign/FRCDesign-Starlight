@@ -3,12 +3,29 @@ title: Pivoting Intakes
 description: Examples of pivoting/slapdown intakes from FRC robots
 ---
 
+import MechanismCardGrid from '@components/content/MechanismCardGrid.astro';
+import intake1778 from './img/1778_2024_intake.webp';
+import intake3847 from './img/3847_2022_intake.webp';
+
+export const exampleCards = [
+  {
+    title: "1778's Crescendo Slapdown Intake",
+    href: 'https://cad.onshape.com/documents/bcbf24dd5a87e45bf4e7feb1/w/ffa6c81a1dfe71234cde9aca/e/e925d7cf2a2b03135bc67046',
+    image: intake1778,
+    imageAlt: '1778 Crescendo slapdown intake CAD render',
+    description: 'A motor powered slapdown intake with a zombie axle pivot for intaking notes.',
+  },
+  {
+    title: "3847's Rapid React Springed Intake",
+    href: 'https://cad.onshape.com/documents/995ee9b75573cf463f84dbbc/w/80aecca8674f728b1e04236c/e/dac0a7693d84c119c3ce8bab',
+    image: intake3847,
+    imageAlt: '3847 Rapid React springed intake CAD render',
+    description: 'A spring powered pivoting intake that shares the pivot motor with the roller motor.',
+  },
+];
+
 Pivoting, or "slapdown", intakes offer fast deployment and fine control of intake positioning.
 
-## Featured
+## CAD References
 
-### [1778's Crescendo Slapdown Intake](./1778_2024_intake/)
-A motor powered slapdown intake with a zombie axle pivot for intaking notes
-
-### [3847's Rapid React Springed Intake](./3847_2022_intake/)
-A spring powered pivoting intake that allows for the pivot motor to be the same as the roller motor
+<MechanismCardGrid cards={exampleCards} />

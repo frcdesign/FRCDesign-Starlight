@@ -1,0 +1,440 @@
+---
+import { Image } from 'astro:assets';
+
+import drivebaseImage from '../../content/docs/mechanism-examples/drivebase/swerve/img/2910_2023_dt.webp';
+import shooterImage from '../../content/docs/mechanism-examples/shooter/img/1678_2022_shooter.webp';
+import pivotImage from '../../content/docs/mechanism-examples/pivots/img/2910_2023_pivot.webp';
+import intakeImage from '../../content/docs/mechanism-examples/intake/slapdown/img/1778_2024_intake.webp';
+import elevatorImage from '../../content/docs/mechanism-examples/elevator/continuous/img/1678_2023_elevator.webp';
+
+const inDepthExamples = [
+  {
+    title: "2910's Charged Up Drivebase",
+    href: '/mechanism-examples/drivebase/swerve/2910_2023_dt/',
+    image: drivebaseImage,
+    imageAlt: '2910 Charged Up swerve drivebase CAD render',
+    category: 'Swerve drivebase',
+    description: 'A detailed look at a compact swerve frame with a pocketed bellypan, wire routing, electronics layout, and weight distribution choices.',
+  },
+  {
+    title: "1678's Rapid React Shooter",
+    href: '/mechanism-examples/shooter/1678_2022_shooter/',
+    image: shooterImage,
+    imageAlt: '1678 Rapid React shooter CAD render',
+    category: 'Shooter',
+    description: 'A hooded shooter breakdown covering backrollers, flywheel mass, hood actuation, spin control, and practical design tradeoffs.',
+  },
+  {
+    title: '2910 Dead Axle Pivot',
+    href: '/mechanism-examples/pivots/2910_2023_pivot/',
+    image: pivotImage,
+    imageAlt: '2910 dead axle pivot CAD render',
+    category: 'Pivot',
+    description: 'A custom dead-axle pivot with notes on chain tensioning, load paths, electronics packaging, and serviceable structure.',
+  },
+];
+
+const categories = [
+  {
+    title: 'Drivebases',
+    href: '/mechanism-examples/drivebase/swerve/',
+    image: drivebaseImage,
+    imageAlt: 'Swerve drivebase CAD render',
+    description: 'Swerve drivebases, bellypans, electronics packaging, frame geometry, and module integration.',
+    links: [
+      { label: 'Swerve drivebases', href: '/mechanism-examples/drivebase/swerve/' },
+    ],
+  },
+  {
+    title: 'Intakes',
+    href: '/mechanism-examples/intake/slapdown/',
+    image: intakeImage,
+    imageAlt: 'Pivoting intake CAD render',
+    description: 'Over-the-bumper intake layouts, pivoting intakes, linkage deployments, roller placement, and acquisition geometry.',
+    links: [
+      { label: 'Pivoting intakes', href: '/mechanism-examples/intake/slapdown/' },
+      { label: 'Linkage intakes', href: '/mechanism-examples/intake/linkage/' },
+    ],
+  },
+  {
+    title: 'Shooters',
+    href: '/mechanism-examples/shooter/',
+    image: shooterImage,
+    imageAlt: 'Shooter CAD render',
+    description: 'Flywheels, hoods, backrollers, note and ball launchers, and examples from multiple FRC games.',
+    links: [
+      { label: 'Shooters', href: '/mechanism-examples/shooter/' },
+    ],
+  },
+  {
+    title: 'Elevators',
+    href: '/mechanism-examples/elevator/continuous/',
+    image: elevatorImage,
+    imageAlt: 'Continuous elevator CAD render',
+    description: 'Continuous and cascade elevator layouts, bearing blocks, rigging choices, carriages, and COTS elevator kits.',
+    links: [
+      { label: 'Continuous elevators', href: '/mechanism-examples/elevator/continuous/' },
+      { label: 'Cascade elevators', href: '/mechanism-examples/elevator/cascade/' },
+    ],
+  },
+  {
+    title: 'Pivots',
+    href: '/mechanism-examples/pivots/',
+    image: pivotImage,
+    imageAlt: 'Dead axle pivot CAD render',
+    description: 'Dead-axle pivots, belt pivots, chain tensioning, arm structure, and packaging for rotating mechanisms.',
+    links: [
+      { label: 'Pivots', href: '/mechanism-examples/pivots/' },
+    ],
+  },
+];
+---
+
+<section class="mechanism-hero">
+  <div class="mechanism-hero-copy">
+    <p class="mechanism-eyebrow">Mechanism examples</p>
+    <blockquote>
+      <p>Steal from the best, invent the rest.</p>
+      <cite>-Mike Corsetto, Team 1678</cite>
+    </blockquote>
+    <p class="hero-copy">
+      Don't be afraid to take inspiration from robots that already solved hard design problems. This library collects in-depth writeups and CAD references so teams can study real mechanisms, compare approaches, and build better designs faster.
+    </p>
+  </div>
+  <div class="mechanism-contribution">
+    <p class="mechanism-eyebrow">Contribute</p>
+    <h2>Help make the library deeper.</h2>
+    <p>
+      Add examples with images and CAD links, or help turn existing references into full Behind the Design writeups with the reasoning, packaging choices, and tradeoffs that made the mechanism work.
+    </p>
+    <a href="/contribution/methods-of-contributing/">Contribution guidelines</a>
+  </div>
+</section>
+
+<section id="in-depth-examples" class="mechanism-section">
+  <div class="section-heading">
+    <p class="mechanism-eyebrow">Start here</p>
+    <h2>In-depth writeups</h2>
+    <p>These examples go beyond a CAD document and explain why the mechanism was designed the way it was.</p>
+  </div>
+
+  <div class="featured-grid">
+    {inDepthExamples.map((example) => (
+      <article class="featured-card">
+        <a href={example.href} aria-label={`Open ${example.title}`}></a>
+        <div class="featured-image">
+          <Image src={example.image} alt={example.imageAlt} loading="lazy" />
+        </div>
+        <div class="featured-body">
+          <p class="category-label">{example.category}</p>
+          <h3>{example.title}</h3>
+          <p>{example.description}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<section id="browse-library" class="mechanism-section">
+  <div class="section-heading">
+    <p class="mechanism-eyebrow">Browse by mechanism</p>
+    <h2>Mechanism library</h2>
+    <p>Each section collects in-depth pages first, followed by CAD references when available.</p>
+  </div>
+
+  <div class="library-grid">
+    {categories.map((category) => (
+      <article class="library-card">
+        <div class="library-image">
+          <Image src={category.image} alt={category.imageAlt} loading="lazy" />
+        </div>
+        <div class="library-body">
+          <h3><a href={category.href}>{category.title}</a></h3>
+          <p>{category.description}</p>
+          <div class="library-links">
+            {category.links.map((link) => (
+              <a href={link.href}>{link.label}</a>
+            ))}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .mechanism-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+    gap: clamp(1.25rem, 4vw, 3rem);
+    align-items: stretch;
+    margin: 1.5rem 0 2rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 8px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--sl-color-gray-6) 68%, transparent), color-mix(in srgb, var(--sl-color-accent) 8%, transparent));
+  }
+
+  .mechanism-hero-copy {
+    display: grid;
+    align-content: center;
+    gap: 1.1rem;
+  }
+
+  .mechanism-eyebrow,
+  .category-label {
+    margin: 0;
+    color: var(--sl-color-accent-high);
+    font-size: var(--sl-text-sm);
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .mechanism-contribution h2,
+  .section-heading h2 {
+    margin: 0;
+    color: var(--sl-color-white);
+    line-height: 1.05;
+  }
+
+  .mechanism-hero blockquote {
+    margin: 0;
+    border: 0;
+    padding: 0;
+  }
+
+  .mechanism-hero blockquote p {
+    max-width: 13ch;
+    color: var(--sl-color-white);
+    font-size: clamp(2.3rem, 5vw, 4.8rem);
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 0.95;
+  }
+
+  .mechanism-hero cite {
+    display: block;
+    margin-top: 0.75rem;
+    color: var(--sl-color-gray-3);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .mechanism-hero p {
+    max-width: 60ch;
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-lg);
+  }
+
+  .mechanism-hero .hero-copy {
+    max-width: 62ch;
+  }
+
+  .mechanism-contribution {
+    display: grid;
+    align-content: center;
+    gap: 0.8rem;
+    padding: 1.25rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 8px;
+    background: var(--sl-color-black);
+  }
+
+  .mechanism-contribution h2 {
+    font-size: clamp(1.35rem, 2vw, 1.85rem);
+  }
+
+  .mechanism-contribution a {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    min-height: 2.35rem;
+    margin-top: 0.25rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--sl-color-accent-high);
+    border-radius: 6px;
+    color: var(--sl-color-accent-high);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .mechanism-contribution a:hover {
+    color: var(--sl-color-white);
+    background: color-mix(in srgb, var(--sl-color-accent) 22%, transparent);
+  }
+
+  .library-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.35rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 6px;
+    color: var(--sl-color-white);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .library-links a:hover {
+    border-color: var(--sl-color-accent-high);
+    color: var(--sl-color-accent-high);
+  }
+
+  .mechanism-section {
+    margin-block: 2.5rem;
+  }
+
+  .section-heading {
+    display: grid;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-heading p {
+    max-width: 64ch;
+    margin: 0;
+    color: var(--sl-color-gray-3);
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .featured-card,
+  .library-card {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    margin: 0 !important;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 8px;
+    background: var(--sl-color-black);
+  }
+
+  .featured-card > a {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .featured-card:hover,
+  .library-card:hover {
+    border-color: var(--sl-color-accent-high);
+  }
+
+  .featured-image,
+  .library-image {
+    overflow: hidden;
+    height: clamp(11rem, 18vw, 15rem);
+    border-bottom: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-gray-7);
+  }
+
+  .featured-image img,
+  .library-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: contain;
+    transition: transform 160ms ease;
+  }
+
+  .featured-card:hover img,
+  .library-card:hover img {
+    transform: scale(1.03);
+  }
+
+  .featured-body,
+  .library-body {
+    display: grid;
+    gap: 0.6rem;
+    padding: 1rem;
+  }
+
+  .featured-body h3,
+  .library-body h3,
+  .library-body h3 a {
+    margin: 0;
+    color: var(--sl-color-white);
+    text-decoration: none;
+  }
+
+  .featured-body p,
+  .library-body p {
+    margin: 0;
+    color: var(--sl-color-gray-3);
+    line-height: 1.5;
+  }
+
+  .library-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .library-card {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.8fr) minmax(0, 1.2fr);
+    height: 100%;
+  }
+
+  .library-image {
+    min-height: 12rem;
+    border-right: 1px solid var(--sl-color-gray-5);
+    border-bottom: 0;
+  }
+
+  .library-image img {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .library-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .library-links a {
+    min-height: 2rem;
+    padding-inline: 0.65rem;
+    font-size: var(--sl-text-sm);
+  }
+
+  @media (max-width: 58rem) {
+    .mechanism-hero,
+    .library-card {
+      grid-template-columns: 1fr;
+    }
+
+    .mechanism-hero blockquote p {
+      max-width: 14ch;
+    }
+
+    .featured-grid,
+    .library-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .library-image {
+      border-right: 0;
+      border-bottom: 1px solid var(--sl-color-gray-5);
+    }
+
+    .library-image img {
+      height: 100%;
+    }
+  }
+</style>
