@@ -1,117 +1,116 @@
 # FRCDesign.org
 
-A community-driven learning course and resource hub for FRC Design and CAD, using Onshape. Built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build).
+A community-driven learning course and resource hub for FRC design and CAD, focused on Onshape. The site is built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build), and deploys with the Cloudflare adapter.
 
 ## Project Structure
 
-```
+```text
 .
-├── public/                        # Static assets (favicon, videos)
+├── .github/workflows/          # GitHub Actions checks
+├── public/                     # Static files served exactly by URL
+├── scripts/                    # Maintenance scripts
+│   └── check-local-links.mjs   # Rendered local link/asset checker
 ├── src/
-│   ├── assets/
-│   │   ├── content/               # Optimized images referenced by absolute path
-│   │   ├── footer/                # Footer assets
-│   │   ├── header/                # Header assets
-│   │   ├── home/                  # Homepage assets
-│   │   └── universal/             # Shared assets (logo, icons)
+│   ├── assets/                 # Imported theme, header, footer, and homepage assets
 │   ├── components/
-│   │   ├── content/               # Components used inside MDX pages
-│   │   │   ├── Aside.astro        # Callout boxes (note, tip, caution, danger, example, video)
-│   │   │   ├── ContentFigure.astro# Images, GIFs, YouTube videos, inline icons
-│   │   │   ├── ContentRow.astro   # Side-by-side ContentFigure layout
-│   │   │   ├── LinkButton.astro   # Styled link buttons
-│   │   │   ├── LinkCard.astro     # Linked card component
-│   │   │   └── Slides.astro       # Image/video slideshow with lightbox
-│   │   ├── general/               # Site-wide utility components
-│   │   │   └── Glossary.astro     # Glossary term tooltip definitions
-│   │   └── homepage/              # Components used on the homepage
-│   │       ├── Countdown.astro    # Countdown timer
-│   │       ├── CustomCard.astro   # Feature card (used with CardGrid)
-│   │       └── HomeCard.astro     # Homepage section card
-│   ├── config/                    # Sidebar configuration
-│   ├── content/
-│   │   └── docs/                  # MDX documentation pages
-│   ├── data/                      # Static data files (glossary terms, etc.)
-│   ├── plugins/                   # Remark plugins
-│   │   ├── remark-center.ts       # :::center block directive
-│   │   └── remark-glossary.ts     # Auto-linking glossary terms
-│   ├── starlightOverrides/        # Custom Starlight component overrides
-│   │   ├── Footer.astro
-│   │   ├── Header.astro
-│   │   ├── Hero.astro
-│   │   ├── Pagination.astro
-│   │   ├── Sidebar.astro
-│   │   └── TableOfContents.astro
-│   └── styles/                    # Global CSS
-├── astro.config.mjs               # Astro + Starlight configuration
+│   │   ├── content/            # Components used inside MDX pages
+│   │   ├── general/            # Site-wide utility components
+│   │   └── homepage/           # Homepage components
+│   ├── config/                 # Sidebar and table-of-contents configuration
+│   ├── content/docs/           # Starlight MDX documentation pages
+│   ├── data/                   # Static data such as glossary terms
+│   ├── plugins/                # Remark plugins
+│   ├── starlightOverrides/     # Custom Starlight component overrides
+│   └── styles/                 # Global CSS
+├── astro.config.mjs            # Astro, Starlight, sitemap, and Cloudflare config
 ├── package.json
-└── tsconfig.json
+├── package-lock.json
+├── tsconfig.json
+└── wrangler.jsonc
 ```
+
+Generated folders such as `dist/`, `.astro/`, and `node_modules/` are ignored by git.
+
+## Content Organization
+
+All docs live under `src/content/docs/`. Page URLs are based on the folder path and `.mdx` filename.
+
+File naming rules:
+- Use lowercase filenames.
+- Use hyphens between words: `methods-of-contributing.mdx`, not `methodsofcontributing.mdx`.
+- Keep `index.mdx` for section landing pages.
+- Existing team/year mechanism examples use underscore-style identifiers, such as `2910_2023_dt.mdx`.
+
+When renaming a page, update:
+- `src/config/sidebarConfig.ts`
+- Any Markdown links to the old route
+- Header or navigation links if the page is a nav target
+
+## Assets
+
+For normal content images, place images near the page that uses them, usually in an `img/` folder beside the MDX file, and reference them with `ContentFigure`, `Slides`, or Markdown image syntax.
+
+Use `public/` only when the browser needs to request an exact static URL, such as raw HTML `<video>` sources or files that should not go through Astro image optimization.
 
 ## Content Components
 
-All content components are imported from `@components/content/` in MDX files.
+Import content components from `@components/content/` in MDX files.
 
 ### ContentFigure
 
-The primary component for all images, GIFs, and videos. Handles optimization automatically — no per-file image imports needed.
+Use `ContentFigure` for images, animated media, and YouTube videos.
 
 ```mdx
 import ContentFigure from '@components/content/ContentFigure.astro';
 
-<!-- Image (resolved via glob, optimized automatically) -->
 <ContentFigure src="../img/example.webp" alt="Description" />
 
-<!-- With caption, width, border, and alignment -->
 <ContentFigure src="../img/example.webp" alt="Description" width="70%" border align="center">
   Caption with **markdown** and [links](url)
 </ContentFigure>
 
-<!-- YouTube (bare video ID or any YouTube URL) -->
-<ContentFigure src="VIDEO_ID">Video caption</ContentFigure>
 <ContentFigure src="https://www.youtube.com/watch?v=VIDEO_ID" width="80%" />
+<ContentFigure src="VIDEO_ID">Video caption</ContentFigure>
 
-<!-- Animated GIF / looping video -->
-<ContentFigure src="../img/animation.webp" gif />
 <ContentFigure src="../img/animation.webm" gif width="60%" />
-
-<!-- Inline icon (renders as inline <img>, no figure wrapper) -->
 <ContentFigure src="../img/icon.webp" alt="Icon description" inline />
 ```
 
 Props:
-- `src`: Image path, YouTube URL, bare YouTube video ID, or animated media path
-- `alt`: Alt text for accessibility
-- `width`: CSS width of the figure (default: `100%`)
-- `border`: Add a border — boolean for default style, or string for custom CSS (e.g. `"2px dashed red"`)
-- `align`: `"left"`, `"center"`, or `"right"` (default: `"center"`)
-- `gif`: Render as autoplay looping video/image with no controls
-- `inline`: Render as an inline `<img>` without the figure wrapper (for icons in text)
+- `src`: Image path, `ImageMetadata`, YouTube URL, bare YouTube video ID, or animated media path
+- `alt`: Alt text for images
+- `width`: CSS width of the figure, default `70%`
+- `border`: Boolean for default border, or a CSS border string
+- `align`: `left`, `center`, or `right`, default `center`
+- `gif`: Renders animated media as autoplaying looped media
+- `inline`: Renders an inline image without the figure wrapper
 
 ### ContentRow
 
-Places multiple `ContentFigure` components side by side.
+Use `ContentRow` to place multiple figures side by side.
 
 ```mdx
 import ContentRow from '@components/content/ContentRow.astro';
+import ContentFigure from '@components/content/ContentFigure.astro';
 
-<ContentRow>
+<ContentRow mediaHeight="18rem">
   <ContentFigure src="../img/left.webp" alt="Left" />
   <ContentFigure src="../img/right.webp" alt="Right" />
 </ContentRow>
 ```
 
 Props:
-- `gap`: Space between figures (default: `"0.5rem"`)
+- `gap`: Space between figures, default `0.5rem`
+- `mediaHeight`: Shared media height so captions line up
 
 ### Slides
 
-Slideshow with lightbox support. Each slide is an image (or YouTube embed) immediately followed by a caption.
+Use `Slides` for step-by-step image or video sequences.
 
 ```mdx
 import Slides from '@components/content/Slides.astro';
 
-<Slides>
+<Slides scale={0.8}>
   ![](../img/step1.webp)
   Caption for step 1
 
@@ -124,43 +123,44 @@ import Slides from '@components/content/Slides.astro';
 ```
 
 Props:
-- `scale`: Width of the slideshow as a fraction (default: `0.8` = 80%)
+- `scale`: Width of the slideshow as a number from `0.1` to `1`, default `0.8`
 
-Supported media: images (`.webp`, `.png`, `.jpg`), YouTube URLs/embeds, video files (`.webm`, `.mp4`).
+Supported media includes `.webp`, `.png`, `.jpg`, YouTube URLs/embeds, `.webm`, and `.mp4`.
 
 ### Aside
 
-Styled callout boxes with optional collapse.
+Use `Aside` for callouts.
 
 ```mdx
 import Aside from '@components/content/Aside.astro';
 
-<Aside type="tip">This is a tip!</Aside>
-<Aside type="note" title="Custom Title">Content here</Aside>
-<Aside type="caution" collapse>Collapsible content</Aside>
+<Aside type="tip">This is a tip.</Aside>
+<Aside type="note" title="Custom Title">Content here.</Aside>
+<Aside type="caution" collapse>Collapsible content.</Aside>
 ```
 
-Types: `note`, `tip`, `caution`, `danger`, `example`, `video`
+Types: `note`, `tip`, `caution`, `danger`, `example`, `video`.
 
 ### LinkButton
 
-Styled button link.
+Use `LinkButton` for prominent links.
 
 ```mdx
 import LinkButton from '@components/content/LinkButton.astro';
 
-<LinkButton href="/path">Button Text</LinkButton>
-<LinkButton href="https://example.com" center external>Centered External Link</LinkButton>
+<LinkButton href="https://example.com">External Link</LinkButton>
+<LinkButton href="/path/" blank={false}>Internal Link</LinkButton>
+<LinkButton href="/path/" center blank={false}>Centered Internal Link</LinkButton>
 ```
 
 Props:
-- `href` (required): Link URL
+- `href`: Link URL
+- `blank`: Opens in a new tab when true, default `true`
 - `center`: Centers the button
-- `external`: Opens in a new tab
 
 ### CustomCard
 
-Feature card, intended for use with Starlight's `CardGrid`.
+Use `CustomCard` with Starlight's `CardGrid`.
 
 ```mdx
 import { CardGrid } from '@astrojs/starlight/components';
@@ -168,36 +168,33 @@ import CustomCard from '@components/homepage/CustomCard.astro';
 
 <CardGrid>
   <CustomCard title="Card Title" subTitle="Subtitle" href="https://example.com">
-    Card body content — markdown, images, components.
-    <Aside type="video" title="Demo" collapse>
-      <ContentFigure src="VIDEO_ID" />
-    </Aside>
+    Card body content.
   </CustomCard>
 </CardGrid>
 ```
 
 Props:
-- `title`: Bold card title (also the link text when `href` is set)
-- `subTitle`: Italicized text next to the title
-- `href`: Makes the title a hyperlink and shows a copy-link button
+- `title`: Card title
+- `subTitle`: Optional subtitle
+- `href`: Makes the title a link and enables the copy-link button
 
-## Centered Text
+## Centered Content
 
-Use `:::center` to center any content:
+Use the `:::center` directive to center content:
 
-```markdown
+```md
 :::center
 **Centered text or formula**
 :::
 ```
 
-## Getting Started
+## Local Development
 
 ### Prerequisites
 
-- **Node.js** 18 or higher — [nodejs.org](https://nodejs.org/)
-- **Git** — [git-scm.com](https://git-scm.com/)
-- A code editor (e.g. [VS Code](https://code.visualstudio.com/))
+- Node.js 22 is used in CI. Node.js 18 or higher should work locally.
+- Git
+- A code editor such as VS Code
 
 ### Setup
 
@@ -212,21 +209,37 @@ Visit [http://localhost:4321](http://localhost:4321).
 
 ## Commands
 
-| Command           | Action                                     |
-| :---------------- | :----------------------------------------- |
-| `npm install`     | Install dependencies                       |
-| `npm run dev`     | Start dev server at `localhost:4321`       |
-| `npm run build`   | Build production site to `./dist/`         |
-| `npm run check:links:local` | Build and check rendered local links/assets |
-| `npm run preview` | Preview production build locally           |
+| Command | Action |
+| :-- | :-- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Start the dev server at `localhost:4321` |
+| `npm run build` | Build the production site to `./dist/` |
+| `npm run preview` | Preview the production build locally |
+| `npm run check:links:local` | Build the site and check rendered local links/assets plus Onshape workspace-link rules |
+
+## Link Checking
+
+`npm run check:links:local` builds the site, serves `dist/` locally, crawls rendered same-origin links, and fails on broken local `href`, `src`, `srcset`, and `poster` URLs.
+
+The checker also inspects `cad.onshape.com/documents/...` links. Onshape document links must use workspace URLs containing `/w/`; version URLs containing `/v/` and placeholder document links fail the check.
+
+External links other than Onshape document shape checks are not fetched, which keeps PR checks stable.
+
+## CI
+
+GitHub Actions runs `.github/workflows/checks.yml` on pull requests and pushes to `main`.
+
+The workflow:
+- Installs dependencies with `npm ci`
+- Runs `npm run check:links:local`
 
 ## Deployment
 
-Deployed on Cloudflare Pages via the `@astrojs/cloudflare` adapter.
+The site is configured for Cloudflare via `@astrojs/cloudflare` and `wrangler.jsonc`.
 
 ## Contributing
 
-See the [Contribution Guide](https://frcdesign.org/contribution/methodsofcontributing/) on the website.
+See the [Contribution Guide](https://frcdesign.org/contribution/methods-of-contributing/) on the website.
 
 ## Links
 

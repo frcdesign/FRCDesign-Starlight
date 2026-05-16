@@ -440,7 +440,7 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
         { label: 'Overview', slug: 'best-practices' },
         { label: 'Document Setup', slug: 'best-practices/document-setup' },
         { label: 'Sub-Document Setup', slug: 'best-practices/sub-document-setup' },
-        { label: 'Layout Sketch Best Practices', slug: 'best-practices/mastersketch-setup' },
+        { label: 'Layout Sketch Best Practices', slug: 'best-practices/master-sketch-setup' },
         { label: 'Part Studio Best Practices', slug: 'best-practices/feature-tree-setup' },
         { label: 'Assembly Best Practices', slug: 'best-practices/assembly-setup' },
       ],
@@ -485,8 +485,8 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
     {
       label: 'Contribution',
       items: [
-        { label: 'Methods of Contributing', slug: 'contribution/methodsofcontributing' },
-        { label: 'Contributing to Mech. Examples', slug: 'contribution/mechanismcontribution' },
+        { label: 'Methods of Contributing', slug: 'contribution/methods-of-contributing' },
+        { label: 'Contributing to Mech. Examples', slug: 'contribution/mechanism-contribution' },
         { label: 'Style Guide', slug: 'contribution/styleguide' },
         { label: 'Contributors', slug: 'contribution/contributors' },
       ],
