@@ -5,6 +5,9 @@ public/social-cards/
 # generated types
 .astro/
 
+# wrangler local dev state
+.wrangler/
+
 # dependencies
 node_modules/
 
