@@ -337,13 +337,8 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/drivebase/swerve' },
                 { label: "2910's Charged Up Drivebase", slug: 'mechanism-examples/drivebase/swerve/2910_2023_dt' },
-                { label: "1678's Crescendo Drivebase", slug: 'mechanism-examples/drivebase/swerve/1678_2024_dt' },
-                { label: "3005's Charged Up Drivebase", slug: 'mechanism-examples/drivebase/swerve/3005_2023_dt' },
-                { label: "6328's Crescendo Drivebase", slug: 'mechanism-examples/drivebase/swerve/6328_2024_dt' },
-                { label: "5460's Crescendo Drivebase", slug: 'mechanism-examples/drivebase/swerve/5460_2023_dt' },
               ],
             },
-            { label: 'Tank', slug: 'mechanism-examples/drivebase/tank' },
           ],
         },
         {
@@ -355,8 +350,6 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               collapsed: true,
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/intake/slapdown' },
-                { label: "1778's Crescendo Intake", slug: 'mechanism-examples/intake/slapdown/1778_2024_intake' },
-                { label: "3847's Rapid React Intake", slug: 'mechanism-examples/intake/slapdown/3847_2022_intake' },
               ],
             },
             {
@@ -364,10 +357,8 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               collapsed: true,
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/intake/linkage' },
-                { label: "1678's Rapid React Intake", slug: 'mechanism-examples/intake/linkage/1678_2022_intake' },
               ],
             },
-            { label: 'UTB Intakes', slug: 'mechanism-examples/intake/utb' },
           ],
         },
         {
@@ -382,8 +373,6 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
                 { label: "1678's Rapid React Shooter", slug: 'mechanism-examples/shooter/1678_2022_shooter' },
               ],
             },
-            { label: 'End Effectors', slug: 'mechanism-examples/end-effector' },
-            { label: 'Indexers', slug: 'mechanism-examples/indexer' },
           ],
         },
         {
@@ -395,8 +384,6 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               collapsed: true,
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/elevator/continuous' },
-                { label: "1678's Charged Up Elevator", slug: 'mechanism-examples/elevator/continuous/1678_2023_elevator' },
-                { label: "3847's Charged Up Elevator", slug: 'mechanism-examples/elevator/continuous/3847_2023_elevator' },
               ],
             },
             {
@@ -404,12 +391,8 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               collapsed: true,
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/elevator/cascade' },
-                { label: 'WCP Greyt COTS Elevator', slug: 'mechanism-examples/elevator/cascade/wcp_greyt_elevator' },
-                { label: '2 Stage Cascade Elevator', slug: 'mechanism-examples/elevator/cascade/2_stage_elevator' },
-                { label: '3 Stage Cascade Elevator', slug: 'mechanism-examples/elevator/cascade/3_stage_elevator' },
               ],
             },
-            { label: 'Telescopes', slug: 'mechanism-examples/telescope' },
           ],
         },
         {
@@ -422,10 +405,8 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/pivots' },
                 { label: '2910 Dead Axle Pivot', slug: 'mechanism-examples/pivots/2910_2023_pivot' },
-                { label: '5460 Dead Axle Pivot', slug: 'mechanism-examples/pivots/5460_2023_pivot' },
               ],
             },
-            { label: 'Turrets', slug: 'mechanism-examples/turret' },
           ],
         },
       ],
@@ -535,6 +516,10 @@ export function getSidebarForPath(pathname: string): SidebarSection[] {
   // Normalize pathname
   const normalizedPath = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
 
+  if (normalizedPath === '/mechanism-examples' || normalizedPath.startsWith('/mechanism-examples/')) {
+    return [];
+  }
+
   // Try to find exact match first
   if (sidebarSections[normalizedPath]) {
     return sidebarSections[normalizedPath];
@@ -578,6 +563,11 @@ function flattenSidebarItems(items: SidebarItem[]): { label: string; href: strin
  * Gets prev/next navigation links for a given path
  */
 export function getPrevNextLinks(pathname: string): { prev: { label: string; href: string } | null; next: { label: string; href: string } | null } {
+  const normalizedPathForSection = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+  if (normalizedPathForSection === '/mechanism-examples' || normalizedPathForSection.startsWith('/mechanism-examples/')) {
+    return { prev: null, next: null };
+  }
+
   const sections = getSidebarForPath(pathname);
 
   // Flatten all sections into a single list

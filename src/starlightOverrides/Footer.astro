@@ -61,6 +61,43 @@ import Pagination from 'virtual:starlight/components/Pagination';
   </div>
 </footer>
 
+<script is:inline>
+  (() => {
+    const sameSiteHosts = new Set([
+      window.location.hostname,
+      'frcdesign.org',
+      'www.frcdesign.org',
+      'star.frcdesign.org',
+    ]);
+
+    const updateExternalLinks = () => {
+      for (const link of document.querySelectorAll('a[href]')) {
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) continue;
+
+        let url;
+        try {
+          url = new URL(href, window.location.href);
+        } catch {
+          continue;
+        }
+
+        if (url.protocol !== 'http:' && url.protocol !== 'https:') continue;
+        if (sameSiteHosts.has(url.hostname)) continue;
+
+        link.setAttribute('target', '_blank');
+        const rel = new Set((link.getAttribute('rel') || '').split(/\s+/).filter(Boolean));
+        rel.add('noopener');
+        rel.add('noreferrer');
+        link.setAttribute('rel', Array.from(rel).join(' '));
+      }
+    };
+
+    updateExternalLinks();
+    document.addEventListener('astro:page-load', updateExternalLinks);
+  })();
+</script>
+
 <style>
   .site-footer {
     margin-top: 4rem;

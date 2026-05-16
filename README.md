@@ -69,6 +69,10 @@ import ContentFigure from '@components/content/ContentFigure.astro';
   Caption with **markdown** and [links](url)
 </ContentFigure>
 
+<ContentFigure src="../img/example.webp" alt="Description" captionPosition="right">
+  Caption beside the image.
+</ContentFigure>
+
 <ContentFigure src="https://www.youtube.com/watch?v=VIDEO_ID" width="80%" />
 <ContentFigure src="VIDEO_ID">Video caption</ContentFigure>
 
@@ -82,6 +86,7 @@ Props:
 - `width`: CSS width of the figure, default `70%`
 - `border`: Boolean for default border, or a CSS border string
 - `align`: `left`, `center`, or `right`, default `center`
+- `captionPosition`: `center`, `left`, or `right`, default `center`; `left` and `right` place caption text beside the media
 - `gif`: Renders animated media as autoplaying looped media
 - `inline`: Renders an inline image without the figure wrapper
 

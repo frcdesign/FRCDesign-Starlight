@@ -74,35 +74,39 @@ function convertSections(sections: SidebarSection[], currentPath: string): { lab
 const sidebarData = convertSections(sidebarSections, pathname);
 ---
 
-<div class="sidebar-content-wrapper">
-  {sidebarData.map((section, index) => (
-    <div class="sidebar-section">
-      {index === 0 ? (
-        <div class="sidebar-section-header">
-          <h2 class="sidebar-section-title">{section.label}</h2>
-          <button class="sidebar-collapse-toggle" aria-label="Toggle sidebar" data-sidebar-toggle>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
+{sidebarData.length > 0 && (
+  <>
+    <div class="sidebar-content-wrapper">
+      {sidebarData.map((section, index) => (
+        <div class="sidebar-section">
+          {index === 0 ? (
+            <div class="sidebar-section-header">
+              <h2 class="sidebar-section-title">{section.label}</h2>
+              <button class="sidebar-collapse-toggle" aria-label="Toggle sidebar" data-sidebar-toggle>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          ) : (
+            <h2 class="sidebar-section-title">{section.label}</h2>
+          )}
+          <SidebarPersister>
+            <SidebarSublist sublist={section.entries} />
+          </SidebarPersister>
         </div>
-      ) : (
-        <h2 class="sidebar-section-title">{section.label}</h2>
-      )}
-      <SidebarPersister>
-        <SidebarSublist sublist={section.entries} />
-      </SidebarPersister>
+      ))}
     </div>
-  ))}
-</div>
 
-<div class="sidebar-collapsed-toggle-wrapper">
-  <button class="sidebar-collapse-toggle" aria-label="Toggle sidebar" data-sidebar-toggle-collapsed>
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="9 18 15 12 9 6"></polyline>
-    </svg>
-  </button>
-</div>
+    <div class="sidebar-collapsed-toggle-wrapper">
+      <button class="sidebar-collapse-toggle" aria-label="Toggle sidebar" data-sidebar-toggle-collapsed>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </>
+)}
 
 <div class="md:sl-hidden">
   <MobileMenuFooter />

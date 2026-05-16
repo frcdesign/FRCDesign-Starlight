@@ -241,13 +241,6 @@ for (const section of sidebarSections) {
 
         // Close button
         lightbox.querySelector('.global-lightbox-close').addEventListener('click', closeLightbox);
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && lightbox.classList.contains('open')) {
-            closeLightbox();
-          }
-        });
       }
 
       function openLightbox(imgSrc, imgAlt) {
@@ -279,6 +272,22 @@ for (const section of sidebarSections) {
           openLightbox(img.src, img.alt);
         });
       });
+
+      // Escape key — guard with a flag on <html> so this is only registered once
+      // across view transitions (body is replaced each navigation but <html> persists)
+      if (!document.documentElement.dataset.lightboxEscapeAdded) {
+        document.documentElement.dataset.lightboxEscapeAdded = 'true';
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            const lb = document.getElementById('global-image-lightbox');
+            if (lb?.classList.contains('open')) {
+              lb.classList.remove('open');
+              document.body.style.overflow = '';
+              document.documentElement.classList.remove('lightbox-open');
+            }
+          }
+        });
+      }
     };
 
     // Run on page load and Astro navigation
@@ -288,6 +297,28 @@ for (const section of sidebarSections) {
       document.addEventListener('DOMContentLoaded', initImageLightbox);
     }
     document.addEventListener('astro:page-load', initImageLightbox);
+  })();
+</script>
+
+<script is:inline>
+  (() => {
+    const initImageSpinners = () => {
+      for (const img of document.querySelectorAll('img:not(.global-lightbox-image):not([data-img-spinner-init])')) {
+        img.dataset.imgSpinnerInit = 'true';
+        if (img.complete && img.naturalWidth > 0) continue;
+        img.dataset.imgLoading = 'true';
+        const onDone = () => { delete img.dataset.imgLoading; };
+        img.addEventListener('load', onDone, { once: true });
+        img.addEventListener('error', onDone, { once: true });
+      }
+    };
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      initImageSpinners();
+    } else {
+      document.addEventListener('DOMContentLoaded', initImageSpinners);
+    }
+    document.addEventListener('astro:page-load', initImageSpinners);
   })();
 </script>
 
@@ -348,8 +379,16 @@ for (const section of sidebarSections) {
           menu.removeAttribute("data-mobile-menu-open");
         });
       });
+    };
 
+    // Outside-click handler for the mobile menu — guard with a flag on <html> so it
+    // is only registered once across view transitions (body replaced, <html> persists)
+    if (!document.documentElement.dataset.menuOutsideClickAdded) {
+      document.documentElement.dataset.menuOutsideClickAdded = 'true';
       document.addEventListener("click", (e) => {
+        const toggle = document.querySelector("[data-mobile-menu-toggle]");
+        const menu = document.querySelector("[data-mobile-menu]");
+        if (!toggle || !menu) return;
         if (
           !toggle.contains(e.target) &&
           !menu.contains(e.target) &&
@@ -359,7 +398,7 @@ for (const section of sidebarSections) {
           menu.removeAttribute("data-mobile-menu-open");
         }
       });
-    };
+    }
 
     const init = () => {
       let theme = getStoredTheme();

@@ -1,47 +1,55 @@
-﻿---
+---
 title: Swerve Drivebases
 description: Examples of swerve drivebases from FRC robots
+template: splash
 ---
 
-import LinkButton from '@components/content/LinkButton.astro';
+import MechanismCardGrid from '@components/content/MechanismCardGrid.astro';
+import dt2910 from './img/2910_2023_dt.webp';
+import dt1678 from './img/1678_2024_dt.webp';
+import dt3005 from './img/3005_2023_dt.webp';
+import dt5460 from './img/5460_2023_dt.webp';
+
+export const writeupCards = [
+  {
+    title: "2910's Charged Up Drivebase",
+    href: './2910_2023_dt/',
+    image: dt2910,
+    imageAlt: '2910 Charged Up drivebase CAD render',
+    description: 'A swerve drivebase writeup covering cross tubes, wire grommets, electronics layout, bellypan structure, and weight distribution.',
+  },
+];
+
+export const exampleCards = [
+  {
+    title: "1678's Crescendo Drivebase",
+    href: 'https://cad.onshape.com/documents/9fbc1c0f3ea4398f1ae28aa8/w/522b8dadf85a8dc5d1f8c291/e/24e2d20279c4d96e626dc6be',
+    image: dt1678,
+    imageAlt: '1678 Crescendo drivebase CAD render',
+    description: 'A drivebase featuring a dropped frame layout used by many 2024 robots.',
+  },
+  {
+    title: "3005's Charged Up Drivebase",
+    href: 'https://cad.onshape.com/documents/f1c0c9ce2309b0be3a22a379/w/c8169ca8774f2b499875ab45/e/b1639093afdfd702347929f0',
+    image: dt3005,
+    imageAlt: '3005 Charged Up drivebase CAD render',
+    description: 'A REV swerve drivebase packaged around NEO motors.',
+  },
+  {
+    title: "5460's Charged Up Drivebase",
+    href: 'https://cad.onshape.com/documents/0b20b359a25b9a8142fe9631/w/263949fda713f005d5add009/e/9ff2797a21aae7b8fea3933c',
+    image: dt5460,
+    imageAlt: '5460 Charged Up drivebase CAD render',
+    description: 'A standard SDS MK4i swerve drivebase with pocketed tubing.',
+  },
+];
 
 The drivebase is the single most important part of your robot, if you can't move, you can't score or play defense. All other mechanisms will also build on top of the drivebase. These examples can provide useful inspiration for electronics layout, bellypan design, and structural supports.
 
-## Featured
+## In-depth Writeups
 
-### [2910 Charged Up Drivebase](./2910_2023_dt/)
-A drivebase with two cross tubes featuring wire grommets
+<MechanismCardGrid cards={writeupCards} />
 
-### [1678 Crescendo Drivebase](./1678_2024_dt/)
-A drivebase featuring a "dropped frame" frame found on many robots in 2024
+## CAD References
 
-### [3005 Charged Up Drivebase](./3005_2023_dt/)
-A drivebase featuring REV swerve modules and NEO motors
-
-### [6328 Crescendo Drivebase](./6328_2024_dt/)
-A drivebase featuring a unique frame cutout for an UTB intake
-
-### [5460 Charged Up Drivebase](./5460_2023_dt/)
-A standard swerve drivebase with SDS MK4i modules and pocketed tubing
-
-## More Examples
-
-### 2024
-
-- [1778's Crescendo Drivebase](https://cad.onshape.com/documents/21700de5780384d6ad1fa400/w/e7b7f12e375e341a4fd42288/e/2501a63e8a1e274c06f6ffa9)
-- [2910's Crescendo Drivebase](https://2910.onshape.com/documents/b05af223ad0d2a358074cc0a/w/24f535878b828a85540c8430/e/9d8b5a55e5c746878f41c2bc)
-- [6036's Crescendo Drivebase](https://cad.onshape.com/documents/22a2d0f831f60e64d21620b9/w/6114dadbd9085f5612dad887/e/8de2be52d382e7a9e35e8f71)
-
-### 2023
-
-- [1678's Charged Up Drivebase](https://cad.onshape.com/documents/e96fd59ce7ac19e7f6efda0e/w/21eb649ac86f456f426e47a6/e/1816729067fb37bcba2a150b)
-- [3847's Charged Up Drivebase](https://cad.onshape.com/documents/de43bfb90686cd44b0870071/w/9d183c2710bcbdcce0b821b4/e/52ffe457d07a49279860d194)
-- [5460's Charged Up Drivebase](https://cad.onshape.com/documents/0b20b359a25b9a8142fe9631/w/263949fda713f005d5add009/e/9ff2797a21aae7b8fea3933c)
-
-### 2022
-
-- [1678's Rapid React Drivebase](https://cad.onshape.com/documents/76cceb18fbc1c922c8217ec3/w/e35ea9353fc3c4781b8f8883/e/f4de020844649ab5f8786b52)
-
-### 2021 (Infinite Recharge @ Home)
-
-- [111's IR @ Home Drivebase](https://cad.onshape.com/documents/e82ea426e855038e49d02864/w/718b2c5ff33cd33e39664376/e/0b83d5f80ed251fa566e4b51)
+<MechanismCardGrid cards={exampleCards} />
