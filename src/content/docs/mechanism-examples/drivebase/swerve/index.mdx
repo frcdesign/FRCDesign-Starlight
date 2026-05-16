@@ -3,14 +3,16 @@ title: Swerve Drivebases
 description: Examples of swerve drivebases from FRC robots
 template: splash
 socialCard:
-  image: ./img/2910_2023_dt.webp
+  image: ./img/2910/2910_2023_dt.webp
 ---
 
 import MechanismCardGrid from '@components/content/MechanismCardGrid.astro';
-import dt2910 from './img/2910_2023_dt.webp';
+import dt2910 from './img/2910/2910_2023_dt.webp';
 import dt1678 from './img/1678_2024_dt.webp';
 import dt3005 from './img/3005_2023_dt.webp';
+import dt6328 from './img/6328_2024_dt.webp';
 import dt5460 from './img/5460_2023_dt.webp';
+import dt972 from './img/972_2024_dt.webp';
 
 export const writeupCards = [
   {
@@ -38,11 +40,25 @@ export const exampleCards = [
     description: 'A REV swerve drivebase packaged around NEO motors.',
   },
   {
+    title: "6328's Crescendo Drivebase",
+    href: 'https://cad.onshape.com/documents/3377aeb4f934febff9d3a00f/w/8cbec8d6b9da94869df6d735/e/bc9b31fa0546b4f8b0cf0e0a',
+    image: dt6328,
+    imageAlt: '6328 Crescendo drivebase CAD render',
+    description: 'A drivebase featuring a unique frame cutout for an under-the-bumper intake.',
+  },
+  {
     title: "5460's Charged Up Drivebase",
     href: 'https://cad.onshape.com/documents/0b20b359a25b9a8142fe9631/w/263949fda713f005d5add009/e/9ff2797a21aae7b8fea3933c',
     image: dt5460,
     imageAlt: '5460 Charged Up drivebase CAD render',
     description: 'A standard SDS MK4i swerve drivebase with pocketed tubing.',
+  },
+  {
+    title: "972's Crescendo Drivebase",
+    href: 'https://lgsstudent.onshape.com/documents/0e95e39213c03c7423bfb91b/w/4b99a31cc58cad3a9204fd96/e/6abeeb6af28f118928da9d06',
+    image: dt972,
+    imageAlt: '972 Crescendo drivebase CAD render',
+    description: 'A drivebase featuring an inverted bellypan, or "brainpan", for electronics mounting.',
   },
 ];
 
