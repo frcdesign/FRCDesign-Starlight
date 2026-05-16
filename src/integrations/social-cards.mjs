@@ -84,7 +84,7 @@ export default function socialCardsIntegration() {
           const html = await fs.readFile(htmlFile, 'utf8');
           if (html.includes('property="og:image"') || html.includes('name="twitter:image"')) continue;
 
-          const imageUrl = new URL(cardPathFromRoute(route), site).href;
+          const imageUrl = cardPathFromRoute(route);
           const updated = injectAfter(
             html,
             '<meta name="twitter:card" content="summary_large_image"/>',
