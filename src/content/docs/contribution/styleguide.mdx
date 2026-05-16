@@ -54,7 +54,7 @@ Keep in mind that FRC design trends are temporary and transient.
 ### File Formats:
 
 - Compress images to .webp format using [squoosh](https://squoosh.app/)
-- Embed all videos using YouTube — pass the video ID or full URL to `ContentFigure`
+- Upload all videos to YouTube and pass the video ID or full URL to `ContentFigure`
 - Add images with a path relative to your MDX file: `<ContentFigure src="./img/example.webp" alt="Alt text" />`
 
 ### Brand Standards
@@ -62,7 +62,7 @@ Keep in mind that FRC design trends are temporary and transient.
 Adhere to brand standards when possible.
 
 - Abide by *FIRST* Trademark guidelines, available [here](https://www.firstinspires.org/sites/default/files/uploads/resource_library/UseofUSFIRSTandLEGOGroupTrademarksandCopyrightedMaterials.pdf)
-- The first instance of *FIRST* and FRC on a page should include the registered trademark symbol (i.e, *FIRST*)
+- The first instance of *FIRST* and FRC on a page should include the registered trademark symbol (i.e, *FIRST®*)
 - Always capitalize and italicize the name *FIRST*
 - Do NOT use a possessive on the *FIRST* name (e.g, FIRST's)
 - This also applies to team names: spell them how they are officially spelled
@@ -84,14 +84,14 @@ You can use "you" when writing, when it makes writing less awkward. However, try
 
 Every page starts with a frontmatter block between `---` markers. Required fields:
 
-- **`title`** — displayed in the browser tab, search results, and navigation
-- **`description`** — short summary for meta tags and search engines
+- **`title`**: displayed in the browser tab, search results, and navigation
+- **`description`**: short summary for meta tags and search engines
 
 Optional fields:
 
-- **`tableOfContents: false`** — hide the table of contents (use on overview/index pages)
-- **`prev: false`** / **`next: false`** — remove the previous/next page navigation buttons
-- **`template: splash`** — full-width layout with no sidebar (used for mechanism example pages)
+- **`tableOfContents: false`**: hide the table of contents (use on overview/index pages)
+- **`prev: false`** / **`next: false`**: remove the previous/next page navigation buttons
+- **`template: splash`**: full-width layout with no sidebar (used for mechanism example pages)
 
 ```yaml
 ---
