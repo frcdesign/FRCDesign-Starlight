@@ -35,44 +35,49 @@ const showKickoffCountdown = false;
 
 // Check if this is the home page (splash template)
 const isHomePage = data.template === 'splash';
+const isMechanismExamplesPage = Astro.url.pathname === '/mechanism-examples/' || Astro.url.pathname.startsWith('/mechanism-examples/');
 
 // Kickoff 2027: January 10th, 2027 at 1:30 PM ET = January 10th, 2027 at 18:30 UTC
 const kickoffDate = "2027-01-10T18:30:00Z";
 ---
 
-<div class="hero">
-	{
-		darkImage && (
-			<Image
-				src={darkImage}
-				{...imageAttrs}
-				class:list={{ 'light:sl-hidden': Boolean(lightImage) }}
-			/>
-		)
-	}
-	{lightImage && <Image src={lightImage} {...imageAttrs} class="dark:sl-hidden" />}
-	{rawHtml && <div class="hero-html sl-flex" set:html={rawHtml} />}
-	<div class="sl-flex stack">
-		<div class="sl-flex copy">
-			<h1 id={PAGE_TITLE_ID} data-page-title set:html={title} />
-			{tagline && <div class="tagline" set:html={tagline} />}
-		</div>
+{isMechanismExamplesPage ? (
+	<h1 id={PAGE_TITLE_ID} data-page-title class="mechanism-page-title-sr" set:html={title} />
+) : (
+	<div class="hero">
 		{
-			actions.length > 0 && (
-				<div class="sl-flex actions">
-					{actions.map(
-						({ attrs: { class: className, ...attrs } = {}, icon, link: href, text, variant }) => (
-							<LinkButton {href} {variant} icon={icon?.name} class:list={[className]} {...attrs}>
-								{text}
-								{icon?.html && <Fragment set:html={icon.html} />}
-							</LinkButton>
-						)
-					)}
-				</div>
+			darkImage && (
+				<Image
+					src={darkImage}
+					{...imageAttrs}
+					class:list={{ 'light:sl-hidden': Boolean(lightImage) }}
+				/>
 			)
 		}
+		{lightImage && <Image src={lightImage} {...imageAttrs} class="dark:sl-hidden" />}
+		{rawHtml && <div class="hero-html sl-flex" set:html={rawHtml} />}
+		<div class="sl-flex stack">
+			<div class="sl-flex copy">
+				<h1 id={PAGE_TITLE_ID} data-page-title set:html={title} />
+				{tagline && <div class="tagline" set:html={tagline} />}
+			</div>
+			{
+				actions.length > 0 && (
+					<div class="sl-flex actions">
+						{actions.map(
+							({ attrs: { class: className, ...attrs } = {}, icon, link: href, text, variant }) => (
+								<LinkButton {href} {variant} icon={icon?.name} class:list={[className]} {...attrs}>
+									{text}
+									{icon?.html && <Fragment set:html={icon.html} />}
+								</LinkButton>
+							)
+						)}
+					</div>
+				)
+			}
+		</div>
 	</div>
-</div>
+)}
 
 {showKickoffCountdown && isHomePage && (
 	<div class="countdown-wrapper">
@@ -97,6 +102,18 @@ const kickoffDate = "2027-01-10T18:30:00Z";
 	}
 
 	/* Original Starlight Hero styles */
+	.mechanism-page-title-sr {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
 	.hero {
 		display: grid;
 		align-items: center;

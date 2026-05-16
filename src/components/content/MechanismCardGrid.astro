@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { glossaryTerms } from '../../data/glossary';
 
 interface MechanismCard {
   title: string;
@@ -14,18 +15,41 @@ interface Props {
 }
 
 const { cards } = Astro.props;
+
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const renderGlossaryDescription = (description: string) => {
+  let html = escapeHtml(description);
+
+  for (const entry of [...glossaryTerms].sort((a, b) => b.term.length - a.term.length)) {
+    const pattern = new RegExp(`(^|[^\\w-])(${escapeRegExp(entry.term)})(?=$|[^\\w-])`, 'gi');
+    html = html.replace(
+      pattern,
+      `$1<span class="glossary-term" data-tooltip="${escapeHtml(entry.definition)}">$2</span>`
+    );
+  }
+
+  return html;
+};
 ---
 
 <div class="mechanism-card-grid">
   {cards.map((card) => (
     <article class="mechanism-card">
-      <a href={card.href} aria-label={`Open ${card.title}`}></a>
-      <div class="mechanism-card-media">
+      <a href={card.href} class="mechanism-card-media" aria-label={`Open ${card.title}`}>
         <Image src={card.image} alt={card.imageAlt} loading="lazy" />
-      </div>
+      </a>
       <div class="mechanism-card-body">
-        <h3>{card.title}</h3>
-        <p>{card.description}</p>
+        <h3><a href={card.href}>{card.title}</a></h3>
+        <p set:html={renderGlossaryDescription(card.description)} />
       </div>
     </article>
   ))}
@@ -53,21 +77,17 @@ const { cards } = Astro.props;
     background: var(--sl-color-black);
   }
 
-  .mechanism-card > a {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-  }
-
   .mechanism-card:hover {
-    border-color: var(--sl-color-accent-high);
+    border-color: #2fbf5b;
   }
 
   .mechanism-card-media {
     overflow: hidden;
     height: clamp(14rem, 24vw, 20rem);
+    padding: clamp(0.75rem, 2vw, 1.25rem);
     border-bottom: 1px solid var(--sl-color-gray-5);
     background: var(--sl-color-gray-7);
+    box-sizing: border-box;
   }
 
   .mechanism-card-media img {
@@ -80,7 +100,7 @@ const { cards } = Astro.props;
   }
 
   .mechanism-card:hover img {
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
 
   .mechanism-card-body {
@@ -91,13 +111,54 @@ const { cards } = Astro.props;
 
   .mechanism-card-body h3 {
     margin: 0;
+  }
+
+  .mechanism-card-body h3 a {
     color: var(--sl-color-white);
+    text-decoration: none;
   }
 
   .mechanism-card-body p {
     margin: 0;
     color: var(--sl-color-gray-3);
     line-height: 1.5;
+  }
+
+  .mechanism-card-body :global(.glossary-term) {
+    position: relative;
+    cursor: help;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--sl-color-gray-4);
+    text-underline-offset: 0.2em;
+  }
+
+  .mechanism-card-body :global(.glossary-term)::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    z-index: 20;
+    width: max-content;
+    max-width: 18rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    transform: translateX(-50%);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 6px;
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-gray-1);
+    font-size: var(--sl-text-sm);
+    line-height: 1.4;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+    visibility: hidden;
+  }
+
+  .mechanism-card-body :global(.glossary-term):hover::after {
+    opacity: 1;
+    visibility: visible;
   }
 
   @media (max-width: 44rem) {
