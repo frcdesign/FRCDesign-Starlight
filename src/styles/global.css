@@ -80,6 +80,10 @@
     object-fit: contain;
 }
 
+.sl-markdown-content pre {
+    text-align: left;
+}
+
 .sl-markdown-content figure {
     margin: 1.5rem auto;
     max-width: 100%;

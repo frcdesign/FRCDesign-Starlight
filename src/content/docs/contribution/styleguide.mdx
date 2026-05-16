@@ -1,6 +1,6 @@
-﻿---
+---
 title: Contribution Style Guide
-description: The style guide for contribution according to the goals of the website.
+description: Writing philosophy and standards for contributing content to FRCDesign.org.
 ---
 
 ## Futureproofing and Usefulness
@@ -49,14 +49,6 @@ Keep in mind that FRC design trends are temporary and transient.
 
 - Just because something is popular one season doesn't mean it's the end all be all. There was a time when WCD and sheet metal superstructures was all the rage, but that doesn't mean that we should recommend them in this guide. Try your best to think about why something is popular, and what benefits in design, function, and execution they actually bring to the table.
 
-## Standards
-
-### File Formats:
-
-- Compress images to .webp format using [squoosh](https://squoosh.app/)
-- Embed longer videos using the YouTube component, and shorter videos with a webm file
-- Add images using markdown syntax: `<ContentFigure src="/path/to/image.webp" alt="Alt text" />`
-
 ### Social Cards
 
 Social cards are the preview images that appear when a page is shared in Discord or other apps. They are generated automatically from each page's `title` and `description`, so most contributors do not need to do anything special.
@@ -101,22 +93,10 @@ Run `npm run social-cards` if you want to regenerate the preview images locally.
 Adhere to brand standards when possible.
 
 - Abide by *FIRST* Trademark guidelines, available [here](https://www.firstinspires.org/sites/default/files/uploads/resource_library/UseofUSFIRSTandLEGOGroupTrademarksandCopyrightedMaterials.pdf)
-- The first instance of *FIRST* and FRC on a page should include the registered trademark symbol (i.e, *FIRST*)
+- The first instance of *FIRST* and FRC on a page should include the registered trademark symbol (i.e, *FIRST®*)
 - Always capitalize and italicize the name *FIRST*
 - Do NOT use a possessive on the *FIRST* name (e.g, FIRST's)
 - This also applies to team names: spell them how they are officially spelled
 - Check [The Blue Alliance](https://www.thebluealliance.com/) if you don't know how to spell a team's name
 
 You can use "you" when writing, when it makes writing less awkward. However, try avoiding excessively using it.
-
-### Links:
-
-- External links should generally open in a new tab
-- Links to CAD documents should use the LinkButton component:
-  ```mdx
-  import ContentFigure from '@components/content/ContentFigure.astro';
-import LinkButton from '@components/content/LinkButton.astro';
-
-  <LinkButton href="https://cad.onshape.com/..." variant="primary">CAD Link</LinkButton>
-  ```
-- Internal links should use relative paths: `[Link Text](/path/to/page)`

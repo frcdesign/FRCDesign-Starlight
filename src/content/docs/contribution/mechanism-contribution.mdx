@@ -1,9 +1,7 @@
-﻿---
+---
 title: Contributing to Mechanism Examples
 description: A guide to contributing mechanism examples to the website.
 ---
-
-import Aside from '@components/content/Aside.astro';
 
 The [mechanism examples](/mechanism-examples/) pages are the ones that would benefit the most from outside contribution. You can add examples from other teams, of course, but adding your own mechanism and going behind the design and performance on it will be ideal. If adding an example from another team, try to interview them for their input and more accurate information.
 
@@ -22,79 +20,130 @@ As was described in [methods of contributing](/contribution/methods-of-contribut
 1. Writing the contribution on a separate platform (such as Google Docs) and getting an internal contributor to add it to the website
 2. Forking and making a pull request on GitHub
 
-The first method is pretty self explanatory, but if you choose to fork and make a pull request on GitHub, there is some formatting required. Make sure to follow the contribution guide on the [methods of contributing](/contribution/methods-of-contributing/) page to get up and running with GitHub and VS Code.
+The first method is pretty self explanatory, but if you choose to fork and make a pull request on GitHub, refer to the [Adding a Page](/contribution/adding-a-page/) guide for the technical setup, then follow the structure below.
 
-## Adding a Mechanism Category (OPTIONAL)
+## Adding a Mechanism Example
 
-If you need to add a mechanism category, you must add a landing page for the mechanism examples in that category.
+If you only have an image and a CAD link, you don't need a dedicated page! You can add the example directly to the category's `index.mdx`. A full page is worthwhile when you have enough content to write a "Behind the Design" section.
 
-### Adding the Folders and Files
+### Adding to the Category Index (Advanced)
 
-1. Create a new folder under `mechanism-examples` with the name of the new mechanism category. All mechanism example pages and the landing page for the category will be in this folder.
+To add a CAD reference without a full page, add an entry to the `exampleCards` array in the category's `index.mdx`. First, import your thumbnail at the top of the file (after the other imports), then add the card object:
 
-<Aside type="note">
-If there are multiple types of the mechanism (such as with elevators and intakes), you can create multiple folders in that with the landing pages in each separate folder. For example, the folder `elevator` contains the folders `cascade` and `continuous`, both of which contain a landing page `index.mdx`.
-</Aside>
+```mdx
+import myMechImage from './img/your-image.webp';
+```
 
-2. Create the landing page(s) for the category, named `index.mdx`. Only one of these can be made per folder.
+```ts
+export const exampleCards = [
+  // ...existing entries...
+  {
+    title: "Team XXXX Mechanism Name",
+    href: 'https://cad.onshape.com/...',
+    image: myMechImage,
+    imageAlt: 'Brief description of the image',
+    description: 'One or two sentences about the design.',
+  },
+];
+```
 
-3. Copy this template for the category landing page and fill it out with your information:
+If `exampleCards` doesn't exist in the index yet, add the export and a `## CAD References` section with `<MechanismCardGrid cards={exampleCards} />` below the existing writeup grid.
+
+### Creating a Full Page
+
+Create a new `.mdx` file in the appropriate category folder. Use this template as a starting point:
 
 ```mdx
 ---
-title: page-title
-description: Description of the mechanism category
+title: Team XXXX Mechanism Name
+description: Brief description of the mechanism.
+template: splash
 ---
 
-# page-title
+<ContentFigure src="./img/thumb/main-image.webp" alt="Mechanism name CAD render" width="80%" />
+
+<LinkButton href="https://cad.onshape.com/...">
+  CAD Document
+</LinkButton>
+
+## Behind the Design
+
+Content about the design decisions, tradeoffs, performance, and lessons learned.
+```
+
+### Images
+
+Images for a mechanism example page go in an `img/` folder next to the `.mdx` file. Thumbnail images used by the mechanism examples landing page go in `img/thumb/`.
+
+Use `.webp` format, compress with [squoosh](https://squoosh.app/) before adding.
+
+For thumbnail images, use a **1:1.545 or 1.545:1 aspect ratio**. This matches the aspect ratio of Onshape's "print" output using tabloid paper size (landscape for wide, portrait for tall).
+
+<Aside type="tip">
+To crop an existing image to the right aspect ratio, use GIMP (or any image editor) to find the pixel dimensions from your image's shorter side and add pixels to reach the target ratio.
+</Aside>
+
+## Adding a Mechanism Category (Optional)
+
+If the mechanism type you're adding doesn't have a category yet, you'll need to create one first. Adding a category involves two parts: the MDX content files, and updating an Astro component that powers the landing page. The content files are straightforward; the component edit requires some TypeScript familiarity.
+
+<Aside type="note">
+If you're not comfortable editing Astro components, you can skip the landing page step and note in your pull request or Google Doc that an internal contributor should handle it.
+</Aside>
+
+### Content Files
+
+1. Create a new folder under `src/content/docs/mechanism-examples/` named after the mechanism type. If there are multiple subtypes (like elevators having cascade and continuous), create subfolders for each.
+
+2. Create an `index.mdx` landing page in the folder using this template:
+
+```mdx
+---
+title: Category Name
+description: Description of the mechanism category.
+template: splash
+---
+
+# Category Name
 
 Description of the mechanism category and what examples are included.
 ```
 
-## Adding a Mechanism Example Page
+3. Add the category and its pages to `src/config/sidebarConfig.ts` under the mechanism examples section.
 
-Adding a mechanism example page to an already existing category requires a few things to be done. The page has to be created and a standard image for the example needs to be created.
+### Landing Page Component (Advanced)
 
-### Creating the Page
+The [mechanism examples landing page](/mechanism-examples/) is powered by `src/components/content/MechanismExamplesLanding.astro`. To make the new category appear as a card on that page, find the `categories` array in the component and add a new entry:
 
-Create a new `.mdx` file in the category folder for your example.
-
-Fill out the page with your information using Markdown and MDX formatting, including:
-- Frontmatter with title and description
-- Main image of the mechanism
-- Links to CAD documents
-- Behind the Design section
-
-Example template:
-
-```mdx
----
-title: mechanism-example-name
-description: Brief description of the mechanism
----
-
-# mechanism-example-name
-
-<ContentFigure width="80%" />
-
-### Links
-[CAD Link](https://cad.onshape.com/...)
-
-## Behind the Design
-
-Content about the design decisions, performance, and lessons learned.
+```ts
+{
+  title: 'Category Name',
+  href: '/mechanism-examples/your-category/',
+  imageAlt: 'Brief image description',
+  description: 'One or two sentences describing the category.',
+  links: [
+    { label: 'Subcategory name', href: '/mechanism-examples/your-category/subtype/' },
+  ],
+},
 ```
 
-Add any images you use for your page in `/public/mechanism-examples/[category]/[example]/`.
+The `links` array determines which `img/thumb/` images are pulled in for the card. If the category has no subtypes, use the category's own path. The card image is automatically taken from the first thumbnail found under that path, with no extra configuration needed.
 
-### Adding an Image for the Example
+## Setting a Featured In-Depth Example (Advanced)
 
-Images should be in `.webp` format and placed in the `/public/mechanism-examples/[category]/` directory.
+The landing page has a featured section that highlights a small number of particularly detailed, well-documented examples. Getting added there requires editing `src/components/content/MechanismExamplesLanding.astro`, specifically the `inDepthExamples` array near the top of the frontmatter:
 
-Use a 1:1.545 or 1.545:1 aspect ratio. 1:1.545 is the aspect ratio of a picture outputted from Onshape's "print" function using the "tabloid" paper size. You can select landscape or portrait from there for wide or tall.
+```ts
+{
+  title: "Team XXXX Mechanism Name",
+  href: '/mechanism-examples/your-category/your-page/',
+  image: imageByLabel('your thumb image filename without extension'),
+  imageAlt: 'Brief image description',
+  category: 'Category label shown on the card',
+  description: 'Two to three sentences summarizing what makes this example worth featuring.',
+},
+```
 
-<Aside type="tip">
-For images you already have, you can use GIMP and a calculator to crop an image by adding pixels to get it to the desired aspect ratio.
-</Aside>
+The `imageByLabel` call does a loose match on thumbnail filenames. Use a distinctive word from your thumbnail's filename. This is a component edit, so the same note applies: flag it in your pull request if you'd prefer an internal contributor to handle it.
 
 Thanks for your contribution!

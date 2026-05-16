@@ -47,10 +47,10 @@ const renderGlossaryDescription = (description: string) => {
       <a href={card.href} class="mechanism-card-media" aria-label={`Open ${card.title}`}>
         <Image src={card.image} alt={card.imageAlt} loading="lazy" />
       </a>
-      <div class="mechanism-card-body">
-        <h3><a href={card.href}>{card.title}</a></h3>
+      <a href={card.href} class="mechanism-card-body" aria-label={`Open ${card.title}`}>
+        <h3>{card.title}</h3>
         <p set:html={renderGlossaryDescription(card.description)} />
-      </div>
+      </a>
     </article>
   ))}
 </div>
@@ -107,15 +107,13 @@ const renderGlossaryDescription = (description: string) => {
     display: grid;
     gap: 0.55rem;
     padding: 1rem;
+    color: inherit;
+    text-decoration: none;
   }
 
   .mechanism-card-body h3 {
     margin: 0;
-  }
-
-  .mechanism-card-body h3 a {
     color: var(--sl-color-white);
-    text-decoration: none;
   }
 
   .mechanism-card-body p {

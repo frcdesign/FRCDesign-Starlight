@@ -273,7 +273,7 @@ for (const section of sidebarSections) {
         });
       });
 
-      // Escape key — guard with a flag on <html> so this is only registered once
+      // Escape key. Guard with a flag on <html> so this is only registered once
       // across view transitions (body is replaced each navigation but <html> persists)
       if (!document.documentElement.dataset.lightboxEscapeAdded) {
         document.documentElement.dataset.lightboxEscapeAdded = 'true';
@@ -381,7 +381,7 @@ for (const section of sidebarSections) {
       });
     };
 
-    // Outside-click handler for the mobile menu — guard with a flag on <html> so it
+    // Outside-click handler for the mobile menu. Guard with a flag on <html> so it
     // is only registered once across view transitions (body replaced, <html> persists)
     if (!document.documentElement.dataset.menuOutsideClickAdded) {
       document.documentElement.dataset.menuOutsideClickAdded = 'true';
