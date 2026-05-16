@@ -57,6 +57,45 @@ Keep in mind that FRC design trends are temporary and transient.
 - Embed longer videos using the YouTube component, and shorter videos with a webm file
 - Add images using markdown syntax: `<ContentFigure src="/path/to/image.webp" alt="Alt text" />`
 
+### Social Cards
+
+Social cards are the preview images that appear when a page is shared in Discord or other apps. They are generated automatically from each page's `title` and `description`, so most contributors do not need to do anything special.
+
+Mechanism example pages can also include an `image` in the frontmatter. This uses the same green mechanism card style as the rest of the site:
+
+```yaml
+---
+title: 1678's Rapid React Shooter
+description: A ball shooter with rack gear actuated hood
+image: ./img/1678_2022_shooter.webp
+---
+```
+
+If a card needs different wording than the page title or description, add a small `socialCard` block to the page frontmatter:
+
+```yaml
+---
+title: Shooter Mechanisms
+description: Examples and design notes for FRC shooter mechanisms
+socialCard:
+  title: Shooter Mechanisms
+  description: Study proven FRC shooter designs and the tradeoffs behind them.
+  image: ./img/1678_2022_shooter.webp
+---
+```
+
+For tall mechanisms like elevators, use `layout: mechanism-tall` inside `socialCard`. Most mechanism pages can use the default `mechanism-wide` layout.
+
+To disable a card for a page, use:
+
+```yaml
+---
+socialCard: false
+---
+```
+
+Run `npm run social-cards` if you want to regenerate the preview images locally. The normal site build also regenerates them automatically.
+
 ### Brand Standards
 
 Adhere to brand standards when possible.
