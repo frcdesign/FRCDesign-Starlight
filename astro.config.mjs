@@ -47,6 +47,7 @@ export default defineConfig({
       tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 3 },
       // Sidebar configuration is now managed in src/config/sidebarConfig.ts
       // This allows different sidebars per top-level navigation section
+      disable404Route: true,
     }),
     sitemap({
       filter: (page) => !sitemapExcludedPaths.includes(new URL(page).pathname),

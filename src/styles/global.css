@@ -71,6 +71,53 @@
 }
 
 /* ==========================================================================
+   Mechanism Example Category Pages
+   ========================================================================== */
+
+.content-panel:has(+ .content-panel .sl-markdown-content .mechanism-card-grid) h1 {
+    max-width: 85rem;
+    margin-inline: auto;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--sl-color-gray-6);
+    font-size: clamp(2.25rem, 4vw, 3.75rem);
+    line-height: 1.05;
+}
+
+.sl-markdown-content:has(.mechanism-card-grid) {
+    --mechanism-green: #2fbf5b;
+}
+
+.sl-markdown-content:has(.mechanism-card-grid) > p:first-child {
+    max-width: 76ch;
+    margin-block: 0 2.75rem;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-lg);
+    line-height: 1.7;
+}
+
+.sl-markdown-content:has(.mechanism-card-grid) .sl-heading-wrapper.level-h2 {
+    margin-block: 0 0.9rem;
+}
+
+.sl-markdown-content:has(.mechanism-card-grid) .sl-heading-wrapper.level-h2:not(:first-of-type) {
+    margin-top: 2.75rem;
+    padding-top: 2.25rem;
+    border-top: 1px solid var(--sl-color-gray-6);
+}
+
+.sl-markdown-content:has(.mechanism-card-grid) .sl-heading-wrapper.level-h2 h2 {
+    margin: 0;
+    font-size: clamp(1.65rem, 2.3vw, 2.25rem);
+    line-height: 1.1;
+}
+
+.sl-markdown-content:has(.mechanism-card-grid) .mechanism-card-grid + p {
+    max-width: 72ch;
+    margin-top: -0.75rem;
+    color: var(--sl-color-gray-3);
+}
+
+/* ==========================================================================
    Images & Figures
    ========================================================================== */
 
