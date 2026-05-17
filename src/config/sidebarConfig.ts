@@ -404,6 +404,7 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
               collapsed: true,
               items: [
                 { label: 'Overview', slug: 'mechanism-examples/pivots' },
+                { label: '6328 A-Frame Pivot', slug: 'mechanism-examples/pivots/6328_2023_pivot' },
                 { label: '2910 Dead Axle Pivot', slug: 'mechanism-examples/pivots/2910_2023_pivot' },
               ],
             },
