@@ -120,7 +120,7 @@ Upload all videos to YouTube and embed them using the video ID or full URL:
 
 ## Components
 
-`ContentFigure`, `Aside`, `Slides`, and `LinkButton` are available in all `.mdx` files without importing. All other components require an explicit import at the top of the file:
+`ContentFigure`, `Aside`, `Slides`, `LinkButton`, and `ImageTable` are available in all `.mdx` files without importing. All other components require an explicit import at the top of the file:
 
 ```mdx
 import ContributorList from '@components/content/ContributorList.astro';
@@ -234,6 +234,41 @@ Prominent link, typically used for CAD documents.
 ```mdx
 <LinkButton href="https://cad.onshape.com/...">CAD Document</LinkButton>
 <LinkButton href="https://cad.onshape.com/..." center>Centered Button</LinkButton>
+```
+
+### ImageTable
+
+Wraps a markdown table that has images in its last column. Handles horizontal scrolling on narrow screens and consistent image sizing.
+
+```mdx
+<ImageTable>
+| Type | Description | Image |
+|---|---|---|
+| **SHCS** | Standard bolt | <ContentFigure src="./img/shcs.webp" alt="SHCS" /> |
+| **BHCS** | Low-profile rounded head | <ContentFigure src="./img/bhcs.webp" alt="BHCS" /> |
+</ImageTable>
+```
+
+Use the optional props to adjust sizing for tables with larger or smaller images:
+
+```mdx
+<ImageTable minWidth="760px" imageMaxWidth="8rem" imageMaxHeight="6.5rem" imageMinHeight="5rem">
+```
+
+Props:
+- `minWidth`: minimum table width before horizontal scroll activates, default `560px`
+- `imageMaxWidth`: max width of images in the last column, default `7rem`
+- `imageMaxHeight`: max height of images in the last column, default `6rem`
+- `imageMinHeight`: minimum cell height in the image column to keep rows uniform, default `4rem`
+
+## Centered Content
+
+Use the `:::center` directive to center text or other inline content:
+
+```md
+:::center
+**Centered text or formula**
+:::
 ```
 
 ## Links
