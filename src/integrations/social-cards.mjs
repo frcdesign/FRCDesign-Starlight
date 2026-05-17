@@ -5,7 +5,7 @@ import { generateSocialCards } from '../../scripts/social-cards.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..', '..');
-const publicCardsDir = path.join(rootDir, 'public', 'social-cards');
+const socialCardsDirName = 'social-cards';
 
 const routeFromHtmlPath = (htmlPath, outDir) => {
   const relative = path.relative(outDir, htmlPath).replace(/\\/g, '/');
@@ -13,10 +13,10 @@ const routeFromHtmlPath = (htmlPath, outDir) => {
   return `/${relative.replace(/\/index\.html$/, '/').replace(/\.html$/, '/')}`;
 };
 
-const cardFileFromRoute = (route) =>
+const cardFileFromRoute = (route, cardsDir) =>
   route === '/'
-    ? path.join(publicCardsDir, 'index.png')
-    : path.join(publicCardsDir, route.replace(/^\/|\/$/g, ''), 'index.png');
+    ? path.join(cardsDir, 'index.png')
+    : path.join(cardsDir, route.replace(/^\/|\/$/g, ''), 'index.png');
 
 const cardPathFromRoute = (route) =>
   route === '/' ? '/social-cards/index.png' : `/social-cards${route}index.png`;
@@ -101,6 +101,7 @@ export { __frcdesignSocialCardWorker as default, pageMap };`;
 export default function socialCardsIntegration() {
   let site;
   let outDir;
+  let clientOutDir;
 
   return {
     name: 'frcdesign-social-cards',
@@ -108,16 +109,19 @@ export default function socialCardsIntegration() {
       'astro:config:done': ({ config }) => {
         site = config.site?.toString() || 'https://star.frcdesign.org';
         outDir = fileURLToPath(config.outDir);
+        clientOutDir = config.build.client ? fileURLToPath(config.build.client) : path.join(outDir, 'client');
       },
       'astro:build:start': async () => {
         await generateSocialCards({ site });
       },
       'astro:build:done': async () => {
-        const htmlFiles = await listHtmlFiles(outDir);
+        const htmlRoot = (await hasFile(clientOutDir)) ? clientOutDir : outDir;
+        const cardsDir = path.join(htmlRoot, socialCardsDirName);
+        const htmlFiles = await listHtmlFiles(htmlRoot);
 
         for (const htmlFile of htmlFiles) {
-          const route = routeFromHtmlPath(htmlFile, outDir);
-          if (!(await hasFile(cardFileFromRoute(route)))) continue;
+          const route = routeFromHtmlPath(htmlFile, htmlRoot);
+          if (!(await hasFile(cardFileFromRoute(route, cardsDir)))) continue;
 
           const html = await fs.readFile(htmlFile, 'utf8');
           if (html.includes('property="og:image"') || html.includes('name="twitter:image"')) continue;
