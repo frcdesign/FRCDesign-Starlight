@@ -12,12 +12,6 @@ const sitemapExcludedPaths = ['/test-content-figure/'];
 export default defineConfig({
   site: 'https://star.frcdesign.org',
   prefetch: true,
-  image: {
-    service: {
-      entrypoint: 'astro/assets/services/compile',
-    },
-  },
-
   markdown: {
     remarkPlugins: [remarkCenter, remarkGlossary, remarkMdxGlobalImports],
     rehypePlugins: [],
@@ -41,6 +35,7 @@ export default defineConfig({
         Pagination: './src/starlightOverrides/Pagination.astro',
         Hero: './src/starlightOverrides/Hero.astro',
         TableOfContents: './src/starlightOverrides/TableOfContents.astro',
+        MobileTableOfContents: './src/starlightOverrides/MobileTableOfContents.astro',
       },
       // TOC is disabled globally but can be enabled per-directory in src/config/tocConfig.ts
       // or per-page via frontmatter (tableOfContents: true)
