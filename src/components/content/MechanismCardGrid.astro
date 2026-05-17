@@ -43,15 +43,15 @@ const renderGlossaryDescription = (description: string) => {
 
 <div class="mechanism-card-grid">
   {cards.map((card) => (
-    <article class="mechanism-card">
-      <a href={card.href} class="mechanism-card-media" aria-label={`Open ${card.title}`}>
-        <Image src={card.image} alt={card.imageAlt} loading="lazy" />
-      </a>
-      <a href={card.href} class="mechanism-card-body" aria-label={`Open ${card.title}`}>
-        <h3>{card.title}</h3>
-        <p set:html={renderGlossaryDescription(card.description)} />
-      </a>
-    </article>
+    <a href={card.href} class="mechanism-card" aria-label={`Open ${card.title}`}>
+      <span class="mechanism-card-media">
+        <Image src={card.image} alt={card.imageAlt} loading="lazy" data-no-lightbox />
+      </span>
+      <span class="mechanism-card-body">
+        <span class="mechanism-card-title">{card.title}</span>
+        <span class="mechanism-card-description" set:html={renderGlossaryDescription(card.description)} />
+      </span>
+    </a>
   ))}
 </div>
 
@@ -75,6 +75,8 @@ const renderGlossaryDescription = (description: string) => {
     border: 1px solid var(--sl-color-gray-5);
     border-radius: 8px;
     background: var(--sl-color-black);
+    color: inherit;
+    text-decoration: none;
   }
 
   .mechanism-card:hover {
@@ -107,16 +109,19 @@ const renderGlossaryDescription = (description: string) => {
     display: grid;
     gap: 0.55rem;
     padding: 1rem;
-    color: inherit;
-    text-decoration: none;
   }
 
-  .mechanism-card-body h3 {
+  .mechanism-card-title {
+    display: block;
     margin: 0;
     color: var(--sl-color-white);
+    font-size: var(--sl-text-xl);
+    font-weight: 700;
+    line-height: var(--sl-line-height-headings);
   }
 
-  .mechanism-card-body p {
+  .mechanism-card-description {
+    display: block;
     margin: 0;
     color: var(--sl-color-gray-3);
     line-height: 1.5;

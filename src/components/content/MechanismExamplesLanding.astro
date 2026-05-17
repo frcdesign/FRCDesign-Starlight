@@ -178,6 +178,7 @@ const categories = [
         alt={`${heroImage.label} CAD render`}
         loading={index === 0 ? 'eager' : 'lazy'}
         class:list={['hero-rotator-image', { active: index === 0 }]}
+        data-route={heroImage.route}
         data-no-lightbox
       />
     ))}
@@ -239,7 +240,7 @@ const categories = [
           />
         </div>
         <div class="library-body">
-          <h3><a href={category.href}>{category.title}</a></h3>
+          <h3>{category.title}</h3>
           <p set:html={renderGlossaryDescription(category.description)} />
           <div class="library-links">
             {category.links.map((link) => (
@@ -323,9 +324,9 @@ const categories = [
   }
 
   .mechanism-hero blockquote p {
-    max-width: 13ch;
+    max-width: 17ch;
     color: var(--sl-color-white);
-    font-size: clamp(2.3rem, 5vw, 4.8rem);
+    font-size: clamp(2.1rem, 4.3vw, 4.05rem);
     font-weight: 800;
     letter-spacing: 0;
     line-height: 0.95;
@@ -584,6 +585,7 @@ const categories = [
   }
 
   .library-card .library-body {
+    align-self: stretch;
     border-left: 1px solid var(--sl-color-gray-5);
   }
 
@@ -608,7 +610,7 @@ const categories = [
     }
 
     .mechanism-hero blockquote p {
-      max-width: 14ch;
+      max-width: 17ch;
     }
 
     .featured-grid,
@@ -696,6 +698,14 @@ const categories = [
     const slides = Array.from(rotator?.querySelectorAll('.hero-rotator-image') ?? []) as HTMLImageElement[];
     let activeIndex = 0;
 
+    if (slides.length > 1) {
+      activeIndex = Math.floor(Math.random() * slides.length);
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === activeIndex);
+        if (index === activeIndex) slide.loading = 'eager';
+      });
+    }
+
     clearInterval(rotatorIntervalId);
     if (slides.length > 1) {
       rotatorIntervalId = setInterval(() => {
@@ -715,15 +725,8 @@ const categories = [
       rotator.addEventListener('click', () => {
         const activeImg = slides[activeIndex];
         if (!activeImg) return;
-        const lightbox = document.getElementById('global-image-lightbox');
-        if (!lightbox) return;
-        const lightboxImg = lightbox.querySelector('.global-lightbox-image') as HTMLImageElement | null;
-        if (!lightboxImg) return;
-        lightboxImg.src = activeImg.src;
-        lightboxImg.alt = activeImg.alt || '';
-        lightbox.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        document.documentElement.classList.add('lightbox-open');
+        const route = activeImg.dataset.route;
+        if (route) window.location.href = route;
       });
     }
 
@@ -736,15 +739,32 @@ const categories = [
       const defaultSrc = image.dataset.defaultSrc || image.currentSrc || image.src;
       const cardImages = JSON.parse(image.dataset.images || '[]').filter(Boolean) as string[];
 
+      let swapToken = 0;
+
       const setCardImage = (nextSrc: string) => {
         if (!nextSrc || image.src.endsWith(nextSrc)) return;
-        image.classList.add('is-swapping');
-        window.setTimeout(() => {
+        const currentToken = ++swapToken;
+        const preload = new Image();
+
+        preload.onload = () => {
+          if (currentToken !== swapToken) return;
+          image.classList.add('is-swapping');
+          window.setTimeout(() => {
+            if (currentToken !== swapToken) return;
+            image.src = nextSrc;
+            requestAnimationFrame(() => {
+              image.classList.remove('is-swapping');
+            });
+          }, 160);
+        };
+
+        preload.onerror = () => {
+          if (currentToken !== swapToken) return;
           image.src = nextSrc;
-          image.addEventListener('load', () => {
-            image.classList.remove('is-swapping');
-          }, { once: true });
-        }, 140);
+          image.classList.remove('is-swapping');
+        };
+
+        preload.src = nextSrc;
       };
 
       for (const trigger of card.querySelectorAll('[data-category-trigger]')) {
