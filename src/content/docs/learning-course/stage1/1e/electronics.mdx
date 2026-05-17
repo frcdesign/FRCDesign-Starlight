@@ -17,7 +17,7 @@ To make wiring the robot and later inspecting the wiring easier, enough space sh
 A list of typical electrical components found on FRC robots is provided below, as well as a recommended mounting location. Again, mounting locations are highly dependent on the rest of your robot, make sure to always coordinate with your electrical team to decide what is best.
 
 
-<Aside type="note" title="FRC Electrical Components" class="electrical-components-table">
+<ImageTable minWidth="760px" imageMaxWidth="8rem" imageMaxHeight="6.5rem" imageMinHeight="5rem">
 | **Component** | **Function** | **Suggested Location** | **Image** |
 |---|---|---|---|
 | REV Power Distribution Hub (PDH) or  CTRE Power Distribution Panel (PDP) | Distributes power to all other components | Bellypan | <ContentFigure src="../img/1e/elec-components/pdh.webp" alt="PDH" /> |
@@ -31,65 +31,4 @@ A list of typical electrical components found on FRC robots is provided below, a
 | Inertial Measurement Unit (IMU) | Used to determine robot heading and acceleration | Close to the center is best practice (on Bellypan or VHB tape to attach to RoboRIO) | <ContentFigure src="../img/1e/elec-components/imu.webp" alt="Inertial Measurement Unit" /> |
 | Voltage Regulator Module | Can be used for custom circuits | Bellypan | <ContentFigure src="../img/1e/elec-components/vrm.webp" alt="Voltage Regulator Module" /> |
 | Pneumatics Hub | Controls pneumatic components | Bellypan | <ContentFigure src="../img/1e/elec-components/pcm.webp" alt="Pneumatics Hub" /> |
-</Aside>
-
-<style is:global>{`
-  .electrical-components-table .aside-content {
-    overflow-x: auto;
-  }
-
-  .electrical-components-table table {
-    table-layout: fixed;
-    width: 100%;
-    min-width: 760px;
-    margin: 0;
-  }
-
-  .electrical-components-table th,
-  .electrical-components-table td {
-    vertical-align: middle;
-    padding: 0.65rem 0.75rem;
-  }
-
-  .electrical-components-table th:nth-child(1),
-  .electrical-components-table td:nth-child(1) {
-    width: 23%;
-  }
-
-  .electrical-components-table th:nth-child(2),
-  .electrical-components-table td:nth-child(2) {
-    width: 30%;
-  }
-
-  .electrical-components-table th:nth-child(3),
-  .electrical-components-table td:nth-child(3) {
-    width: 27%;
-  }
-
-  .electrical-components-table th:nth-child(4),
-  .electrical-components-table td:nth-child(4) {
-    width: 20%;
-    text-align: center;
-  }
-
-  .electrical-components-table td:nth-child(4) .content-figure {
-    max-width: 8rem !important;
-    margin: 0 auto !important;
-    padding-top: 0;
-  }
-
-  .electrical-components-table td:nth-child(4) .content-figure-image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 5rem;
-  }
-
-  .electrical-components-table td:nth-child(4) .figure-img {
-    width: auto !important;
-    height: auto !important;
-    max-width: 8rem;
-    max-height: 6.5rem;
-    object-fit: contain;
-  }
-`}</style>
+</ImageTable>

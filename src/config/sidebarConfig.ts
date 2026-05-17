@@ -313,6 +313,7 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
           collapsed: true,
           items: [
             { label: 'Structure', slug: 'design-handbook/structure/structure' },
+            { label: 'Fasteners', slug: 'design-handbook/structure/fasteners' },
             { label: 'Intro to 3D Printing', slug: 'design-handbook/structure/intro-to-3d-printing' },
             { label: 'Design for 3D Printing', slug: 'design-handbook/structure/design-for-3d-printing' },
           ],

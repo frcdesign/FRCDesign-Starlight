@@ -16,6 +16,7 @@ const GLOBAL_IMPORTS = [
   { name: 'Aside',         path: '@components/content/Aside.astro' },
   { name: 'Slides',        path: '@components/content/Slides.astro' },
   { name: 'LinkButton',    path: '@components/content/LinkButton.astro' },
+  { name: 'ImageTable',    path: '@components/content/ImageTable.astro' },
 ];
 
 function makeImportNode(name: string, importPath: string) {
