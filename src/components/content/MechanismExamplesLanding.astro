@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { glossaryTerms } from '../../data/glossary';
+import { renderGlossaryDescription } from '../../utils/renderGlossaryDescription';
 
 type MechanismImage = ImageMetadata & { route: string; label: string };
 
@@ -47,30 +47,6 @@ const imagesForRoutes = (routes: string[]) => {
 
 const imageByLabel = (labelPart: string) =>
   mechanismImages.find((image) => image.label.includes(labelPart)) || mechanismImages[0];
-
-const escapeHtml = (value: string) =>
-  value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-
-const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-const renderGlossaryDescription = (description: string) => {
-  let html = escapeHtml(description);
-
-  for (const entry of [...glossaryTerms].sort((a, b) => b.term.length - a.term.length)) {
-    const pattern = new RegExp(`(^|[^\\w-])(${escapeRegExp(entry.term)})(?=$|[^\\w-])`, 'gi');
-    html = html.replace(
-      pattern,
-      `$1<span class="glossary-term" data-tooltip="${escapeHtml(entry.definition)}">$2</span>`
-    );
-  }
-
-  return html;
-};
 
 const inDepthExamples = [
   {
@@ -178,6 +154,7 @@ const categories = [
         alt={`${heroImage.label} CAD render`}
         loading={index === 0 ? 'eager' : 'lazy'}
         class:list={['hero-rotator-image', { active: index === 0 }]}
+        data-route={heroImage.route}
         data-no-lightbox
       />
     ))}
@@ -239,7 +216,7 @@ const categories = [
           />
         </div>
         <div class="library-body">
-          <h3><a href={category.href}>{category.title}</a></h3>
+          <h3>{category.title}</h3>
           <p set:html={renderGlossaryDescription(category.description)} />
           <div class="library-links">
             {category.links.map((link) => (
@@ -323,9 +300,9 @@ const categories = [
   }
 
   .mechanism-hero blockquote p {
-    max-width: 13ch;
+    max-width: 17ch;
     color: var(--sl-color-white);
-    font-size: clamp(2.3rem, 5vw, 4.8rem);
+    font-size: clamp(2.1rem, 4.3vw, 4.05rem);
     font-weight: 800;
     letter-spacing: 0;
     line-height: 0.95;
@@ -354,6 +331,11 @@ const categories = [
     position: relative;
     overflow: visible;
     background: transparent;
+    transition: transform 160ms ease;
+  }
+
+  .mechanism-hero-media:hover {
+    transform: translateY(-2px);
   }
 
   .mechanism-hero-media::before {
@@ -430,6 +412,13 @@ const categories = [
     background: color-mix(in srgb, var(--contribution-green) 24%, transparent);
   }
 
+  .mechanism-contribution a:focus-visible,
+  .library-links a:focus-visible,
+  .featured-card-link:focus-visible {
+    outline: 2px solid #2fbf5b;
+    outline-offset: 3px;
+  }
+
   .library-links a {
     display: inline-flex;
     align-items: center;
@@ -481,6 +470,7 @@ const categories = [
     border: 1px solid var(--sl-color-gray-5);
     border-radius: 8px;
     background: var(--sl-color-black);
+    transition: border-color 160ms ease, transform 160ms ease, background-color 160ms ease;
   }
 
   .featured-card-link {
@@ -495,8 +485,16 @@ const categories = [
     z-index: 1;
   }
 
-  .featured-card:hover {
+  .featured-card:hover,
+  .featured-card:focus-within {
     border-color: #2fbf5b;
+    background: color-mix(in srgb, var(--sl-color-black) 92%, #2fbf5b);
+    transform: translateY(-2px);
+  }
+
+  .featured-card:focus-within {
+    outline: 2px solid #2fbf5b;
+    outline-offset: 3px;
   }
 
   .featured-image,
@@ -584,6 +582,7 @@ const categories = [
   }
 
   .library-card .library-body {
+    align-self: stretch;
     border-left: 1px solid var(--sl-color-gray-5);
   }
 
@@ -608,7 +607,7 @@ const categories = [
     }
 
     .mechanism-hero blockquote p {
-      max-width: 14ch;
+      max-width: 17ch;
     }
 
     .featured-grid,
@@ -691,10 +690,25 @@ const categories = [
     }
 
     const getRandomItem = (items: string[]) => items[Math.floor(Math.random() * items.length)];
+    const normalizeImageUrl = (src: string) => {
+      try {
+        return new URL(src, window.location.href).href;
+      } catch {
+        return src;
+      }
+    };
 
     const rotator = document.querySelector('[data-hero-rotator]');
     const slides = Array.from(rotator?.querySelectorAll('.hero-rotator-image') ?? []) as HTMLImageElement[];
     let activeIndex = 0;
+
+    if (slides.length > 1) {
+      activeIndex = Math.floor(Math.random() * slides.length);
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === activeIndex);
+        if (index === activeIndex) slide.loading = 'eager';
+      });
+    }
 
     clearInterval(rotatorIntervalId);
     if (slides.length > 1) {
@@ -715,15 +729,8 @@ const categories = [
       rotator.addEventListener('click', () => {
         const activeImg = slides[activeIndex];
         if (!activeImg) return;
-        const lightbox = document.getElementById('global-image-lightbox');
-        if (!lightbox) return;
-        const lightboxImg = lightbox.querySelector('.global-lightbox-image') as HTMLImageElement | null;
-        if (!lightboxImg) return;
-        lightboxImg.src = activeImg.src;
-        lightboxImg.alt = activeImg.alt || '';
-        lightbox.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        document.documentElement.classList.add('lightbox-open');
+        const route = activeImg.dataset.route;
+        if (route) window.location.href = route;
       });
     }
 
@@ -735,27 +742,85 @@ const categories = [
 
       const defaultSrc = image.dataset.defaultSrc || image.currentSrc || image.src;
       const cardImages = JSON.parse(image.dataset.images || '[]').filter(Boolean) as string[];
+      const preloadedImages = new Map<string, Promise<void>>();
+      const preloadElements = new Map<string, HTMLImageElement>();
 
-      const setCardImage = (nextSrc: string) => {
-        if (!nextSrc || image.src.endsWith(nextSrc)) return;
+      const preloadImage = (src: string) => {
+        const normalizedSrc = normalizeImageUrl(src);
+        if (!src) return Promise.resolve();
+        if (preloadedImages.has(normalizedSrc)) return preloadedImages.get(normalizedSrc)!;
+
+        const preload = new Image();
+        preload.decoding = 'async';
+        preloadElements.set(normalizedSrc, preload);
+
+        const preloadPromise = new Promise<void>((resolve) => {
+          preload.onload = async () => {
+            try {
+              await preload.decode();
+            } catch {
+              // Some browsers reject decode() for already-complete images; the load
+              // event still means the file is available for the swap.
+            }
+            resolve();
+          };
+          preload.onerror = () => resolve();
+        });
+
+        preloadedImages.set(normalizedSrc, preloadPromise);
+        preload.src = src;
+        return preloadPromise;
+      };
+
+      preloadImage(defaultSrc);
+
+      const chooseHoverImage = (pool: string[]) => {
+        if (pool.length === 0) return '';
+
+        const normalizedDefaultSrc = normalizeImageUrl(defaultSrc);
+        const nonDefaultPool = pool.filter((src) => normalizeImageUrl(src) !== normalizedDefaultSrc);
+        return getRandomItem(nonDefaultPool.length > 0 ? nonDefaultPool : pool);
+      };
+
+      let swapToken = 0;
+
+      const setCardImage = async (nextSrc: string) => {
+        if (!nextSrc || normalizeImageUrl(image.currentSrc || image.src) === normalizeImageUrl(nextSrc)) return;
+        const currentToken = ++swapToken;
+
+        await preloadImage(nextSrc);
+        if (currentToken !== swapToken) return;
+
         image.classList.add('is-swapping');
-        window.setTimeout(() => {
+
+        window.setTimeout(async () => {
+          if (currentToken !== swapToken) return;
           image.src = nextSrc;
-          image.addEventListener('load', () => {
+          try {
+            await image.decode();
+          } catch {
+            // If decode fails, let the browser render the loaded fallback normally.
+          }
+          if (currentToken !== swapToken) return;
+          requestAnimationFrame(() => {
             image.classList.remove('is-swapping');
-          }, { once: true });
-        }, 140);
+          });
+        }, 160);
       };
 
       for (const trigger of card.querySelectorAll('[data-category-trigger]')) {
-        const triggerImages = JSON.parse((trigger as HTMLElement).dataset.images || '[]').filter(Boolean) as string[];
+        const triggerElement = trigger as HTMLElement;
+        const triggerImages = JSON.parse(triggerElement.dataset.images || '[]').filter(Boolean) as string[];
+        const pool = triggerImages.length > 0 ? triggerImages : cardImages;
+        const hoverSrc = chooseHoverImage(pool);
+        triggerElement.dataset.hoverSrc = hoverSrc;
+        preloadImage(hoverSrc);
+
         trigger.addEventListener('mouseenter', () => {
-          const pool = triggerImages.length > 0 ? triggerImages : cardImages;
-          if (pool.length > 0) setCardImage(getRandomItem(pool));
+          if (triggerElement.dataset.hoverSrc) setCardImage(triggerElement.dataset.hoverSrc);
         });
         trigger.addEventListener('focus', () => {
-          const pool = triggerImages.length > 0 ? triggerImages : cardImages;
-          if (pool.length > 0) setCardImage(getRandomItem(pool));
+          if (triggerElement.dataset.hoverSrc) setCardImage(triggerElement.dataset.hoverSrc);
         });
       }
 

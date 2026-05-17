@@ -155,5 +155,7 @@ showToc = items.length > 0 && !frontmatterDisabled && (frontmatterEnabled || dir
     }
   }
 
-  customElements.define('starlight-toc', StarlightTOC);
+  if (!customElements.get('starlight-toc')) {
+    customElements.define('starlight-toc', StarlightTOC);
+  }
 </script>

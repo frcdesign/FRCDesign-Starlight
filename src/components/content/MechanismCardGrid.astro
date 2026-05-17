@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { glossaryTerms } from '../../data/glossary';
+import { renderGlossaryDescription } from '../../utils/renderGlossaryDescription';
 
 interface MechanismCard {
   title: string;
@@ -16,53 +16,35 @@ interface Props {
 
 const { cards } = Astro.props;
 
-const escapeHtml = (value: string) =>
-  value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-
-const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-const renderGlossaryDescription = (description: string) => {
-  let html = escapeHtml(description);
-
-  for (const entry of [...glossaryTerms].sort((a, b) => b.term.length - a.term.length)) {
-    const pattern = new RegExp(`(^|[^\\w-])(${escapeRegExp(entry.term)})(?=$|[^\\w-])`, 'gi');
-    html = html.replace(
-      pattern,
-      `$1<span class="glossary-term" data-tooltip="${escapeHtml(entry.definition)}">$2</span>`
-    );
-  }
-
-  return html;
-};
 ---
 
-<div class="mechanism-card-grid">
+<div class:list={['mechanism-card-grid', { 'is-single': cards.length === 1 }]}>
   {cards.map((card) => (
-    <article class="mechanism-card">
-      <a href={card.href} class="mechanism-card-media" aria-label={`Open ${card.title}`}>
-        <Image src={card.image} alt={card.imageAlt} loading="lazy" />
-      </a>
-      <a href={card.href} class="mechanism-card-body" aria-label={`Open ${card.title}`}>
-        <h3>{card.title}</h3>
-        <p set:html={renderGlossaryDescription(card.description)} />
-      </a>
-    </article>
+    <a href={card.href} class="mechanism-card" aria-label={`Open ${card.title}`}>
+      <span class="mechanism-card-media">
+        <Image src={card.image} alt={card.imageAlt} loading="lazy" data-no-lightbox />
+      </span>
+      <span class="mechanism-card-body">
+        <span class="mechanism-card-meta">{card.href.startsWith('http') ? 'CAD reference' : 'In-depth guide'}</span>
+        <span class="mechanism-card-title">{card.title}</span>
+        <span class="mechanism-card-description" set:html={renderGlossaryDescription(card.description)} />
+      </span>
+    </a>
   ))}
 </div>
 
 <style>
   .mechanism-card-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
     grid-auto-rows: 1fr;
     align-items: stretch;
     gap: 1rem;
-    margin-block: 1rem 2rem;
+    margin-block: 1rem 2.25rem;
+  }
+
+  .mechanism-card-grid.is-single {
+    max-width: 42rem;
   }
 
   .mechanism-card {
@@ -75,16 +57,27 @@ const renderGlossaryDescription = (description: string) => {
     border: 1px solid var(--sl-color-gray-5);
     border-radius: 8px;
     background: var(--sl-color-black);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 160ms ease, transform 160ms ease, background-color 160ms ease;
   }
 
-  .mechanism-card:hover {
+  .mechanism-card:hover,
+  .mechanism-card:focus-visible {
     border-color: #2fbf5b;
+    background: color-mix(in srgb, var(--sl-color-black) 92%, #2fbf5b);
+    transform: translateY(-2px);
+  }
+
+  .mechanism-card:focus-visible {
+    outline: 2px solid #2fbf5b;
+    outline-offset: 3px;
   }
 
   .mechanism-card-media {
     overflow: hidden;
-    height: clamp(14rem, 24vw, 20rem);
-    padding: clamp(0.75rem, 2vw, 1.25rem);
+    height: clamp(11rem, 16vw, 14rem);
+    padding: clamp(0.85rem, 1.8vw, 1.15rem);
     border-bottom: 1px solid var(--sl-color-gray-5);
     background: var(--sl-color-gray-7);
     box-sizing: border-box;
@@ -105,18 +98,33 @@ const renderGlossaryDescription = (description: string) => {
 
   .mechanism-card-body {
     display: grid;
+    align-content: start;
     gap: 0.55rem;
     padding: 1rem;
-    color: inherit;
-    text-decoration: none;
   }
 
-  .mechanism-card-body h3 {
+  .mechanism-card-meta {
+    display: block;
+    margin: 0;
+    color: var(--sl-color-accent-high);
+    font-size: var(--sl-text-xs);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .mechanism-card-title {
+    display: block;
     margin: 0;
     color: var(--sl-color-white);
+    font-size: var(--sl-text-xl);
+    font-weight: 700;
+    line-height: var(--sl-line-height-headings);
   }
 
-  .mechanism-card-body p {
+  .mechanism-card-description {
+    display: block;
     margin: 0;
     color: var(--sl-color-gray-3);
     line-height: 1.5;
@@ -160,10 +168,6 @@ const renderGlossaryDescription = (description: string) => {
   }
 
   @media (max-width: 44rem) {
-    .mechanism-card-grid {
-      grid-template-columns: 1fr;
-    }
-
     .mechanism-card-media {
       height: clamp(12rem, 58vw, 20rem);
     }
