@@ -199,7 +199,7 @@ const categories = [
   <div class="section-heading">
     <p class="mechanism-eyebrow">Browse by mechanism</p>
     <h2>Mechanism library</h2>
-    <p>Each section collects in-depth pages first, followed by CAD references when available.</p>
+    <p>Each section displays in-depth writeups first followed by CAD references when available.</p>
   </div>
 
   <div class="library-grid">
@@ -287,6 +287,10 @@ const categories = [
     text-transform: uppercase;
   }
 
+  .category-label {
+    color: #2fbf5b;
+  }
+
   .section-heading h2 {
     margin: 0;
     color: var(--sl-color-white);
@@ -321,6 +325,10 @@ const categories = [
     margin: 0;
     color: var(--sl-color-gray-2);
     font-size: var(--sl-text-lg);
+  }
+
+  .mechanism-hero .mechanism-eyebrow {
+    color: var(--mechanism-green);
   }
 
   .mechanism-hero .hero-copy {
@@ -452,6 +460,11 @@ const categories = [
     color: var(--sl-color-gray-3);
   }
 
+  .section-heading .mechanism-eyebrow {
+    color: #2fbf5b;
+    line-height: 1.2;
+  }
+
   .featured-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -550,6 +563,11 @@ const categories = [
     margin: 0;
     color: var(--sl-color-gray-3);
     line-height: 1.5;
+  }
+
+  .featured-body .category-label {
+    color: #2fbf5b;
+    line-height: 1.2;
   }
 
   .library-grid {
