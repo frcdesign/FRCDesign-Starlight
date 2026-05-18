@@ -333,13 +333,6 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
             { label: 'Designing for Controllability', slug: 'design-handbook/design-writeups/designing-for-controllability' },
           ],
         },
-        {
-          label: 'FeatureScript',
-          collapsed: true,
-          items: [
-            { label: 'Feature Studio', slug: 'design-handbook/feature-studio/featurestudio' },
-          ],
-        },
       ],
     },
   ],
