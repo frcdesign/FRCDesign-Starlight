@@ -1,7 +1,7 @@
 ---
 import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
 import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
-import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+import SidebarSublist from './SidebarSublist.astro';
 import { getSidebarForPath, type SidebarItem, type SidebarSection } from '../config/sidebarConfig';
 
 // Get the current URL pathname
@@ -23,6 +23,8 @@ type SidebarLink = {
 type SidebarGroup = {
   type: 'group';
   label: string;
+  href?: string;
+  isCurrent?: boolean;
   entries: (SidebarLink | SidebarGroup)[];
   collapsed: boolean;
   badge: undefined;
@@ -31,10 +33,23 @@ type SidebarGroup = {
 type SidebarEntry = SidebarLink | SidebarGroup;
 
 function convertItem(item: SidebarItem, currentPath: string, isTopLevel: boolean = false): SidebarEntry {
-  if (item.slug) {
+  const normalizedCurrent = currentPath.endsWith('/') ? currentPath : currentPath + '/';
+
+  if (item.items && item.items.length > 0) {
+    const href = item.slug ? '/' + item.slug + '/' : undefined;
+    // It's a group - top level items should NOT be collapsed
+    return {
+      type: 'group',
+      label: item.label,
+      href,
+      isCurrent: href ? normalizedCurrent === href : false,
+      entries: item.items.map(subItem => convertItem(subItem, currentPath, false)),
+      collapsed: isTopLevel ? false : (item.collapsed ?? false),
+      badge: undefined,
+    };
+  } else if (item.slug) {
     // It's a link
     const href = '/' + item.slug + '/';
-    const normalizedCurrent = currentPath.endsWith('/') ? currentPath : currentPath + '/';
     return {
       type: 'link',
       label: item.label,
@@ -42,15 +57,6 @@ function convertItem(item: SidebarItem, currentPath: string, isTopLevel: boolean
       isCurrent: normalizedCurrent === href,
       badge: undefined,
       attrs: {},
-    };
-  } else if (item.items) {
-    // It's a group - top level items should NOT be collapsed
-    return {
-      type: 'group',
-      label: item.label,
-      entries: item.items.map(subItem => convertItem(subItem, currentPath, false)),
-      collapsed: isTopLevel ? false : (item.collapsed ?? false),
-      badge: undefined,
     };
   }
   // Fallback - shouldn't happen with valid config
