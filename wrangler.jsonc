@@ -1,6 +1,6 @@
 {
 	"main": "@astrojs/cloudflare/entrypoints/server",
-	"name": "frcdesign",
+	"name": "frcdesign-starlight",
   "compatibility_date": "2025-11-30",
   "compatibility_flags": [
     "nodejs_compat",
