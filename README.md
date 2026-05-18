@@ -69,8 +69,8 @@ Documentation for Markdown/MDX page components is maintained on the site itself 
 ### Setup
 
 ```bash
-git clone https://github.com/frcdesign/FRCDesign-Starlight.git
-cd FRCDesign-Starlight
+git clone https://github.com/frcdesign/FRCDesign.org.git
+cd FRCDesign.org
 npm install
 npm run dev
 ```
@@ -114,5 +114,5 @@ See the [Contribution Guide](https://frcdesign.org/contribution/methods-of-contr
 ## Links
 
 - [FRCDesign.org](https://frcdesign.org)
-- [GitHub Repository](https://github.com/frcdesign/FRCDesign-Starlight)
+- [GitHub Repository](https://github.com/frcdesign/FRCDesign.org)
 - [Discord Server](https://discord.gg/frcdesign)

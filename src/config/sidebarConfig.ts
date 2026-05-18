@@ -363,17 +363,15 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
           items: [
             {
               label: 'Pivoting Intakes',
+              slug: 'mechanism-examples/intake/slapdown',
               collapsed: true,
-              items: [
-                { label: 'Overview', slug: 'mechanism-examples/intake/slapdown' },
-              ],
+              items: [],
             },
             {
               label: 'Linkage Intakes',
+              slug: 'mechanism-examples/intake/linkage',
               collapsed: true,
-              items: [
-                { label: 'Overview', slug: 'mechanism-examples/intake/linkage' },
-              ],
+              items: [],
             },
           ],
         },
@@ -397,17 +395,15 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
           items: [
             {
               label: 'Continuous Elevators',
+              slug: 'mechanism-examples/elevator/continuous',
               collapsed: true,
-              items: [
-                { label: 'Overview', slug: 'mechanism-examples/elevator/continuous' },
-              ],
+              items: [],
             },
             {
               label: 'Cascade Elevators',
+              slug: 'mechanism-examples/elevator/cascade',
               collapsed: true,
-              items: [
-                { label: 'Overview', slug: 'mechanism-examples/elevator/cascade' },
-              ],
+              items: [],
             },
           ],
         },
@@ -501,7 +497,7 @@ export function getSidebarForPath(pathname: string): SidebarSection[] {
   // Normalize pathname
   const normalizedPath = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
 
-  if (normalizedPath === '/mechanism-examples' || normalizedPath.startsWith('/mechanism-examples/')) {
+  if (normalizedPath === '/mechanism-examples') {
     return [];
   }
 

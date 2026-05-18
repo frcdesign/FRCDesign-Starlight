@@ -107,7 +107,7 @@ export default function socialCardsIntegration() {
     name: 'frcdesign-social-cards',
     hooks: {
       'astro:config:done': ({ config }) => {
-        site = config.site?.toString() || 'https://star.frcdesign.org';
+        site = config.site?.toString() || 'https://frcdesign.org';
         outDir = fileURLToPath(config.outDir);
         clientOutDir = config.build.client ? fileURLToPath(config.build.client) : path.join(outDir, 'client');
       },
