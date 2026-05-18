@@ -3,6 +3,8 @@ title: "Motion Components"
 description: "A guide on bearings, bushings, and axles used in FRC power transmission."
 ---
 
+import ContentRow from '@components/content/ContentRow.astro';
+
 A guide on bearings, bushings, and axles, including the mechanics behind transmission of torque through axles. This page also contains tips on how to manufacture and assemble these parts. 
 
 ## Radial Bearings
@@ -14,7 +16,7 @@ There are other applications of bearings, such as in elevator bearing blocks whe
 <Aside type="note">
 An axle on bearings is not a structural or rigid component, which means that it cannot support a structure, unlike a spacer bolted rigidly.
 </Aside>
-<ContentFigure src="../img/power-transmission/bearing-context.png" alt="" width="70%">
+<ContentFigure src="../img/power-transmission/bearing-context.png" alt="" width="40%">
   Flanged bearing used on rollers for 1678's 2024 robot.
 </ContentFigure>
 
@@ -28,7 +30,7 @@ They are the most common types of bearings. They have a flange which allows them
 
 They are basically the same flanged bearings, but instead they do not have  a flange. They are usually used in spaces where a flange will not fit or is not necessary. They can be used in much of the same applications as flanged bearings, however extra care is needed to mount them.
 
-<ContentFigure src="../img/power-transmission/standard-bearing-context.png" alt="" width="50%">
+<ContentFigure src="../img/power-transmission/standard-bearing-context.png" alt="" width="30%">
   Standard bearing in gearbox. The plate is half pocketed so that the bearing doesn't fall out, and is retained by a custom axle.
 </ContentFigure>
 
@@ -36,7 +38,7 @@ They are basically the same flanged bearings, but instead they do not have  a fl
 
 Needle bearings are a special type of bearing which is much thinner than flanged and standard bearings. They can be used in spaces where there is not enough space for a normal bearing and are almost always used for round axles. As a result, they are a common option to use with [dead axle rollers](/learning-course/stage1/1c/exercise2/) as they can be press fit into the end caps. 
 
-<ContentFigure src="../img/power-transmission/1540needlebearing.png" alt="" width="70%">
+<ContentFigure src="../img/power-transmission/1540needlebearing.png" alt="" width="40%">
   Needle bearing used in dead axle rollers for 1540's 2025 intake. Allows roller to spin around a rigid axle.
 </ContentFigure>
 
@@ -44,19 +46,19 @@ Needle bearings are a special type of bearing which is much thinner than flanged
 
 X-Contact bearings operate with completely different use cases and applications than typical ball bearings. They typically have a much larger diameter than most bearings. As a result, they are commonly used in swerve drives or turrets to allow free rotation of these systems. X-Contact bearings are also assembled differently compared to typical bearings.
 
-<ContentFigure src="../img/power-transmission/x-contact-context.png" alt="" width="70%">
+<ContentRow mediaHeight="20rem">
+<ContentFigure src="../img/power-transmission/x-contact-context.png" alt="mk4i swerve module x-contact bearing">
   X-Contact bearing in an MK4 swerve module. Allows wheel to rotate freely.
 </ContentFigure>
 
-
-<ContentFigure src="../img/power-transmission/JGKWXv2OdJCRBAJ8O1yNFD2TTZEuUdvi.webp" alt="" width="90%">
+<ContentFigure src="../img/power-transmission/JGKWXv2OdJCRBAJ8O1yNFD2TTZEuUdvi.webp" alt="x-contact bearing contact points">
   X-Contact bearing setup. The ball is contacted on 4 points instead of 2 in standard bearings.
 </ContentFigure>
 
-<ContentFigure src="../img/power-transmission/TypeC.webp" alt="" width="90%">
+<ContentFigure src="../img/power-transmission/TypeC.webp" alt="standard bearing contact points">
   Standard ball bearing setup. Ball is contacted on 2 points vertically.
 </ContentFigure>
-
+</ContentRow>
 
 This setup allows X-Contact bearings to withstand much more [thrust](https://en.wikipedia.org/wiki/Thrust_bearing) force than typical bearings, meaning it can withstand loads laterally rather than rotationally. This is very useful for places where a lot of weight is against the bearing vertically, such as in swerve modules where the bearings must be able to hold the entire weight of the robot. 
 
@@ -64,7 +66,7 @@ This setup allows X-Contact bearings to withstand much more [thrust](https://en.
 
 A common type of bearing used in FRC are bushings. Bushing are often used for high torque, low speed applications, such as [dead axle pivots](/learning-course/stage2/2b/introduction/). They are much simpler than ball bearings; instead of using balls to allow for smooth rotational movement, axles simply rotate on a self-lubricating surface (i.e. brass). Although bearings are the preferred solution in most cases because they reduce friction and support load most effectively, in low speed applications bushings have the upper hand for being smaller and lighter than bearings. They usually have a flange but other types can be sourced from non-FRC vendors. 
 
-<ContentFigure src="../img/power-transmission/citrus-bushing.png" alt="" width="50%">
+<ContentFigure src="../img/power-transmission/citrus-bushing.png" alt="" width="40%">
   Bushing mounted to 1678 2024 shooter, which allows it to pivot freely around an axle.
 </ContentFigure>
 
@@ -101,7 +103,7 @@ The diameters of FRC shafts vary wildly. The majority vary from 3/8" diameter to
 
 The general rule of thumb is that the higher the torque and load, the larger the shaft should be. If too small of an axle is used, no matter the material, it may be susceptible to twisting under high loads. For large cantilevered arms, wider 2"+ axles are helpful for stability and strength. On the other side, smaller axles can be useful in scenarios where strength isn't as much of an issue for weight savings. 
 
-<ContentFigure src="../img/power-transmission/hexpivotfun.png" alt="" width="50%">
+<ContentFigure src="../img/power-transmission/hexpivotfun.png" alt="" width="40%">
   Twisted steel hex axle, 1/2" diameter. Was used for pivoting an extremely large load.
 </ContentFigure>
 
@@ -131,7 +133,7 @@ Most bearings can be press fit into metal parts, like flanged and needle. Other 
 
 For bearings on polycarbonate or similarly bendy material, it is good practice to include proper bearing retention using "hats" which are bolted to the material and hold the bearing in place. This is needed due to the flexibility of polycarbonate, which may allow bearings to pop out, and is especially important if there are no spacers to properly support the polycarbonate plate. These hats can be bought by a vendor or custom 3D printed.
 
-<ContentFigure src="../img/power-transmission/bearinghat1540.png" alt="" width="50%">
+<ContentFigure src="../img/power-transmission/bearinghat1540.png" alt="" width="30%">
   3D printed bearing hat on 1540's 2025 end effector.
 </ContentFigure>
 

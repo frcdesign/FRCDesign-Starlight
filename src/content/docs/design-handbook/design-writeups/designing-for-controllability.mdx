@@ -71,7 +71,7 @@ When using chain, it is necessary to include tensioning options. Over time, chai
 
 When using belts in high-torque scenarios, it may be necessary to tension the belt so that it does not skip. This can be done in much the same ways that tensioning chain is done (aside from in-line tensioners). 
 
-<ContentFigure src="../img/design-writeups/chaintensioner.webp" alt="" width="67%">
+<ContentFigure src="../img/design-writeups/chaintensioner.webp" alt="" width="40%">
   Adjustable in-line chain tensioner on an elevator.
 </ContentFigure>
 
@@ -83,29 +83,25 @@ Hardstops makes tracking position of a mechanism easier and more consistent. It 
 
 Mechanical hardstops are the simplest and most important to incorporate in a design. Essentially, hardstops physically prevent the mechanism from moving further than wanted. This can be very useful to prevent damage or to have a consistent zeroing location. Mechanical hardstops can be made in many ways. They can be separately designed in, or utilize an already existing structure to hardstop on, making them fairly easy to implement. However, they are susceptible to wear over time (which may not be significant for an FRC season) and breakage. "Softstops" can be used to lessen the force, such as using TPU stops or adding a protective foam, at the cost of less consistency. Mechanical hardstops are still incredibly useful and are great to implement wherever possible. Below are examples of mechanical hardstops. 
 
-<ContentFigure src="../img/design-writeups/elevatorhardstop.webp" alt="" width="50%">
+<ContentRow>
+<ContentFigure src="../img/design-writeups/elevatorhardstop.webp" alt="" width="30%">
   Upper hardstop on a continuous elevator. Prevents the elevator from extending too far.
 </ContentFigure>
-  
-  
-<ContentFigure src="../img/design-writeups/citrusstop.webp" alt="" width="50%">
+
+<ContentFigure src="../img/design-writeups/citrusstop.webp" alt="" width="30%">
   1678's 2024 shooter hardstops on the swerve modules to limit its angle, showing that hardstops do not need to be definitely defined and can hardstop on existing structures.
 </ContentFigure>
   
-
-<ContentFigure src="../img/design-writeups/254hardstop.webp" alt="" width="50%">
+<ContentFigure src="../img/design-writeups/254hardstop.webp" alt="" width="30%">
   254's 2022 intake hardstops on itself. This type of hardstop is special to four bar intakes. For more information on four bar intakes, check out the mechanism examples for intakes.
 </ContentFigure>
-  
-
-  
-  
+</ContentRow>
 
 ## Non-Mechanical Hardstops
 
 In cases where mechanical hardstops are impossible to include, non-mechanical hardstops using sensors can be used. These types of hardstops also have the advantage of being essentially immune to wear and tear, which may be necessary for mechanisms with large forces. They are commonly implemented with Hall Effect sensors and magnets. When the magnet passes the sensor, the sensor is activated and can then be used as a zeroing location. 
 
-<ContentFigure src="../img/design-writeups/1540elevatorstop.webp" alt="" width="50%">
+<ContentFigure src="../img/design-writeups/1540elevatorstop.webp" alt="" width="30%">
   Example of a non-mechanical hardstop using a Hall Effect sensor on Stage 0 (highlighted in yellow) and a magnet on Stage 2 (highlighted in blue).
 </ContentFigure>
 
@@ -123,18 +119,6 @@ Some absolute encoders, known as **Through-Bore Encoders**, are added directly o
 <ContentFigure src="../img/design-writeups/6995encoder.webp" alt="" width="50%">
   A belt goes directly off the pivoting shaft and connects to an encoder. Since the power transmission is belt, there is virtually zero backlash in the system, allowing for extreme precision. (Credit: 6995)
 </ContentFigure>
-  
-
-  
-  
-
-# Calculating Gear Ratios (WIP)
-
-Guide on calculating the optimal gear ratio and using [ReCalc](https://www.reca.lc/)
 
 For more information about gear ratios (and manual calculations without the use of ReCalc), check out [971's presentation on Designing for Controllability](https://www.spartanrobotics.org/workshops) by Travis Schuh.
-
-# Offsetting Forces (WIP)
-
-Guide on springs and constant force springs to offset forces. 
 
