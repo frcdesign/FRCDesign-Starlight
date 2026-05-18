@@ -10,7 +10,7 @@ import { remarkMdxGlobalImports } from './src/plugins/remark-mdx-global-imports.
 const sitemapExcludedPaths = ['/test-content-figure/'];
 
 export default defineConfig({
-  site: 'https://star.frcdesign.org',
+  site: 'https://frcdesign.org',
   prefetch: true,
   markdown: {
     remarkPlugins: [remarkCenter, remarkGlossary, remarkMdxGlobalImports],
