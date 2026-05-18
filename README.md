@@ -56,6 +56,8 @@ Use `public/` only when the browser needs to request an exact static URL, such a
 
 `ContentFigure`, `Aside`, `Slides`, `LinkButton`, and `ImageTable` are auto-imported into every `.mdx` file via `src/plugins/remark-mdx-global-imports.ts`. No import statement is needed to use them. To register a new global component, add it to the `GLOBAL_IMPORTS` array in that file.
 
+Documentation for Markdown/MDX page components is maintained on the site itself in the [Adding a Page guide](https://frcdesign.org/contribution/adding-a-page/).
+
 ## Local Development
 
 ### Prerequisites

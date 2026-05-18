@@ -70,7 +70,7 @@ interface Props {
   inline?: boolean;
 }
 
-const { src, alt = '', width = '70%', border = false, align = 'center', captionPosition = 'center', class: className, gif = false, inline = false } = Astro.props;
+const { src, alt = '', width = '80%', border = false, align = 'center', captionPosition = 'center', class: className, gif = false, inline = false } = Astro.props;
 const hasExplicitWidth = Astro.props.width !== undefined;
 const hasSideCaption = captionPosition === 'left' || captionPosition === 'right';
 
@@ -187,7 +187,7 @@ const figureStyle = [
     <img src={typeof src === 'string' ? src : ''} alt={alt} style="display: inline; vertical-align: middle;" loading="lazy" />
   )
 ) : (
-<figure class:list={['content-figure', `caption-${captionPosition}`, { 'has-side-caption': hasSideCaption && hasCaption }, className]} style={figureStyle}>
+<figure class:list={['content-figure', `caption-${captionPosition}`, { 'has-caption': hasCaption, 'has-side-caption': hasSideCaption && hasCaption }, className]} style={figureStyle}>
   <div class="content-figure-inner">
     {hasSideCaption && hasCaption && captionPosition === 'left' && (
       <figcaption class="content-figure-caption">
@@ -270,6 +270,10 @@ const figureStyle = [
 
   .content-figure-media {
     width: 100%;
+  }
+
+  .content-figure:not(.has-caption) .content-figure-media {
+    padding-bottom: 1.5rem;
   }
 
   .content-figure.has-side-caption {
