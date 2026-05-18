@@ -313,9 +313,31 @@ export const sidebarSections: Record<string, SidebarSection[]> = {
           collapsed: true,
           items: [
             { label: 'Structure', slug: 'design-handbook/structure/structure' },
+            { label: 'Materials', slug: 'design-handbook/structure/materials' },
             { label: 'Fasteners', slug: 'design-handbook/structure/fasteners' },
             { label: 'Intro to 3D Printing', slug: 'design-handbook/structure/intro-to-3d-printing' },
             { label: 'Design for 3D Printing', slug: 'design-handbook/structure/design-for-3d-printing' },
+          ],
+        },
+        {
+          label: 'Power Transmission',
+          collapsed: true,
+          items: [
+            { label: 'Motion Components', slug: 'design-handbook/power-transmission/motion-components' },
+          ],
+        },
+        {
+          label: 'Design Write-ups',
+          collapsed: true,
+          items: [
+            { label: 'Designing for Controllability', slug: 'design-handbook/design-writeups/designing-for-controllability' },
+          ],
+        },
+        {
+          label: 'FeatureScript',
+          collapsed: true,
+          items: [
+            { label: 'Feature Studio', slug: 'design-handbook/feature-studio/featurestudio' },
           ],
         },
       ],
